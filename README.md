@@ -1,2 +1,2 @@
-# MLJobSearch2025
-ML Companies Tier List and Interview Questions
+# ML Jobs and Interview Questions 2025 💹 🐱‍💻
+🙏 Feel free to submit a new job posting or suggst a change by submitting a pull request
