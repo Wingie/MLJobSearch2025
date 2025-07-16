@@ -17,7 +17,7 @@ Top ML companies (subjectively ranked based on perception, culture, program, pre
 
 5️⃣ Akuna - DRW - SIG - Flow Traders - Tower - Virtu. 
 
-⚠️ Disclaimer: this is just a very rough ranking based on highly subjective opinions. In order for a company to make it to this list, they have to pay at least $300k/yr in average total compensation for ML roles.
+⚠️ Disclaimer: this is just a very rough ranking based on highly subjective opinions. In order for a company to make it to this list, they have to pay at least $300k/yr in average total compensation for ML roles. Tier 1 and 2 need to pay over $500k/yr.
 
 
 ------
