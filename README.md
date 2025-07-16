@@ -17,7 +17,7 @@ Top companies hiring on ML (subjectively ranked based on perception, culture, pr
 
 4️⃣ Microsoft - Tesla - Tiktok - Stripe - Cruise. 
 
-5️⃣ Lambda - Figure AI - Scale - Coinbase - Reddit - Adobe
+5️⃣ Lambda - Figure AI - Scale - Coinbase - Reddit - Adobe.
 
 ⚠️ Disclaimer: this is just a very rough ranking based on highly subjective opinions. In order for a company to make it to this list, they have to pay at least $300k/yr in average total compensation for ML roles. Tier 1 and 2 need to pay over $500k/yr.
 
