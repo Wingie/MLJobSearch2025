@@ -3,19 +3,20 @@
 
 🙏 Feel free to submit a new job posting or suggest a change at team@neuraprep.com
 
+🎓 Only the Hedge Funds that do ML and hire on ML openly were included
 ------
 
-Top ML companies (subjectively ranked based on perception, culture, program, prestige and pay): 
+Top companies hiring on ML (subjectively ranked based on perception, culture, program, prestige and pay): 
 
-1️⃣ HRT - Jane Street - Radix - TGS - PDT. 
+1️⃣ Meta - OpenAI - Anthropic - Nvidia. 
 
-2️⃣ Citadel (Securities) - Headlands - Ansatz - Aquatic. 
+2️⃣ Citadel (Securities) - Netflix - Google - TwoSigma. 
 
-3️⃣ Five Rings - DE Shaw - Jump - Vatic. 
+3️⃣ RunwayML - Uber - xAI. 
 
-4️⃣ Two Sigma - IMC - Optiver. 
+4️⃣ Microsoft - Tesla - Tiktok. 
 
-5️⃣ Akuna - DRW - SIG - Flow Traders - Tower - Virtu. 
+5️⃣ Lambda - Figure AI - SIG - Flow Traders - Tower - Virtu. 
 
 ⚠️ Disclaimer: this is just a very rough ranking based on highly subjective opinions. In order for a company to make it to this list, they have to pay at least $300k/yr in average total compensation for ML roles. Tier 1 and 2 need to pay over $500k/yr.
 
