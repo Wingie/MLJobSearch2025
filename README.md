@@ -5,7 +5,7 @@
 
 ------
 
-Top New Grad companies (subjectively ranked based on perception, culture, program, prestige and pay): 
+Top ML companies (subjectively ranked based on perception, culture, program, prestige and pay): 
 
 1️⃣ HRT - Jane Street - Radix - TGS - PDT. 
 
@@ -17,7 +17,7 @@ Top New Grad companies (subjectively ranked based on perception, culture, progra
 
 5️⃣ Akuna - DRW - SIG - Flow Traders - Tower - Virtu. 
 
-⚠️ Disclaimer: this is just a very rough ranking based on highly subjective opinions. Ideally we'd have separate rankings for SWE, QR, QT and separate rankings for culture, pay etc but this should do for now. ⚠️
+⚠️ Disclaimer: this is just a very rough ranking based on highly subjective opinions. In order for a company to make it to this list, they have to pay at least $300k/yr in average total compensation for ML roles.
 
 
 ------
