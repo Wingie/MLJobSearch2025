@@ -1,0 +1,462 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Dropout During Inference - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_015.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="dropout-during-training-vs-inference-the-critical-difference"><a class="header" href="#dropout-during-training-vs-inference-the-critical-difference">Dropout During Training vs Inference: The Critical Difference</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>Meta/Google/Amazon</strong>: "What happens to dropout during inference? If at the training stage we randomly deactivate neurons, then do we do the same when predicting?"</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question is a favorite among top tech companies because it tests several fundamental concepts that are crucial for any ML engineer:</p>
+<ul>
+<li><strong>Understanding of regularization techniques</strong>: Dropout is one of the most important regularization methods in deep learning</li>
+<li><strong>Training vs inference distinction</strong>: A core concept that separates beginners from experienced practitioners</li>
+<li><strong>Mathematical intuition</strong>: The scaling factor reveals whether you understand the mathematical foundations</li>
+<li><strong>Practical implementation knowledge</strong>: Shows if you've actually implemented neural networks in practice</li>
+</ul>
+<p>Companies ask this because many candidates can recite what dropout does during training but completely miss the critical inference behavior. This question quickly separates those who have hands-on experience from those who only have theoretical knowledge.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<p>Before diving into the answer, let's establish the key concepts:</p>
+<p><strong>Dropout</strong>: A regularization technique that randomly sets some neurons to zero during training to prevent overfitting.</p>
+<p><strong>Training Phase</strong>: When the model learns from data by adjusting weights through backpropagation.</p>
+<p><strong>Inference Phase</strong>: When the trained model makes predictions on new, unseen data.</p>
+<p><strong>Regularization</strong>: Techniques used to prevent a model from memorizing training data (overfitting) and help it generalize to new data.</p>
+<p><strong>Overfitting</strong>: When a model performs well on training data but poorly on new data because it has memorized rather than learned patterns.</p>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="what-happens-during-training"><a class="header" href="#what-happens-during-training">What Happens During Training</a></h3>
+<p>During training, dropout works like this:</p>
+<ol>
+<li><strong>Random Selection</strong>: For each training example, dropout randomly selects neurons to "drop out" (set to zero) with a certain probability</li>
+<li><strong>Probability Parameter</strong>: Common dropout rates are 0.2 (20% of neurons dropped) to 0.5 (50% of neurons dropped)</li>
+<li><strong>Different Networks</strong>: Each training step effectively uses a different "subnetwork" because different neurons are dropped each time</li>
+<li><strong>Forces Redundancy</strong>: Since neurons can't rely on specific other neurons (they might be dropped), the network learns more robust, distributed representations</li>
+</ol>
+<p>Think of it like a sports team where players randomly sit out during practice. This forces all players to be ready to fill different roles and prevents the team from becoming too dependent on any single player.</p>
+<h3 id="what-happens-during-inference"><a class="header" href="#what-happens-during-inference">What Happens During Inference</a></h3>
+<p><strong>The key insight</strong>: During inference, dropout is turned OFF completely. Here's what happens:</p>
+<ol>
+<li><strong>All Neurons Active</strong>: Every neuron in the network contributes to the final prediction</li>
+<li><strong>No Random Dropping</strong>: There's no randomness - the same input always produces the same output</li>
+<li><strong>Deterministic Behavior</strong>: This is crucial for consistent, reliable predictions in production</li>
+</ol>
+<h3 id="the-critical-scaling-problem"><a class="header" href="#the-critical-scaling-problem">The Critical Scaling Problem</a></h3>
+<p>Here's where most people get confused. If you train with 50% dropout but use all neurons during inference, your network's outputs will be roughly twice as large as expected. This would break your model!</p>
+<p>The solution involves <strong>scaling</strong> to maintain consistent activation magnitudes:</p>
+<p><strong>Method 1 - Standard Dropout (Original)</strong>:</p>
+<ul>
+<li>During training: Use raw activations for kept neurons, zeros for dropped neurons</li>
+<li>During inference: Scale all activations by the keep probability (p)</li>
+<li>If keep probability is 0.8, multiply all activations by 0.8 during inference</li>
+</ul>
+<p><strong>Method 2 - Inverted Dropout (Modern)</strong>:</p>
+<ul>
+<li>During training: Scale kept neurons by 1/(keep probability)</li>
+<li>During inference: Use raw activations (no scaling needed)</li>
+<li>If keep probability is 0.8, multiply kept activations by 1/0.8 = 1.25 during training</li>
+</ul>
+<p>Most modern frameworks (PyTorch, TensorFlow) use inverted dropout because it's more efficient.</p>
+<h3 id="real-world-analogy"><a class="header" href="#real-world-analogy">Real-World Analogy</a></h3>
+<p>Imagine a restaurant where:</p>
+<ul>
+<li><strong>Training</strong>: Randomly 20% of chefs call in sick each day, so remaining chefs work harder (scale up their effort)</li>
+<li><strong>Inference</strong>: All chefs are present, but they work at normal intensity</li>
+<li><strong>Result</strong>: Consistent food quality whether some chefs are absent or all are present</li>
+</ul>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<p>Let's make the math simple with a concrete example:</p>
+<h3 id="training-phase-inverted-dropout"><a class="header" href="#training-phase-inverted-dropout">Training Phase (Inverted Dropout)</a></h3>
+<pre><code>Original activation: a = 10
+Keep probability: p = 0.8 (80% neurons kept)
+Random mask: r ~ Bernoulli(p) = [1, 0, 1, 1, 0] (for 5 neurons)
+
+Dropout output: a_dropout = (a * r) / p
+If neuron is kept: a_dropout = 10 * 1 / 0.8 = 12.5
+If neuron is dropped: a_dropout = 10 * 0 / 0.8 = 0
+</code></pre>
+<h3 id="inference-phase"><a class="header" href="#inference-phase">Inference Phase</a></h3>
+<pre><code>Original activation: a = 10
+Dropout output: a_inference = a = 10 (no change)
+</code></pre>
+<h3 id="why-this-works"><a class="header" href="#why-this-works">Why This Works</a></h3>
+<p>The expected value during training equals the inference value:</p>
+<pre><code>E[a_dropout] = E[(a * r) / p] = a * E[r] / p = a * p / p = a
+</code></pre>
+<p>This mathematical property ensures that the network sees similar activation magnitudes during both training and inference.</p>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="code-example-pytorch"><a class="header" href="#code-example-pytorch">Code Example (PyTorch)</a></h3>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+
+class SimpleNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layer1 = nn.Linear(100, 50)
+        self.dropout = nn.Dropout(p=0.2)  # 20% dropout
+        self.layer2 = nn.Linear(50, 10)
+    
+    def forward(self, x):
+        x = torch.relu(self.layer1(x))
+        x = self.dropout(x)  # Only active during training
+        x = self.layer2(x)
+        return x
+
+# Training mode
+model.train()  # Dropout is active
+output_train = model(input_data)
+
+# Inference mode
+model.eval()   # Dropout is turned off
+output_inference = model(input_data)
+</code></pre>
+<h3 id="production-considerations"><a class="header" href="#production-considerations">Production Considerations</a></h3>
+<ol>
+<li><strong>Always call model.eval()</strong>: Forgetting this is a common bug that leads to inconsistent predictions</li>
+<li><strong>Deterministic outputs</strong>: Inference should always produce the same output for the same input</li>
+<li><strong>Performance</strong>: Inference is faster because no random number generation is needed</li>
+<li><strong>Memory</strong>: All neurons are used, so memory usage is predictable</li>
+</ol>
+<h3 id="when-not-to-use-dropout-during-inference"><a class="header" href="#when-not-to-use-dropout-during-inference">When NOT to Use Dropout During Inference</a></h3>
+<p>Sometimes researchers intentionally keep dropout active during inference for:</p>
+<ul>
+<li><strong>Monte Carlo Dropout</strong>: Running inference multiple times with dropout to get uncertainty estimates</li>
+<li><strong>Bayesian Neural Networks</strong>: Using dropout as an approximation to Bayesian inference</li>
+</ul>
+<p>But for standard production systems, dropout should always be off during inference.</p>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="misconception-1-dropout-improves-inference-accuracy"><a class="header" href="#misconception-1-dropout-improves-inference-accuracy">Misconception 1: "Dropout improves inference accuracy"</a></h3>
+<p><strong>Reality</strong>: Dropout is only for training. During inference, you want all your neurons working to make the best possible prediction.</p>
+<h3 id="misconception-2-the-same-neurons-are-always-dropped"><a class="header" href="#misconception-2-the-same-neurons-are-always-dropped">Misconception 2: "The same neurons are always dropped"</a></h3>
+<p><strong>Reality</strong>: Different neurons are randomly dropped for each training example, creating different subnetworks.</p>
+<h3 id="misconception-3-scaling-doesnt-matter"><a class="header" href="#misconception-3-scaling-doesnt-matter">Misconception 3: "Scaling doesn't matter"</a></h3>
+<p><strong>Reality</strong>: Without proper scaling, your model's outputs will have completely different magnitudes between training and inference.</p>
+<h3 id="misconception-4-dropout-slows-down-training"><a class="header" href="#misconception-4-dropout-slows-down-training">Misconception 4: "Dropout slows down training"</a></h3>
+<p><strong>Reality</strong>: While dropout adds some computation, it often allows faster convergence by preventing overfitting.</p>
+<h3 id="common-bugs-in-practice"><a class="header" href="#common-bugs-in-practice">Common Bugs in Practice</a></h3>
+<ol>
+<li><strong>Forgetting model.eval()</strong>: Network keeps dropping neurons during inference</li>
+<li><strong>Manual scaling errors</strong>: Implementing custom dropout with wrong scaling factors</li>
+<li><strong>Inconsistent dropout rates</strong>: Using different rates in different parts of the network without understanding the implications</li>
+</ol>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="how-to-structure-your-answer"><a class="header" href="#how-to-structure-your-answer">How to Structure Your Answer</a></h3>
+<ol>
+<li><strong>Start with the key insight</strong>: "Dropout behaves completely differently during training versus inference"</li>
+<li><strong>Explain training behavior</strong>: Random dropping, different subnetworks per example</li>
+<li><strong>Explain inference behavior</strong>: All neurons active, no randomness</li>
+<li><strong>Address scaling</strong>: Show you understand the mathematical necessity</li>
+<li><strong>Mention practical implications</strong>: model.eval(), deterministic outputs</li>
+</ol>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<ul>
+<li>Dropout is <strong>only</strong> for regularization during training</li>
+<li>Inference uses <strong>all</strong> neurons for best performance</li>
+<li>Scaling ensures consistent activation magnitudes</li>
+<li>Modern frameworks handle scaling automatically</li>
+<li>Always use model.eval() for inference</li>
+</ul>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<ul>
+<li>"Why is scaling necessary?"</li>
+<li>"What happens if you forget to turn off dropout during inference?"</li>
+<li>"How does dropout prevent overfitting?"</li>
+<li>"What's the difference between standard and inverted dropout?"</li>
+<li>"Can you think of cases where you might want dropout during inference?"</li>
+</ul>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<ul>
+<li>Saying dropout improves inference performance</li>
+<li>Confusing training and inference behavior</li>
+<li>Not mentioning scaling at all</li>
+<li>Claiming all regularization techniques work the same way</li>
+</ul>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<p>Understanding dropout connects to several other important ML concepts:</p>
+<p><strong>Ensemble Learning</strong>: Dropout can be viewed as training multiple subnetworks and averaging their predictions. Each training step uses a different random subset of neurons, effectively training many smaller networks simultaneously.</p>
+<p><strong>Bayesian Neural Networks</strong>: Monte Carlo Dropout uses multiple inference passes with dropout active to approximate Bayesian uncertainty estimation.</p>
+<p><strong>Other Regularization Techniques</strong>:</p>
+<ul>
+<li><strong>Batch Normalization</strong>: Also behaves differently during training vs inference</li>
+<li><strong>L1/L2 Regularization</strong>: Applied during training, affects inference through learned weights</li>
+<li><strong>Early Stopping</strong>: Training technique that indirectly affects final inference model</li>
+</ul>
+<p><strong>Model Deployment</strong>: Understanding training vs inference differences is crucial for:</p>
+<ul>
+<li>Model serving systems</li>
+<li>Mobile/edge deployment where consistency matters</li>
+<li>A/B testing where prediction variance affects results</li>
+</ul>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="foundational-papers"><a class="header" href="#foundational-papers">Foundational Papers</a></h3>
+<ul>
+<li><strong>"Dropout: A Simple Way to Prevent Neural Networks from Overfitting"</strong> by Srivastava et al. (2014) - The original dropout paper</li>
+<li><strong>"What Uncertainties Do We Need in Bayesian Deep Learning for Computer Vision?"</strong> by Kendall &amp; Gal (2017) - Monte Carlo Dropout applications</li>
+</ul>
+<h3 id="practical-tutorials"><a class="header" href="#practical-tutorials">Practical Tutorials</a></h3>
+<ul>
+<li><strong>PyTorch Dropout Documentation</strong>: Official documentation with examples</li>
+<li><strong>"Dropout Regularization Using PyTorch: A Hands-On Guide"</strong> by DataCamp - Comprehensive tutorial with code</li>
+<li><strong>"Understanding Dropout in Neural Networks"</strong> by Towards Data Science - Mathematical explanations</li>
+</ul>
+<h3 id="advanced-topics"><a class="header" href="#advanced-topics">Advanced Topics</a></h3>
+<ul>
+<li><strong>"Concrete Dropout"</strong> by Gal, Hron &amp; Kendall (2017) - Learning optimal dropout rates</li>
+<li><strong>"Variational Dropout and the Local Reparameterization Trick"</strong> by Kingma et al. (2015) - Theoretical foundations</li>
+<li><strong>"Ensemble Methods for Deep Learning Neural Networks"</strong> by Machine Learning Mastery - Connections to ensemble learning</li>
+</ul>
+<h3 id="implementation-resources"><a class="header" href="#implementation-resources">Implementation Resources</a></h3>
+<ul>
+<li><strong>PyTorch nn.Dropout documentation</strong>: https://pytorch.org/docs/stable/generated/torch.nn.Dropout.html</li>
+<li><strong>TensorFlow Dropout layer</strong>: https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dropout</li>
+<li><strong>Hands-on tutorials</strong>: Search for "dropout implementation tutorial" in your preferred framework</li>
+</ul>
+<p>This question might seem simple, but mastering the nuances of dropout behavior demonstrates a deep understanding of neural network fundamentals that separates junior from senior ML engineers.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_014.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_016.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_014.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_016.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

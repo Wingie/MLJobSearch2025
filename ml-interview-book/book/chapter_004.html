@@ -1,0 +1,548 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Skewed Distributions - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_004.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="understanding-mean-median-and-mode-in-skewed-distributions"><a class="header" href="#understanding-mean-median-and-mode-in-skewed-distributions">Understanding Mean, Median, and Mode in Skewed Distributions</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>Meta, Google, OpenAI</strong>: "What happens to the mean, median, and mode when your data distribution is right skewed versus left skewed? Can you explain the relationship between these measures of central tendency?"</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question is a cornerstone of statistical literacy that major tech companies use to assess multiple critical skills:</p>
+<ul>
+<li><strong>Data Quality Assessment</strong>: Understanding how outliers and skewness affect different metrics helps you choose appropriate summary statistics</li>
+<li><strong>Model Performance</strong>: Skewed distributions can severely impact machine learning model performance, especially linear models</li>
+<li><strong>Business Decision Making</strong>: Choosing the wrong central tendency measure (like using mean income instead of median) can lead to poor business decisions</li>
+<li><strong>Data Preprocessing Knowledge</strong>: Demonstrates understanding of when data transformation is necessary before modeling</li>
+</ul>
+<p>Companies like Meta and Google deal with highly skewed data daily - from user engagement metrics to revenue distributions - making this knowledge essential for data scientists and ML engineers.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<h3 id="what-are-measures-of-central-tendency"><a class="header" href="#what-are-measures-of-central-tendency">What Are Measures of Central Tendency?</a></h3>
+<p>Measures of central tendency are single values that represent the "center" or "typical" value of a dataset. Think of them as different ways to answer "What's a normal value in this data?"</p>
+<p><strong>Mean</strong>: The arithmetic average - add all values and divide by count
+<strong>Median</strong>: The middle value when data is sorted - 50% of values are above, 50% below<br />
+<strong>Mode</strong>: The most frequently occurring value in the dataset</p>
+<h3 id="understanding-distribution-shape"><a class="header" href="#understanding-distribution-shape">Understanding Distribution Shape</a></h3>
+<p><strong>Symmetric Distribution</strong>: Like a perfectly balanced seesaw - the left and right sides mirror each other
+<strong>Skewed Distribution</strong>: Like a lopsided seesaw - one tail is longer than the other</p>
+<p><strong>Right Skewed (Positive Skew)</strong>: The right tail stretches out longer, pulling the distribution toward higher values
+<strong>Left Skewed (Negative Skew)</strong>: The left tail stretches out longer, pulling the distribution toward lower values</p>
+<h3 id="why-skewness-matters"><a class="header" href="#why-skewness-matters">Why Skewness Matters</a></h3>
+<p>Imagine measuring the heights of people in a room. If everyone is roughly the same height, you get a symmetric distribution. But if you measure household incomes in a city, you get right skewness - most people earn moderate amounts, but a few very wealthy individuals create a long right tail.</p>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="the-fundamental-relationship"><a class="header" href="#the-fundamental-relationship">The Fundamental Relationship</a></h3>
+<p>In skewed distributions, the mean, median, and mode don't converge to the same point like they do in symmetric distributions. Instead, they spread out in a predictable pattern:</p>
+<p><strong>For Right-Skewed (Positively Skewed) Distributions:</strong></p>
+<pre><code>Mode &lt; Median &lt; Mean
+</code></pre>
+<p><strong>For Left-Skewed (Negatively Skewed) Distributions:</strong></p>
+<pre><code>Mean &lt; Median &lt; Mode
+</code></pre>
+<p><strong>For Symmetric Distributions:</strong></p>
+<pre><code>Mean = Median = Mode
+</code></pre>
+<h3 id="why-this-happens-the-pull-of-outliers"><a class="header" href="#why-this-happens-the-pull-of-outliers">Why This Happens: The Pull of Outliers</a></h3>
+<p>Think of the mean as being "pulled" by extreme values. Here's why:</p>
+<p><strong>The Mean is Sensitive</strong>: Every single value in your dataset affects the mean. If you have extreme values (outliers) on one side, they pull the mean toward them like a magnet.</p>
+<p><strong>The Median is Resistant</strong>: The median only cares about the middle position, not the actual values of extreme points. You could have billionaires in your income dataset, but if they're in the top 1%, they won't shift the median much.</p>
+<p><strong>The Mode is Local</strong>: The mode represents where most of your data clusters, unaffected by what happens in the tails.</p>
+<h3 id="real-world-example-website-traffic"><a class="header" href="#real-world-example-website-traffic">Real-World Example: Website Traffic</a></h3>
+<p>Imagine you're analyzing daily page views for a company blog:</p>
+<p><strong>Right-Skewed Scenario:</strong></p>
+<ul>
+<li>Most days: 100-500 page views (normal traffic)</li>
+<li>Occasionally: 10,000+ page views (viral content)</li>
+<li>Mode: ~200 views (most common day)</li>
+<li>Median: ~300 views (middle value)</li>
+<li>Mean: ~800 views (pulled up by viral days)</li>
+</ul>
+<p><strong>Business Impact:</strong> If you use the mean (800) to plan server capacity, you're over-provisioning. If you use it to set revenue expectations, you're being overly optimistic.</p>
+<h3 id="visual-description-of-skewness"><a class="header" href="#visual-description-of-skewness">Visual Description of Skewness</a></h3>
+<p><strong>Right-Skewed Distribution:</strong>
+Picture a mountain with a steep cliff on the left and a gentle slope on the right. Most of your data clusters near the cliff (low values), but the gentle slope extends far to the right (high values). The mode sits at the peak, the median partway down the slope, and the mean gets pulled further right by that long tail.</p>
+<p><strong>Left-Skewed Distribution:</strong>
+Now flip that mountain - gentle slope on the left, steep cliff on the right. The long left tail pulls the mean leftward, while the mode stays at the peak on the right.</p>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<h3 id="karl-pearsons-empirical-relationship"><a class="header" href="#karl-pearsons-empirical-relationship">Karl Pearson's Empirical Relationship</a></h3>
+<p>For moderately skewed distributions, statistician Karl Pearson discovered an approximate relationship:</p>
+<pre><code>Mode ≈ 3 × Median - 2 × Mean
+</code></pre>
+<p>Or rearranged:</p>
+<pre><code>Mean - Mode ≈ 3 × (Mean - Median)
+</code></pre>
+<p>This formula tells us that the distance between mean and mode is roughly three times the distance between mean and median.</p>
+<h3 id="example-calculation"><a class="header" href="#example-calculation">Example Calculation</a></h3>
+<p>Let's say you have income data where:</p>
+<ul>
+<li>Mean = $60,000</li>
+<li>Median = $45,000</li>
+</ul>
+<p>Using Pearson's formula:</p>
+<pre><code>Mode ≈ 3 × $45,000 - 2 × $60,000
+Mode ≈ $135,000 - $120,000 = $15,000
+</code></pre>
+<p>This suggests the most common income is around $15,000, with the mean pulled upward by high earners.</p>
+<h3 id="measuring-skewness-numerically"><a class="header" href="#measuring-skewness-numerically">Measuring Skewness Numerically</a></h3>
+<p>Skewness can be quantified using the formula:</p>
+<pre><code>Skewness = 3 × (Mean - Median) / Standard Deviation
+</code></pre>
+<ul>
+<li>Skewness = 0: Perfectly symmetric</li>
+<li>Skewness &gt; 0: Right-skewed</li>
+<li>Skewness &lt; 0: Left-skewed</li>
+</ul>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="1-e-commerce-revenue-analysis"><a class="header" href="#1-e-commerce-revenue-analysis">1. E-commerce Revenue Analysis</a></h3>
+<p><strong>Scenario</strong>: An online store analyzing customer order values</p>
+<p><strong>Right-Skewed Reality:</strong></p>
+<ul>
+<li>Mode: $25 (most common small purchases)</li>
+<li>Median: $40 (half of customers spend less/more)</li>
+<li>Mean: $75 (pulled up by luxury buyers)</li>
+</ul>
+<p><strong>Business Decisions:</strong></p>
+<ul>
+<li>Use median for typical customer messaging</li>
+<li>Use mean for revenue projections</li>
+<li>Use mode for inventory planning of popular items</li>
+</ul>
+<h3 id="2-machine-learning-feature-engineering"><a class="header" href="#2-machine-learning-feature-engineering">2. Machine Learning Feature Engineering</a></h3>
+<p><strong>Problem</strong>: Training a price prediction model with right-skewed housing prices</p>
+<p><strong>Without Transformation:</strong></p>
+<ul>
+<li>Linear models perform poorly due to outliers</li>
+<li>Model gets "confused" by extreme values</li>
+<li>Predictions skewed toward expensive properties</li>
+</ul>
+<p><strong>Solution Approach:</strong></p>
+<pre><code class="language-python"># Common transformations for right-skewed data
+import numpy as np
+
+# Log transformation (most common)
+log_prices = np.log(prices)
+
+# Square root transformation
+sqrt_prices = np.sqrt(prices)
+
+# Box-Cox transformation (optimal power transformation)
+from scipy.stats import boxcox
+transformed_prices, lambda_param = boxcox(prices)
+</code></pre>
+<h3 id="3-ab-testing-and-conversion-rates"><a class="header" href="#3-ab-testing-and-conversion-rates">3. A/B Testing and Conversion Rates</a></h3>
+<p><strong>Scenario</strong>: Testing two website layouts for conversion rates</p>
+<p><strong>Challenge</strong>: Conversion rates are often right-skewed</p>
+<ul>
+<li>Most users: 0% conversion (didn't buy)</li>
+<li>Some users: 100% conversion (bought multiple items)</li>
+<li>Mean conversion inflated by power users</li>
+</ul>
+<p><strong>Correct Approach:</strong></p>
+<ul>
+<li>Report median conversion for typical user experience</li>
+<li>Use mean for revenue impact calculations</li>
+<li>Segment analysis by user type</li>
+</ul>
+<h3 id="4-performance-monitoring-systems"><a class="header" href="#4-performance-monitoring-systems">4. Performance Monitoring Systems</a></h3>
+<p><strong>Application</strong>: Server response time monitoring</p>
+<p><strong>Typical Pattern (Right-Skewed):</strong></p>
+<ul>
+<li>Mode: 50ms (most requests fast)</li>
+<li>Median: 75ms (half below/above)</li>
+<li>Mean: 150ms (pulled up by slow queries)</li>
+</ul>
+<p><strong>Alerting Strategy:</strong></p>
+<ul>
+<li>Use median for general health monitoring</li>
+<li>Use 95th percentile for outlier detection</li>
+<li>Mean can mask performance issues</li>
+</ul>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="misconception-1-mean-is-always-the-best-average"><a class="header" href="#misconception-1-mean-is-always-the-best-average">Misconception 1: "Mean is Always the Best Average"</a></h3>
+<p><strong>Reality</strong>: Mean is heavily influenced by outliers and can be misleading in skewed data.</p>
+<p><strong>Example</strong>: If you're reporting typical salary for a company where the CEO earns $10M and everyone else earns $50K, the mean salary might be $200K - completely unrepresentative of employee experience.</p>
+<h3 id="misconception-2-median-always-represents-the-majority"><a class="header" href="#misconception-2-median-always-represents-the-majority">Misconception 2: "Median Always Represents the Majority"</a></h3>
+<p><strong>Reality</strong>: Median finds the middle value, not necessarily the most common experience.</p>
+<p><strong>Example</strong>: In a dataset of test scores where most students score 90-95%, but a few fail with scores of 10-20%, the median might be 85% even though most students scored higher.</p>
+<h3 id="misconception-3-mode-is-only-for-categorical-data"><a class="header" href="#misconception-3-mode-is-only-for-categorical-data">Misconception 3: "Mode is Only for Categorical Data"</a></h3>
+<p><strong>Reality</strong>: Mode can be meaningful for continuous data, especially when there are clear peaks or clusters.</p>
+<p><strong>Example</strong>: In salary data, there might be clear modes around entry-level, mid-level, and senior-level pay bands.</p>
+<h3 id="misconception-4-skewness-always-means-bad-data-quality"><a class="header" href="#misconception-4-skewness-always-means-bad-data-quality">Misconception 4: "Skewness Always Means Bad Data Quality"</a></h3>
+<p><strong>Reality</strong>: Many natural phenomena are inherently skewed. The key is recognizing and appropriately handling skewness.</p>
+<p><strong>Examples of Natural Skewness:</strong></p>
+<ul>
+<li>Income distributions (right-skewed in most societies)</li>
+<li>City sizes (few large cities, many small towns)</li>
+<li>Website traffic (most pages get little traffic, few go viral)</li>
+</ul>
+<h3 id="pitfall-1-using-wrong-measure-for-business-decisions"><a class="header" href="#pitfall-1-using-wrong-measure-for-business-decisions">Pitfall 1: Using Wrong Measure for Business Decisions</a></h3>
+<p><strong>Scenario</strong>: A startup reports "average user spends 45 minutes daily" when the median is 5 minutes.</p>
+<p><strong>Problem</strong>: The average is inflated by a few power users, misleading investors about typical user engagement.</p>
+<h3 id="pitfall-2-ignoring-distribution-shape-in-ml-models"><a class="header" href="#pitfall-2-ignoring-distribution-shape-in-ml-models">Pitfall 2: Ignoring Distribution Shape in ML Models</a></h3>
+<p><strong>Problem</strong>: Training linear regression on skewed target variables without transformation.</p>
+<p><strong>Consequence</strong>: Model predictions will be biased toward the tail, poor performance on typical cases.</p>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="how-to-structure-your-answer"><a class="header" href="#how-to-structure-your-answer">How to Structure Your Answer</a></h3>
+<ol>
+<li>
+<p><strong>Start with Definitions</strong> (30 seconds)</p>
+<ul>
+<li>Briefly define mean, median, mode</li>
+<li>Explain what skewness means</li>
+</ul>
+</li>
+<li>
+<p><strong>State the Key Relationship</strong> (30 seconds)</p>
+<ul>
+<li>Right skew: Mode &lt; Median &lt; Mean</li>
+<li>Left skew: Mean &lt; Median &lt; Mode</li>
+<li>Mention this is due to outlier sensitivity</li>
+</ul>
+</li>
+<li>
+<p><strong>Provide Intuitive Explanation</strong> (60 seconds)</p>
+<ul>
+<li>Explain why mean gets "pulled" by outliers</li>
+<li>Use a concrete example (income, website traffic, etc.)</li>
+<li>Show you understand the business implications</li>
+</ul>
+</li>
+<li>
+<p><strong>Demonstrate Practical Knowledge</strong> (60 seconds)</p>
+<ul>
+<li>Mention when to use each measure</li>
+<li>Discuss impact on ML models</li>
+<li>Show awareness of data transformation needs</li>
+</ul>
+</li>
+</ol>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<ul>
+<li><strong>Outlier Sensitivity</strong>: Mean is most sensitive, median is resistant, mode is unaffected</li>
+<li><strong>Business Impact</strong>: Wrong choice of central tendency can lead to poor decisions</li>
+<li><strong>ML Implications</strong>: Skewed distributions often require preprocessing</li>
+<li><strong>Real-World Prevalence</strong>: Many datasets are naturally skewed</li>
+</ul>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<p><strong>"How would you handle skewed data in a machine learning pipeline?"</strong></p>
+<ul>
+<li>Data transformation (log, sqrt, Box-Cox)</li>
+<li>Robust algorithms (tree-based models)</li>
+<li>Outlier detection and treatment</li>
+</ul>
+<p><strong>"When would you prefer median over mean?"</strong></p>
+<ul>
+<li>Presence of outliers</li>
+<li>Highly skewed distributions</li>
+<li>Reporting typical user experience</li>
+<li>Robust statistics needed</li>
+</ul>
+<p><strong>"How do you detect skewness in practice?"</strong></p>
+<ul>
+<li>Visual inspection (histograms, box plots)</li>
+<li>Skewness coefficient calculation</li>
+<li>Comparing mean vs. median values</li>
+</ul>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<ul>
+<li><strong>Don't</strong> just memorize the formulas without understanding why</li>
+<li><strong>Don't</strong> ignore the practical implications for business decisions</li>
+<li><strong>Don't</strong> forget to mention the impact on machine learning models</li>
+<li><strong>Don't</strong> assume all data should be normally distributed</li>
+</ul>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<h3 id="statistical-concepts"><a class="header" href="#statistical-concepts">Statistical Concepts</a></h3>
+<ul>
+<li><strong>Kurtosis</strong>: Measures tail heaviness (complements skewness)</li>
+<li><strong>Percentiles</strong>: Alternative robust measures (25th, 75th percentiles)</li>
+<li><strong>Standard Deviation</strong>: Also sensitive to outliers like the mean</li>
+<li><strong>Interquartile Range (IQR)</strong>: Robust measure of spread</li>
+</ul>
+<h3 id="machine-learning-connections"><a class="header" href="#machine-learning-connections">Machine Learning Connections</a></h3>
+<ul>
+<li><strong>Feature Engineering</strong>: Transforming skewed features for better model performance</li>
+<li><strong>Outlier Detection</strong>: Using statistical measures to identify anomalies</li>
+<li><strong>Robust Regression</strong>: Models less sensitive to outliers</li>
+<li><strong>Ensemble Methods</strong>: Tree-based models naturally handle skewed data</li>
+</ul>
+<h3 id="data-science-workflow"><a class="header" href="#data-science-workflow">Data Science Workflow</a></h3>
+<ul>
+<li><strong>Exploratory Data Analysis (EDA)</strong>: Identifying distribution shapes early</li>
+<li><strong>Data Quality Assessment</strong>: Understanding when data transformations are needed</li>
+<li><strong>Model Validation</strong>: Ensuring predictions work well across the distribution</li>
+<li><strong>Business Reporting</strong>: Choosing appropriate metrics for stakeholder communication</li>
+</ul>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="essential-papers-and-books"><a class="header" href="#essential-papers-and-books">Essential Papers and Books</a></h3>
+<ul>
+<li>Pearson, K. (1895). "Contributions to the Mathematical Theory of Evolution"</li>
+<li>Tukey, J.W. (1977). "Exploratory Data Analysis" - Classic text on robust statistics</li>
+<li>Hoaglin, D.C. et al. (1983). "Understanding Robust and Exploratory Data Analysis"</li>
+</ul>
+<h3 id="online-resources"><a class="header" href="#online-resources">Online Resources</a></h3>
+<ul>
+<li><strong>Statistics LibreTexts</strong>: Comprehensive coverage of skewness and central tendency</li>
+<li><strong>Khan Academy Statistics</strong>: Visual explanations with interactive examples</li>
+<li><strong>Coursera Statistical Inference</strong>: University-level treatment of these concepts</li>
+</ul>
+<h3 id="practical-implementation"><a class="header" href="#practical-implementation">Practical Implementation</a></h3>
+<ul>
+<li><strong>Pandas Documentation</strong>: Methods for calculating skewness and central tendencies</li>
+<li><strong>SciPy Stats Module</strong>: Advanced statistical functions and transformations</li>
+<li><strong>Seaborn/Matplotlib</strong>: Visualization techniques for understanding distribution shapes</li>
+</ul>
+<h3 id="real-world-case-studies"><a class="header" href="#real-world-case-studies">Real-World Case Studies</a></h3>
+<ul>
+<li><strong>Netflix Prize Dataset</strong>: Highly skewed user rating distributions</li>
+<li><strong>Kaggle House Prices</strong>: Classic example of right-skewed target variables</li>
+<li><strong>UCI Income Dataset</strong>: Demonstrates income distribution skewness patterns</li>
+</ul>
+<p>Understanding how mean, median, and mode behave in skewed distributions is fundamental to being an effective data scientist. This knowledge directly impacts everything from basic data exploration to advanced machine learning model design, making it a critical skill for success in technical interviews and real-world applications.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_003.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_005.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_003.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_005.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Generative Models: Training vs Inference - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_017.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="generative-models-training-vs-inference-in-text-generation"><a class="header" href="#generative-models-training-vs-inference-in-text-generation">Generative Models: Training vs Inference in Text Generation</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>OpenAI/Google/Meta</strong>: "How does a generative model differ during training and inference in the context of text generation?"</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question is a favorite among top AI companies because it tests multiple layers of understanding simultaneously. Companies ask this because:</p>
+<ul>
+<li><strong>Architectural Understanding</strong>: It reveals if you understand the fundamental difference between how models learn and how they operate</li>
+<li><strong>Practical Implementation Knowledge</strong>: Real-world deployment requires understanding both phases to optimize performance and troubleshoot issues</li>
+<li><strong>System Design Implications</strong>: Training and inference have vastly different computational requirements, affecting infrastructure decisions</li>
+<li><strong>Debugging Skills</strong>: Many production issues stem from training-inference mismatches, making this knowledge crucial for ML engineers</li>
+</ul>
+<p>This question separates candidates who have theoretical knowledge from those who understand practical ML system deployment. It's particularly important for roles involving large language models, chatbots, or any text generation systems.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<p>Before diving deep, let's establish the key concepts:</p>
+<p><strong>Generative Model</strong>: A machine learning model that learns to create new data similar to what it was trained on. In text generation, this means producing human-like text.</p>
+<p><strong>Training Phase</strong>: The process where the model learns patterns from large amounts of text data by adjusting billions of parameters to minimize prediction errors.</p>
+<p><strong>Inference Phase</strong>: The operational phase where the trained model generates new text based on user inputs or prompts.</p>
+<p><strong>Autoregressive Generation</strong>: A method where the model generates text one word (token) at a time, using previously generated words to predict the next word.</p>
+<p><strong>Token</strong>: A unit of text processing - could be a word, part of a word, or even a character, depending on how the text is broken down.</p>
+<p>Think of it like learning to write: during training (like studying in school), you read thousands of books to understand language patterns. During inference (like writing an essay), you use that learned knowledge to create new text one word at a time.</p>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="the-training-phase-learning-from-examples"><a class="header" href="#the-training-phase-learning-from-examples">The Training Phase: Learning from Examples</a></h3>
+<p>During training, generative models like GPT operate fundamentally differently than during inference:</p>
+<p><strong>Parallel Processing</strong>: The model can see entire sentences at once. If training on the sentence "The cat sat on the mat," the model simultaneously learns to predict:</p>
+<ul>
+<li>"cat" given "The"</li>
+<li>"sat" given "The cat"</li>
+<li>"on" given "The cat sat"</li>
+<li>And so on...</li>
+</ul>
+<p>This parallel processing is possible because we have the complete target text during training. It's like having the answer key while taking a practice test - you can check all your answers at once.</p>
+<p><strong>Teacher Forcing</strong>: Instead of using its own predictions, the model is fed the correct previous words. When learning to predict "sat," it's given the correct word "cat" (not its own potentially wrong prediction). This is called "teacher forcing" because the teacher (training process) forces the correct input.</p>
+<p><strong>Loss Calculation</strong>: The model calculates how wrong its predictions are across all positions simultaneously, then adjusts its parameters to reduce these errors.</p>
+<p><strong>Attention Masking</strong>: Even though the model sees the whole sentence, it uses "causal masking" to prevent cheating. When predicting "sat," it's artificially prevented from seeing "on the mat" - maintaining the left-to-right prediction principle.</p>
+<h3 id="the-inference-phase-real-world-generation"><a class="header" href="#the-inference-phase-real-world-generation">The Inference Phase: Real-World Generation</a></h3>
+<p>During inference, the constraints change dramatically:</p>
+<p><strong>Sequential Generation</strong>: The model must generate text one token at a time. It doesn't know what comes next because it hasn't generated it yet. Starting with "The," it might predict "cat," then given "The cat," predict "sat," and so on.</p>
+<p><strong>Autoregressive Dependency</strong>: Each new word depends on all previously generated words. Unlike training where we can process everything in parallel, inference creates a dependency chain where step N depends on steps 1 through N-1.</p>
+<p><strong>No Teacher Forcing</strong>: The model must use its own predictions as input for the next prediction. If it wrongly predicts "dog" instead of "cat," it must continue with "The dog" for the next prediction, potentially compounding the error.</p>
+<p><strong>Different Attention Patterns</strong>: The attention mechanism only sees tokens generated so far. There's no future context to mask because future tokens simply don't exist yet.</p>
+<h3 id="a-practical-example"><a class="header" href="#a-practical-example">A Practical Example</a></h3>
+<p>Let's trace through generating "The weather is nice today":</p>
+<p><strong>Training Scenario</strong>:</p>
+<pre><code>Input sequence: "The weather is nice today"
+The model learns simultaneously:
+- P("weather" | "The") 
+- P("is" | "The weather")
+- P("nice" | "The weather is")
+- P("today" | "The weather is nice")
+</code></pre>
+<p>All these predictions happen in parallel, using the correct previous words.</p>
+<p><strong>Inference Scenario</strong>:</p>
+<pre><code>Step 1: Input: "The" → Output: "weather"
+Step 2: Input: "The weather" → Output: "is" 
+Step 3: Input: "The weather is" → Output: "nice"
+Step 4: Input: "The weather is nice" → Output: "today"
+</code></pre>
+<p>Each step must complete before the next can begin, and uses actual model outputs (not ground truth).</p>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<p>The mathematical differences are subtle but crucial:</p>
+<p><strong>Training Objective</strong>: During training, we minimize the cross-entropy loss across all positions:</p>
+<pre><code>Loss = -Σ log P(actual_word_i | previous_words_1_to_i-1)
+</code></pre>
+<p>This sum is calculated across all positions in all training sentences simultaneously.</p>
+<p><strong>Inference Process</strong>: During inference, we sample from the probability distribution:</p>
+<pre><code>next_word = sample(P(word | generated_sequence_so_far))
+</code></pre>
+<p>This happens sequentially, one word at a time.</p>
+<p><strong>Exposure Bias</strong>: This creates a mathematical mismatch. Training optimizes for predicting the next word given perfect context, but inference requires predicting given imperfect (model-generated) context. The model experiences "exposure bias" - it's never trained on its own potentially imperfect outputs.</p>
+<p><strong>Computational Complexity</strong>: Training has O(n) parallelizable operations for sequence length n, while inference has O(n) sequential operations that cannot be parallelized across time steps.</p>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="industry-use-cases"><a class="header" href="#industry-use-cases">Industry Use Cases</a></h3>
+<p><strong>Chatbots and Virtual Assistants</strong>: Understanding this difference is crucial for:</p>
+<ul>
+<li>Optimizing response time (inference speed)</li>
+<li>Managing computational costs</li>
+<li>Debugging generation quality issues</li>
+</ul>
+<p><strong>Content Generation Tools</strong>: Systems like GitHub Copilot or writing assistants need:</p>
+<ul>
+<li>Fast inference for real-time suggestions</li>
+<li>Robust training to handle diverse contexts</li>
+<li>Strategies to maintain quality during long generations</li>
+</ul>
+<p><strong>Language Translation Services</strong>: Machine translation systems must:</p>
+<ul>
+<li>Balance training efficiency with inference quality</li>
+<li>Handle the training-inference mismatch for different languages</li>
+<li>Optimize for real-time translation requirements</li>
+</ul>
+<h3 id="performance-considerations"><a class="header" href="#performance-considerations">Performance Considerations</a></h3>
+<p><strong>Training Performance</strong>:</p>
+<ul>
+<li>Can leverage massive parallelization</li>
+<li>Requires enormous computational resources (thousands of GPUs)</li>
+<li>Optimized for throughput over latency</li>
+</ul>
+<p><strong>Inference Performance</strong>:</p>
+<ul>
+<li>Limited parallelization within single requests</li>
+<li>Can batch multiple user requests</li>
+<li>Optimized for latency and user experience</li>
+<li>Uses techniques like key-value caching to speed up generation</li>
+</ul>
+<h3 id="code-implementation-patterns"><a class="header" href="#code-implementation-patterns">Code Implementation Patterns</a></h3>
+<p><strong>Training Loop (Simplified)</strong>:</p>
+<pre><code class="language-python">for batch in training_data:
+    # Process entire sequences in parallel
+    predictions = model(batch.input_ids)
+    loss = cross_entropy(predictions, batch.targets)
+    loss.backward()
+    optimizer.step()
+</code></pre>
+<p><strong>Inference Loop (Simplified)</strong>:</p>
+<pre><code class="language-python">def generate_text(prompt):
+    tokens = [prompt]
+    for _ in range(max_length):
+        # Generate one token at a time
+        next_token = model.predict_next(tokens)
+        tokens.append(next_token)
+        if next_token == END_TOKEN:
+            break
+    return tokens
+</code></pre>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="misconception-1-training-and-inference-use-the-same-process"><a class="header" href="#misconception-1-training-and-inference-use-the-same-process">Misconception 1: "Training and inference use the same process"</a></h3>
+<p><strong>Reality</strong>: They're fundamentally different. Training uses teacher forcing and parallel processing, while inference is sequential and autoregressive.</p>
+<h3 id="misconception-2-models-perform-the-same-during-training-and-inference"><a class="header" href="#misconception-2-models-perform-the-same-during-training-and-inference">Misconception 2: "Models perform the same during training and inference"</a></h3>
+<p><strong>Reality</strong>: The exposure bias problem means models often perform worse during inference because they're generating based on their own potentially imperfect outputs.</p>
+<h3 id="misconception-3-inference-is-just-faster-training"><a class="header" href="#misconception-3-inference-is-just-faster-training">Misconception 3: "Inference is just faster training"</a></h3>
+<p><strong>Reality</strong>: Inference has different computational patterns, optimization requirements, and error propagation characteristics.</p>
+<h3 id="misconception-4-attention-masks-work-the-same-way-in-both-phases"><a class="header" href="#misconception-4-attention-masks-work-the-same-way-in-both-phases">Misconception 4: "Attention masks work the same way in both phases"</a></h3>
+<p><strong>Reality</strong>: Training uses causal masking to prevent cheating, while inference naturally has no future tokens to mask.</p>
+<h3 id="common-technical-pitfalls"><a class="header" href="#common-technical-pitfalls">Common Technical Pitfalls</a></h3>
+<p><strong>Forgetting Positional Encoding</strong>: During inference, you must correctly handle positional encodings for generated tokens.</p>
+<p><strong>Caching Oversights</strong>: Inference optimizations like key-value caching can introduce bugs if not properly managed.</p>
+<p><strong>Temperature and Sampling</strong>: Inference involves sampling strategies (temperature, top-k, nucleus sampling) that don't exist during training.</p>
+<p><strong>Memory Management</strong>: Inference memory patterns differ significantly from training, affecting deployment strategies.</p>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="structure-your-answer"><a class="header" href="#structure-your-answer">Structure Your Answer</a></h3>
+<ol>
+<li>
+<p><strong>Start with the Core Difference</strong>: "The fundamental difference is that training uses parallel processing with teacher forcing, while inference generates text sequentially using the model's own outputs."</p>
+</li>
+<li>
+<p><strong>Explain Training</strong>: Describe how the model sees complete sequences and learns from correct examples.</p>
+</li>
+<li>
+<p><strong>Explain Inference</strong>: Detail the autoregressive, sequential nature of generation.</p>
+</li>
+<li>
+<p><strong>Highlight Practical Implications</strong>: Discuss computational requirements, performance optimization, and the exposure bias problem.</p>
+</li>
+<li>
+<p><strong>Give Concrete Examples</strong>: Use simple text generation examples to illustrate your points.</p>
+</li>
+</ol>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<ul>
+<li><strong>Parallel vs Sequential</strong>: Training processes entire sequences simultaneously; inference generates one token at a time</li>
+<li><strong>Teacher Forcing vs Autoregressive</strong>: Training uses correct previous tokens; inference uses its own predictions</li>
+<li><strong>Computational Requirements</strong>: Different optimization strategies and resource requirements</li>
+<li><strong>Exposure Bias</strong>: The mismatch between training and inference data distributions</li>
+</ul>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<p><strong>"How would you optimize inference speed?"</strong></p>
+<ul>
+<li>Discuss key-value caching, batching strategies, model quantization, and specialized hardware</li>
+</ul>
+<p><strong>"What is exposure bias and how do you mitigate it?"</strong></p>
+<ul>
+<li>Explain the training-inference mismatch and solutions like scheduled sampling, reinforcement learning fine-tuning</li>
+</ul>
+<p><strong>"How do attention mechanisms differ between training and inference?"</strong></p>
+<ul>
+<li>Detail causal masking during training vs natural causality during inference</li>
+</ul>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<ul>
+<li>Don't confuse training with fine-tuning</li>
+<li>Don't claim inference is "just like training but faster"</li>
+<li>Don't ignore the computational complexity differences</li>
+<li>Don't forget to mention exposure bias</li>
+</ul>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<h3 id="broader-ml-context"><a class="header" href="#broader-ml-context">Broader ML Context</a></h3>
+<p>This training-inference difference exists across many ML domains:</p>
+<ul>
+<li><strong>Computer Vision</strong>: Object detection models use different strategies during training (with ground truth bounding boxes) vs inference</li>
+<li><strong>Reinforcement Learning</strong>: Training uses exploration strategies while inference typically uses exploitation</li>
+<li><strong>Speech Recognition</strong>: Training uses complete audio segments while inference often processes streaming audio</li>
+</ul>
+<h3 id="advanced-topics-worth-understanding"><a class="header" href="#advanced-topics-worth-understanding">Advanced Topics Worth Understanding</a></h3>
+<ul>
+<li><strong>Non-autoregressive Generation</strong>: Alternative approaches that try to generate entire sequences in parallel</li>
+<li><strong>Diffusion Models for Text</strong>: New paradigms that sidestep some autoregressive limitations</li>
+<li><strong>Mixture of Experts</strong>: Architectures that route different types of examples to specialized sub-models</li>
+<li><strong>Retrieval-Augmented Generation</strong>: Hybrid approaches that combine generation with information retrieval</li>
+</ul>
+<h3 id="system-design-connections"><a class="header" href="#system-design-connections">System Design Connections</a></h3>
+<p>Understanding training vs inference helps with:</p>
+<ul>
+<li><strong>MLOps Pipeline Design</strong>: Different infrastructure needs for training vs serving</li>
+<li><strong>Cost Optimization</strong>: Training costs scale with data size; inference costs scale with user requests</li>
+<li><strong>Quality Monitoring</strong>: Different metrics and monitoring strategies for each phase</li>
+</ul>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="foundational-papers"><a class="header" href="#foundational-papers">Foundational Papers</a></h3>
+<ul>
+<li><strong>"Attention Is All You Need" (Vaswani et al., 2017)</strong>: The original Transformer paper explaining the architecture</li>
+<li><strong>"Language Models are Unsupervised Multitask Learners" (Radford et al., 2019)</strong>: GPT-2 paper detailing autoregressive language modeling</li>
+<li><strong>"Training language models to follow instructions with human feedback" (Ouyang et al., 2022)</strong>: InstructGPT paper on bridging training-inference gaps</li>
+</ul>
+<h3 id="technical-resources"><a class="header" href="#technical-resources">Technical Resources</a></h3>
+<ul>
+<li><strong>Hugging Face Transformers Documentation</strong>: Comprehensive guides on both training and inference optimization</li>
+<li><strong>The Illustrated Transformer (Jay Alammar)</strong>: Visual explanations of transformer operations</li>
+<li><strong>Lilian Weng's Blog on Inference Optimization</strong>: Deep dive into making inference faster and more efficient</li>
+</ul>
+<h3 id="practical-guides"><a class="header" href="#practical-guides">Practical Guides</a></h3>
+<ul>
+<li><strong>"Building LLM applications for production" (Chip Huyen)</strong>: Real-world considerations for deploying generative models</li>
+<li><strong>OpenAI GPT Best Practices Guide</strong>: Practical tips for effective text generation</li>
+<li><strong>Google's Machine Learning Engineering Course</strong>: Covers MLOps considerations for training vs serving</li>
+</ul>
+<h3 id="research-frontiers"><a class="header" href="#research-frontiers">Research Frontiers</a></h3>
+<ul>
+<li><strong>Papers on Exposure Bias Mitigation</strong>: Scheduled sampling, reinforcement learning fine-tuning approaches</li>
+<li><strong>Non-autoregressive Generation Research</strong>: Alternative architectures that address sequential generation limitations</li>
+<li><strong>Inference Optimization Techniques</strong>: Key-value caching, speculative decoding, and other speedup methods</li>
+</ul>
+<p>Understanding the training vs inference distinction in generative models is fundamental to working with modern AI systems. This knowledge directly applies to optimizing costs, improving user experience, and building robust production systems that can scale from prototype to millions of users.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_016.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_018.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_016.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_018.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

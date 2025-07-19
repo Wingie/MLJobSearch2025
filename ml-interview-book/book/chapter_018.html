@@ -1,0 +1,518 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Subword Tokenization - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_018.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="subword-tokenization-breaking-down-the-building-blocks-of-language"><a class="header" href="#subword-tokenization-breaking-down-the-building-blocks-of-language">Subword Tokenization: Breaking Down the Building Blocks of Language</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>Google/Meta/OpenAI</strong>: "What is subword tokenization, and why is it preferable to word tokenization? Name a situation when it is NOT preferable."</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question is a staple in machine learning interviews at top tech companies because it tests several critical competencies:</p>
+<ul>
+<li><strong>NLP Fundamentals</strong>: Understanding how text preprocessing works is essential for any ML engineer working with language models</li>
+<li><strong>Trade-off Analysis</strong>: The ability to compare different approaches and understand their pros and cons</li>
+<li><strong>Real-world Application</strong>: Subword tokenization is used in virtually all modern language models (BERT, GPT, T5, etc.)</li>
+<li><strong>Problem-solving Skills</strong>: Knowing when NOT to use a popular technique shows deeper understanding</li>
+</ul>
+<p>Companies like Google, Meta, and OpenAI rely heavily on NLP systems where tokenization choices directly impact model performance, training costs, and user experience. A solid grasp of tokenization fundamentals indicates you can contribute meaningfully to these systems.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<h3 id="what-is-tokenization"><a class="header" href="#what-is-tokenization">What is Tokenization?</a></h3>
+<p>Imagine you're trying to teach a child to read. Instead of showing them entire paragraphs, you start with individual letters, then syllables, then words. Tokenization works similarly for computers—it breaks down text into smaller, manageable pieces called "tokens" that machine learning models can understand.</p>
+<p><strong>Tokenization</strong> is the process of converting a sequence of text into smaller units called tokens. Think of it as cutting up a sentence into bite-sized pieces that a computer can digest.</p>
+<p>For example, the sentence "Hello world!" might be tokenized as:</p>
+<ul>
+<li>["Hello", "world", "!"] (word-level)</li>
+<li>["H", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "!"] (character-level)</li>
+<li>["Hello", "wor", "ld", "!"] (subword-level)</li>
+</ul>
+<h3 id="key-terminology"><a class="header" href="#key-terminology">Key Terminology</a></h3>
+<ul>
+<li><strong>Token</strong>: A single unit of text after tokenization (could be a word, subword, or character)</li>
+<li><strong>Vocabulary</strong>: The complete set of all possible tokens the model knows</li>
+<li><strong>OOV (Out-of-Vocabulary)</strong>: Words that don't exist in the model's vocabulary</li>
+<li><strong>Corpus</strong>: The collection of text used to train the tokenizer</li>
+</ul>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="word-tokenization-the-traditional-approach"><a class="header" href="#word-tokenization-the-traditional-approach">Word Tokenization: The Traditional Approach</a></h3>
+<p>Word tokenization splits text based on delimiters (usually spaces and punctuation). It's intuitive because it matches how humans naturally think about language.</p>
+<p><strong>Example:</strong></p>
+<pre><code>Input: "The cat sat on the mat."
+Output: ["The", "cat", "sat", "on", "the", "mat", "."]
+</code></pre>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Split text on whitespace</li>
+<li>Handle punctuation (separate or attach)</li>
+<li>Create a vocabulary of all unique words</li>
+<li>Convert words to numerical IDs</li>
+</ol>
+<h3 id="subword-tokenization-the-modern-solution"><a class="header" href="#subword-tokenization-the-modern-solution">Subword Tokenization: The Modern Solution</a></h3>
+<p>Subword tokenization breaks words into smaller meaningful pieces. Instead of treating "unhappiness" as one token, it might split it into ["un", "happiness"] or ["unhap", "piness"].</p>
+<p><strong>Example:</strong></p>
+<pre><code>Input: "The unhappiness was overwhelming."
+Word tokens: ["The", "unhappiness", "was", "overwhelming", "."]
+Subword tokens: ["The", "un", "happiness", "was", "over", "whelm", "ing", "."]
+</code></pre>
+<p><strong>Core Principle:</strong> Frequently occurring sequences should be kept as single tokens, while rare words should be broken down into frequent subparts.</p>
+<h3 id="popular-subword-algorithms"><a class="header" href="#popular-subword-algorithms">Popular Subword Algorithms</a></h3>
+<p><strong>1. Byte Pair Encoding (BPE)</strong></p>
+<ul>
+<li>Used in GPT-2, RoBERTa</li>
+<li>Starts with characters, iteratively merges most frequent pairs</li>
+<li>Simple and effective</li>
+</ul>
+<p><strong>2. WordPiece</strong></p>
+<ul>
+<li>Used in BERT, DistilBERT</li>
+<li>Similar to BPE but chooses merges based on likelihood increase</li>
+<li>Slightly more sophisticated than BPE</li>
+</ul>
+<p><strong>3. SentencePiece</strong></p>
+<ul>
+<li>Used in T5, ALBERT</li>
+<li>Treats input as raw text (including spaces)</li>
+<li>Language-agnostic approach</li>
+</ul>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<h3 id="vocabulary-size-mathematics"><a class="header" href="#vocabulary-size-mathematics">Vocabulary Size Mathematics</a></h3>
+<p><strong>Word Tokenization:</strong></p>
+<ul>
+<li>English has ~170,000+ words</li>
+<li>Technical domains add thousands more</li>
+<li>Vocabulary size: Often 50,000-100,000+ tokens</li>
+</ul>
+<p><strong>Subword Tokenization:</strong></p>
+<ul>
+<li>Typical vocabulary: 30,000-50,000 tokens</li>
+<li>Can represent any word through subword combinations</li>
+<li>Mathematical relationship: <code>any_word = subword₁ + subword₂ + ... + subwordₙ</code></li>
+</ul>
+<h3 id="frequency-distribution"><a class="header" href="#frequency-distribution">Frequency Distribution</a></h3>
+<p>Subword tokenization leverages Zipf's Law—a few words appear very frequently, while most words are rare.</p>
+<p><strong>Formula for token frequency:</strong></p>
+<pre><code>frequency(token) = k / rank^α
+</code></pre>
+<p>Where:</p>
+<ul>
+<li>k = constant</li>
+<li>rank = token's frequency rank</li>
+<li>α ≈ 1 for natural language</li>
+</ul>
+<p><strong>Key Insight:</strong> By breaking rare words into common subwords, we increase the frequency of our vocabulary items, leading to better learning.</p>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="real-world-use-cases"><a class="header" href="#real-world-use-cases">Real-world Use Cases</a></h3>
+<p><strong>1. Machine Translation</strong></p>
+<pre><code class="language-python"># Traditional word tokenization problem:
+English: "antidisestablishmentarianism"
+French: "anticonstitutionnellement"
+# These might be OOV and can't be translated
+
+# Subword solution:
+English: ["anti", "dis", "establish", "ment", "arian", "ism"]
+French: ["anti", "constitution", "nelle", "ment"]
+# Model can handle prefix/suffix patterns
+</code></pre>
+<p><strong>2. Code Generation Models</strong></p>
+<pre><code class="language-python"># Programming languages benefit from subword tokenization
+Code: "getFinalResults()"
+Subwords: ["get", "Final", "Results", "(", ")"]
+# Model learns programming naming conventions
+</code></pre>
+<p><strong>3. Multilingual Models</strong></p>
+<pre><code>English: "running" → ["runn", "ing"]
+Spanish: "corriendo" → ["corr", "iendo"]
+German: "laufend" → ["lauf", "end"]
+# Shared subword patterns across languages
+</code></pre>
+<h3 id="performance-considerations"><a class="header" href="#performance-considerations">Performance Considerations</a></h3>
+<p><strong>Memory Usage:</strong></p>
+<ul>
+<li>Word vocab: 100k tokens × 768 dims = ~300MB embedding matrix</li>
+<li>Subword vocab: 30k tokens × 768 dims = ~90MB embedding matrix</li>
+<li>70% memory reduction!</li>
+</ul>
+<p><strong>Training Speed:</strong></p>
+<ul>
+<li>Smaller vocabularies = faster softmax computation</li>
+<li>Fewer OOV tokens = better gradient flow</li>
+<li>Typical speedup: 2-3x for large vocabularies</li>
+</ul>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="misconception-1-subwords-always-preserve-meaning"><a class="header" href="#misconception-1-subwords-always-preserve-meaning">Misconception 1: "Subwords Always Preserve Meaning"</a></h3>
+<p><strong>Reality:</strong> Subword splits can be arbitrary and may not respect morphological boundaries.</p>
+<pre><code>"unhappy" might become ["unh", "appy"] instead of ["un", "happy"]
+</code></pre>
+<h3 id="misconception-2-smaller-vocabulary-is-always-better"><a class="header" href="#misconception-2-smaller-vocabulary-is-always-better">Misconception 2: "Smaller Vocabulary is Always Better"</a></h3>
+<p><strong>Reality:</strong> Too aggressive subword splitting can hurt performance.</p>
+<pre><code>"the" → ["t", "he"] (too granular, loses meaning)
+</code></pre>
+<h3 id="misconception-3-subword-tokenization-solves-all-oov-problems"><a class="header" href="#misconception-3-subword-tokenization-solves-all-oov-problems">Misconception 3: "Subword Tokenization Solves All OOV Problems"</a></h3>
+<p><strong>Reality:</strong> While rare, some character combinations might still be OOV, especially with specialized unicode characters.</p>
+<h3 id="common-pitfalls"><a class="header" href="#common-pitfalls">Common Pitfalls</a></h3>
+<ol>
+<li><strong>Inconsistent Preprocessing:</strong> Not applying the same normalization (lowercasing, unicode handling) during training and inference</li>
+<li><strong>Domain Mismatch:</strong> Using a tokenizer trained on general text for specialized domains (medical, legal)</li>
+<li><strong>Language Assumptions:</strong> Applying space-based tokenizers to languages without word separators</li>
+</ol>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="how-to-structure-your-answer"><a class="header" href="#how-to-structure-your-answer">How to Structure Your Answer</a></h3>
+<p><strong>1. Start with the Core Concept (30 seconds)</strong>
+"Subword tokenization breaks words into smaller meaningful pieces, like splitting 'unhappiness' into 'un' and 'happiness'. This solves problems that word tokenization can't handle."</p>
+<p><strong>2. Explain the Key Advantages (60 seconds)</strong></p>
+<ul>
+<li>Handles out-of-vocabulary words</li>
+<li>Smaller, more manageable vocabulary sizes</li>
+<li>Better frequency distribution for learning</li>
+<li>Language agnostic approach</li>
+</ul>
+<p><strong>3. Provide Concrete Examples (30 seconds)</strong>
+"For example, if a model encounters 'antiviral' but was trained on 'anti' and 'viral' separately, it can still understand the meaning through subword composition."</p>
+<p><strong>4. Address the "When NOT" Question (45 seconds)</strong>
+"Subword tokenization isn't ideal when word boundaries are critically important, like in some linguistic analysis tasks, or when working with very short texts where every character matters."</p>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<ul>
+<li><strong>Modern Relevance:</strong> "All state-of-the-art models like BERT, GPT, and T5 use subword tokenization"</li>
+<li><strong>Practical Impact:</strong> "Reduces vocabulary from 100k+ words to 30k subwords, saving memory and computation"</li>
+<li><strong>Flexibility:</strong> "Can represent any word, even ones never seen during training"</li>
+</ul>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<p><strong>Q: "How would you choose the vocabulary size for subword tokenization?"</strong>
+A: "It's a trade-off between granularity and efficiency. Typically 30k-50k works well. Too small and you lose semantic meaning; too large and you don't get the benefits over word tokenization."</p>
+<p><strong>Q: "What's the difference between BPE and WordPiece?"</strong>
+A: "BPE merges the most frequent character pairs, while WordPiece chooses merges that maximize the likelihood of the training data. WordPiece is slightly more principled but both work well in practice."</p>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<ul>
+<li>Don't say subword tokenization is "always better"</li>
+<li>Don't ignore computational trade-offs</li>
+<li>Don't forget to mention specific algorithms (BPE, WordPiece)</li>
+<li>Don't overlook language-specific considerations</li>
+</ul>
+<h2 id="when-subword-tokenization-is-not-preferable"><a class="header" href="#when-subword-tokenization-is-not-preferable">When Subword Tokenization is NOT Preferable</a></h2>
+<h3 id="scenario-1-linguistic-analysis-tasks"><a class="header" href="#scenario-1-linguistic-analysis-tasks">Scenario 1: Linguistic Analysis Tasks</a></h3>
+<p><strong>When:</strong> Analyzing morphological structure, part-of-speech tagging, or syntactic parsing where word boundaries are crucial.</p>
+<p><strong>Why:</strong> Breaking "unhappiness" into arbitrary pieces like ["unh", "appy", "ness"] obscures the linguistic structure (prefix "un-", root "happy", suffix "-ness").</p>
+<p><strong>Alternative:</strong> Word-level or morpheme-aware tokenization.</p>
+<h3 id="scenario-2-short-text-classification"><a class="header" href="#scenario-2-short-text-classification">Scenario 2: Short Text Classification</a></h3>
+<p><strong>When:</strong> Classifying very short texts like tweets, search queries, or product titles where every word carries significant meaning.</p>
+<p><strong>Example:</strong></p>
+<pre><code>Tweet: "Love it!"
+Word tokens: ["Love", "it", "!"] (clear sentiment)
+Subword tokens: ["Lo", "ve", "it", "!"] (may confuse sentiment)
+</code></pre>
+<p><strong>Why:</strong> Subword splitting can dilute semantic signals in contexts where word-level meaning is paramount.</p>
+<h3 id="scenario-3-domain-specific-applications"><a class="header" href="#scenario-3-domain-specific-applications">Scenario 3: Domain-Specific Applications</a></h3>
+<p><strong>When:</strong> Working with highly technical domains where precise terminology matters (medical diagnoses, legal documents, chemical compounds).</p>
+<p><strong>Example:</strong></p>
+<pre><code>Medical term: "pneumonoultramicroscopicsilicovolcanoconiosis"
+Subword split might obscure that this is a specific medical condition
+</code></pre>
+<h3 id="scenario-4-character-level-tasks"><a class="header" href="#scenario-4-character-level-tasks">Scenario 4: Character-Level Tasks</a></h3>
+<p><strong>When:</strong> Tasks requiring character-level understanding like:</p>
+<ul>
+<li>Spell checking and correction</li>
+<li>Text-to-speech phoneme generation</li>
+<li>OCR post-processing</li>
+</ul>
+<p><strong>Why:</strong> Character-level tokenization preserves the granular information needed for these tasks.</p>
+<h3 id="scenario-5-low-resource-languages"><a class="header" href="#scenario-5-low-resource-languages">Scenario 5: Low-Resource Languages</a></h3>
+<p><strong>When:</strong> Working with languages that have very limited training data or unique writing systems.</p>
+<p><strong>Why:</strong> Subword algorithms need sufficient data to learn meaningful splits. With too little data, the splits may be arbitrary and unhelpful.</p>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<h3 id="preprocessing-pipeline"><a class="header" href="#preprocessing-pipeline">Preprocessing Pipeline</a></h3>
+<ul>
+<li>Text normalization → Tokenization → Encoding → Model input</li>
+<li>Each step affects downstream performance</li>
+</ul>
+<h3 id="embedding-layers"><a class="header" href="#embedding-layers">Embedding Layers</a></h3>
+<ul>
+<li>Token IDs → Dense vectors</li>
+<li>Subword embeddings can be combined to form word representations</li>
+<li>Relationship to positional encoding in transformers</li>
+</ul>
+<h3 id="attention-mechanisms"><a class="header" href="#attention-mechanisms">Attention Mechanisms</a></h3>
+<ul>
+<li>How models attend to subword tokens vs. whole words</li>
+<li>Impact on interpretation and explainability</li>
+</ul>
+<h3 id="transfer-learning"><a class="header" href="#transfer-learning">Transfer Learning</a></h3>
+<ul>
+<li>Pretrained tokenizers and their vocabularies</li>
+<li>Domain adaptation challenges</li>
+<li>Cross-lingual considerations</li>
+</ul>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="academic-papers"><a class="header" href="#academic-papers">Academic Papers</a></h3>
+<ul>
+<li><strong>"Neural Machine Translation of Rare Words with Subword Units"</strong> (Sennrich et al., 2016) - Original BPE paper</li>
+<li><strong>"SentencePiece: A simple and language independent subword tokenizer"</strong> (Kudo &amp; Richardson, 2018)</li>
+<li><strong>"Subword Regularization: Improving Neural Network Translation Models"</strong> (Kudo, 2018)</li>
+</ul>
+<h3 id="practical-resources"><a class="header" href="#practical-resources">Practical Resources</a></h3>
+<ul>
+<li><strong>Hugging Face Tokenizers Documentation</strong>: Comprehensive guide to modern tokenization</li>
+<li><strong>OpenAI GPT Tokenizer</strong>: Interactive tool to visualize subword splits</li>
+<li><strong>TensorFlow Text Guide</strong>: Implementation tutorials and best practices</li>
+</ul>
+<h3 id="tools-and-libraries"><a class="header" href="#tools-and-libraries">Tools and Libraries</a></h3>
+<ul>
+<li><strong>Hugging Face Tokenizers</strong>: Fast, modern tokenization library</li>
+<li><strong>SentencePiece</strong>: Google's language-agnostic tokenizer</li>
+<li><strong>OpenAI tiktoken</strong>: BPE tokenizer used in GPT models</li>
+<li><strong>spaCy</strong>: Full NLP pipeline with tokenization</li>
+</ul>
+<h3 id="advanced-topics"><a class="header" href="#advanced-topics">Advanced Topics</a></h3>
+<ul>
+<li><strong>Tokenization for Multilingual Models</strong>: Handling multiple languages in one vocabulary</li>
+<li><strong>Adaptive Tokenization</strong>: Dynamic vocabulary adjustment during training</li>
+<li><strong>Byte-Level BPE</strong>: Handling any Unicode text without preprocessing</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_017.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_019.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_017.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_019.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
