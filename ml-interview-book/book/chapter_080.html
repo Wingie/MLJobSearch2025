@@ -1,0 +1,475 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Theoretical Limits of Classification: When Perfect Accuracy is Impossible - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_080.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="theoretical-limits-of-classification-when-perfect-accuracy-is-impossible"><a class="header" href="#theoretical-limits-of-classification-when-perfect-accuracy-is-impossible">Theoretical Limits of Classification: When Perfect Accuracy is Impossible</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>Tech Company</strong>: You are building a classification model to distinguish between labels from a synthetically generated dataset. Half of the training data is generated from N(2,2) and half of it is generated from N(0,3). As a baseline, you decide to use a logistic regression model to fit the data. Since the data is synthesized easily, you can assume you have infinitely many samples. Can your logistic regression model achieve 100% training accuracy?</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question tests a fundamental understanding of statistical learning theory and classification limits. Companies ask this because it reveals whether candidates understand:</p>
+<ul>
+<li><strong>Theoretical vs. Practical Limits</strong>: The difference between algorithmic limitations and fundamental statistical boundaries</li>
+<li><strong>Statistical Foundations</strong>: How data distributions determine classification performance regardless of model complexity</li>
+<li><strong>Problem Diagnosis</strong>: Ability to recognize when perfect performance is theoretically impossible</li>
+<li><strong>Mathematical Intuition</strong>: Understanding of probability distributions and their implications for machine learning</li>
+</ul>
+<p>In real ML systems, recognizing theoretical limits helps engineers set realistic expectations, choose appropriate metrics, and avoid wasting resources trying to achieve impossible performance levels.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<h3 id="normal-distributions-and-notation"><a class="header" href="#normal-distributions-and-notation">Normal Distributions and Notation</a></h3>
+<p>A normal distribution N(μ, σ²) describes data that follows a bell-curve pattern with:</p>
+<ul>
+<li><strong>μ (mu)</strong>: The mean - where the center of the distribution lies</li>
+<li><strong>σ² (sigma squared)</strong>: The variance - how spread out the data is</li>
+</ul>
+<p>In our problem:</p>
+<ul>
+<li><strong>Class 1</strong>: N(2, 2) means normally distributed data centered at 2 with variance 2</li>
+<li><strong>Class 2</strong>: N(0, 3) means normally distributed data centered at 0 with variance 3</li>
+</ul>
+<h3 id="distribution-overlap"><a class="header" href="#distribution-overlap">Distribution Overlap</a></h3>
+<p>When two distributions have different centers but their "tails" extend into each other's territory, they overlap. This overlap creates ambiguous regions where data points from either class could realistically appear.</p>
+<p>Think of it like two overlapping circles on a map - in the intersection area, you can't definitively say which circle a point belongs to just by its location.</p>
+<h3 id="the-bayes-optimal-classifier"><a class="header" href="#the-bayes-optimal-classifier">The Bayes Optimal Classifier</a></h3>
+<p>The Bayes optimal classifier represents the theoretical best possible performance for any classification algorithm. It's like having perfect knowledge of the underlying data distributions and making the mathematically optimal decision for each point.</p>
+<p>Even this perfect classifier cannot achieve 100% accuracy when distributions overlap - there will always be some points that are genuinely ambiguous.</p>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="why-perfect-accuracy-is-impossible"><a class="header" href="#why-perfect-accuracy-is-impossible">Why Perfect Accuracy is Impossible</a></h3>
+<p>Let's visualize what happens with our specific distributions:</p>
+<p><strong>Class 1: N(2, 2)</strong></p>
+<ul>
+<li>Center: 2</li>
+<li>Standard deviation: √2 ≈ 1.41</li>
+<li>Most data falls between approximately -1 and 5</li>
+</ul>
+<p><strong>Class 2: N(0, 3)</strong></p>
+<ul>
+<li>Center: 0</li>
+<li>Standard deviation: √3 ≈ 1.73</li>
+<li>Most data falls between approximately -5 and 5</li>
+</ul>
+<p>The overlap region roughly spans from -1 to 5, where both classes have non-zero probability density. In this region, even with infinite data, you cannot perfectly distinguish between classes because:</p>
+<ol>
+<li><strong>Fundamental Ambiguity</strong>: A data point at value 1 could reasonably come from either distribution</li>
+<li><strong>Statistical Overlap</strong>: Both distributions assign positive probability to the same regions</li>
+<li><strong>Irreducible Error</strong>: This represents the "noise" inherent in the problem itself</li>
+</ol>
+<h3 id="mathematical-foundation"><a class="header" href="#mathematical-foundation">Mathematical Foundation</a></h3>
+<p>The theoretical accuracy limit is determined by the <strong>Bayes Error Rate</strong>, calculated as:</p>
+<pre><code>Bayes Error = ∫ min{p₁(x), p₂(x)} dx
+</code></pre>
+<p>Where:</p>
+<ul>
+<li>p₁(x) is the probability density of Class 1 at point x</li>
+<li>p₂(x) is the probability density of Class 2 at point x</li>
+<li>The integral is over all possible x values</li>
+</ul>
+<p>This formula captures the probability mass where the distributions overlap - regions where even optimal classification will make errors.</p>
+<h3 id="step-by-step-analysis"><a class="header" href="#step-by-step-analysis">Step-by-Step Analysis</a></h3>
+<p><strong>Step 1: Identify Overlap Region</strong>
+The distributions overlap most significantly between x = -2 and x = 4, where both have substantial probability density.</p>
+<p><strong>Step 2: Calculate Optimal Decision Boundary</strong>
+The Bayes optimal decision boundary occurs where the two probability densities are equal: p₁(x) = p₂(x).</p>
+<p><strong>Step 3: Compute Error Rate</strong>
+Even at the optimal boundary, some points from each class fall on the "wrong" side, creating unavoidable misclassification.</p>
+<p><strong>Step 4: Recognize Fundamental Limit</strong>
+No classifier, regardless of complexity, can perform better than the Bayes optimal classifier.</p>
+<h3 id="logistic-regression-performance"><a class="header" href="#logistic-regression-performance">Logistic Regression Performance</a></h3>
+<p>Logistic regression learns a linear decision boundary by modeling the log-odds ratio. With infinite data, it will approximate the optimal linear decision boundary, but:</p>
+<ol>
+<li><strong>Linear Limitation</strong>: Logistic regression is restricted to linear boundaries</li>
+<li><strong>Approximation</strong>: It estimates the optimal boundary but may not achieve it exactly</li>
+<li><strong>Fundamental Limit</strong>: Even if it achieved the optimal linear boundary, it cannot exceed the Bayes error rate</li>
+</ol>
+<p>For our specific normal distributions, the optimal decision boundary is actually nonlinear (quadratic), so logistic regression will perform slightly worse than the theoretical optimum.</p>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<h3 id="probability-density-functions"><a class="header" href="#probability-density-functions">Probability Density Functions</a></h3>
+<p>For our distributions:</p>
+<p><strong>Class 1: N(2, 2)</strong></p>
+<pre><code>p₁(x) = (1/√(4π)) × exp(-(x-2)²/4)
+</code></pre>
+<p><strong>Class 2: N(0, 3)</strong></p>
+<pre><code>p₂(x) = (1/√(6π)) × exp(-x²/6)
+</code></pre>
+<h3 id="decision-boundary-calculation"><a class="header" href="#decision-boundary-calculation">Decision Boundary Calculation</a></h3>
+<p>The optimal decision boundary satisfies:</p>
+<pre><code>p₁(x) = p₂(x)
+</code></pre>
+<p>Substituting our distributions:</p>
+<pre><code>(1/√(4π)) × exp(-(x-2)²/4) = (1/√(6π)) × exp(-x²/6)
+</code></pre>
+<p>This equation yields a quadratic solution, not a linear one, explaining why logistic regression cannot achieve optimal performance.</p>
+<h3 id="bayes-error-rate-estimation"><a class="header" href="#bayes-error-rate-estimation">Bayes Error Rate Estimation</a></h3>
+<p>For our specific case, the Bayes error rate can be computed numerically:</p>
+<pre><code class="language-python"># Pseudocode for error calculation
+def bayes_error_rate():
+    integral = 0
+    for x in range(-10, 10, 0.01):
+        p1 = normal_pdf(x, mean=2, var=2)
+        p2 = normal_pdf(x, mean=0, var=3)
+        integral += min(p1, p2) * 0.01
+    return integral
+</code></pre>
+<p>The exact value requires numerical integration, but it's approximately 15-20% for these parameters.</p>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="real-world-scenarios"><a class="header" href="#real-world-scenarios">Real-World Scenarios</a></h3>
+<p>This concept applies broadly in industry:</p>
+<p><strong>Medical Diagnosis</strong>: Overlap in biomarker distributions between healthy and diseased populations creates fundamental diagnostic limits.</p>
+<p><strong>Fraud Detection</strong>: Legitimate and fraudulent transactions often have overlapping patterns in feature space.</p>
+<p><strong>Image Classification</strong>: Visual similarity between categories (e.g., different dog breeds) creates irreducible classification error.</p>
+<p><strong>Natural Language Processing</strong>: Ambiguous text passages that could legitimately belong to multiple categories.</p>
+<h3 id="code-example"><a class="header" href="#code-example">Code Example</a></h3>
+<pre><code class="language-python">import numpy as np
+from sklearn.linear_model import LogisticRegression
+
+# Generate synthetic data
+np.random.seed(42)
+n_samples = 10000
+
+# Class 1: N(2, 2)
+class1_data = np.random.normal(2, np.sqrt(2), n_samples//2)
+class1_labels = np.zeros(n_samples//2)
+
+# Class 2: N(0, 3)  
+class2_data = np.random.normal(0, np.sqrt(3), n_samples//2)
+class2_labels = np.ones(n_samples//2)
+
+# Combine data
+X = np.concatenate([class1_data, class2_data]).reshape(-1, 1)
+y = np.concatenate([class1_labels, class2_labels])
+
+# Train logistic regression
+clf = LogisticRegression()
+clf.fit(X, y)
+
+# Evaluate accuracy
+accuracy = clf.score(X, y)
+print(f"Training accuracy: {accuracy:.3f}")
+# Result: approximately 0.75-0.85, never 1.0
+</code></pre>
+<h3 id="performance-considerations"><a class="header" href="#performance-considerations">Performance Considerations</a></h3>
+<p><strong>Sample Size Impact</strong>: With infinite samples, accuracy converges to a fixed limit determined by distribution overlap, not 100%.</p>
+<p><strong>Model Complexity</strong>: More sophisticated models (neural networks, ensemble methods) cannot exceed the Bayes error rate for this problem.</p>
+<p><strong>Feature Engineering</strong>: Adding more features might help if they provide additional discrimination, but won't eliminate fundamental overlap in the existing feature space.</p>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="misconception-1-more-data-always-helps"><a class="header" href="#misconception-1-more-data-always-helps">Misconception 1: "More Data Always Helps"</a></h3>
+<p><strong>Wrong Thinking</strong>: "With infinite data, we can achieve perfect accuracy."
+<strong>Reality</strong>: More data helps reduce estimation error but cannot eliminate Bayes error from overlapping distributions.</p>
+<h3 id="misconception-2-complex-models-overcome-fundamental-limits"><a class="header" href="#misconception-2-complex-models-overcome-fundamental-limits">Misconception 2: "Complex Models Overcome Fundamental Limits"</a></h3>
+<p><strong>Wrong Thinking</strong>: "A sufficiently complex neural network could achieve 100% accuracy."
+<strong>Reality</strong>: All classifiers are bounded by the same theoretical limit when dealing with inherently overlapping data.</p>
+<h3 id="misconception-3-logistic-regression-is-the-bottleneck"><a class="header" href="#misconception-3-logistic-regression-is-the-bottleneck">Misconception 3: "Logistic Regression is the Bottleneck"</a></h3>
+<p><strong>Wrong Thinking</strong>: "The limitation is due to logistic regression's simplicity."
+<strong>Reality</strong>: Even the optimal Bayes classifier cannot achieve perfect performance on this problem.</p>
+<h3 id="misconception-4-perfect-training-accuracy-means-good-model"><a class="header" href="#misconception-4-perfect-training-accuracy-means-good-model">Misconception 4: "Perfect Training Accuracy Means Good Model"</a></h3>
+<p><strong>Wrong Thinking</strong>: "100% training accuracy is always the goal."
+<strong>Reality</strong>: Achieving perfect accuracy on overlapping data would indicate overfitting, not good generalization.</p>
+<h3 id="edge-cases-to-consider"><a class="header" href="#edge-cases-to-consider">Edge Cases to Consider</a></h3>
+<p><strong>Identical Distributions</strong>: If both classes had the same distribution, random guessing (50% accuracy) would be optimal.</p>
+<p><strong>Non-overlapping Distributions</strong>: If distributions don't overlap (e.g., N(-10, 1) vs N(10, 1)), perfect classification becomes theoretically possible.</p>
+<p><strong>Unequal Class Proportions</strong>: The problem statement specifies balanced classes, but unequal proportions would shift the optimal decision boundary.</p>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="how-to-structure-your-answer"><a class="header" href="#how-to-structure-your-answer">How to Structure Your Answer</a></h3>
+<p><strong>1. Start with the Core Insight</strong>
+"No, logistic regression cannot achieve 100% training accuracy on this problem because the distributions overlap, creating fundamental ambiguity."</p>
+<p><strong>2. Explain the Mathematical Reason</strong>
+"The normal distributions N(2,2) and N(0,3) have overlapping regions where data points from either class can appear with positive probability."</p>
+<p><strong>3. Introduce the Theoretical Framework</strong>
+"This is limited by the Bayes error rate - the theoretical minimum error rate that no classifier can exceed."</p>
+<p><strong>4. Connect to Logistic Regression Specifically</strong>
+"Logistic regression will approximate the optimal linear decision boundary, but even the optimal nonlinear Bayes classifier cannot achieve perfect accuracy here."</p>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<ul>
+<li><strong>Fundamental vs. Algorithmic Limits</strong>: The limitation comes from the data, not the algorithm</li>
+<li><strong>Theoretical Grounding</strong>: Reference Bayes optimal classification and statistical learning theory</li>
+<li><strong>Practical Relevance</strong>: Explain why this matters for real ML systems</li>
+<li><strong>Mathematical Intuition</strong>: Show understanding of probability distributions and overlap</li>
+</ul>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<p><strong>Q</strong>: "What if we used a more complex model?"
+<strong>A</strong>: "Any classifier is bounded by the same Bayes error rate. Complexity doesn't eliminate fundamental overlap."</p>
+<p><strong>Q</strong>: "How would you estimate the maximum achievable accuracy?"
+<strong>A</strong>: "Calculate the Bayes error rate through numerical integration of the minimum probability densities."</p>
+<p><strong>Q</strong>: "What if the distributions were different?"
+<strong>A</strong>: "Non-overlapping distributions could allow perfect classification, while greater overlap would reduce maximum accuracy."</p>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<ul>
+<li>Claiming any algorithm can achieve 100% accuracy on overlapping distributions</li>
+<li>Ignoring the fundamental statistical limits</li>
+<li>Focusing only on logistic regression limitations without mentioning Bayes optimality</li>
+<li>Suggesting that infinite data eliminates all classification error</li>
+</ul>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<h3 id="statistical-learning-theory"><a class="header" href="#statistical-learning-theory">Statistical Learning Theory</a></h3>
+<p>Understanding generalization bounds, bias-variance tradeoff, and the relationship between training and test performance.</p>
+<h3 id="discriminant-analysis"><a class="header" href="#discriminant-analysis">Discriminant Analysis</a></h3>
+<p>Linear and Quadratic Discriminant Analysis provide the optimal classifiers for normally distributed data with known parameters.</p>
+<h3 id="roc-curves-and-auc"><a class="header" href="#roc-curves-and-auc">ROC Curves and AUC</a></h3>
+<p>Performance metrics that account for the tradeoff between sensitivity and specificity in overlapping distributions.</p>
+<h3 id="information-theory"><a class="header" href="#information-theory">Information Theory</a></h3>
+<p>Mutual information between features and labels quantifies the theoretical amount of information available for classification.</p>
+<h3 id="ensemble-methods"><a class="header" href="#ensemble-methods">Ensemble Methods</a></h3>
+<p>While individual models are bounded by Bayes error, ensemble methods can approach this limit more closely.</p>
+<h3 id="feature-engineering"><a class="header" href="#feature-engineering">Feature Engineering</a></h3>
+<p>Adding discriminative features can reduce overlap in the feature space, potentially improving the theoretical accuracy limit.</p>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="academic-papers"><a class="header" href="#academic-papers">Academic Papers</a></h3>
+<ul>
+<li>"Pattern Recognition and Machine Learning" by Christopher Bishop - Comprehensive treatment of Bayes optimal classification</li>
+<li>"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman - Chapter on classification and decision boundaries</li>
+<li>"Understanding Machine Learning: From Theory to Algorithms" by Shalev-Shwartz and Ben-David - Statistical learning theory foundations</li>
+</ul>
+<h3 id="online-resources"><a class="header" href="#online-resources">Online Resources</a></h3>
+<ul>
+<li>Stanford CS229 Machine Learning Course Notes on Classification</li>
+<li>MIT 6.034 Artificial Intelligence lectures on statistical learning</li>
+<li>Coursera Machine Learning courses covering logistic regression and theoretical limits</li>
+</ul>
+<h3 id="practical-implementations"><a class="header" href="#practical-implementations">Practical Implementations</a></h3>
+<ul>
+<li>Scikit-learn documentation on logistic regression and decision boundaries</li>
+<li>TensorFlow/PyTorch tutorials on classification with overlapping data</li>
+<li>Jupyter notebooks demonstrating Bayes error rate calculation</li>
+</ul>
+<h3 id="advanced-topics"><a class="header" href="#advanced-topics">Advanced Topics</a></h3>
+<ul>
+<li>Non-parametric density estimation for arbitrary distributions</li>
+<li>Optimal transport theory for measuring distribution differences</li>
+<li>Information-theoretic approaches to classification limits</li>
+<li>Multi-class extensions of Bayes error rate calculations</li>
+</ul>
+<p>Understanding this fundamental limitation helps build intuition for realistic performance expectations in machine learning systems and guides appropriate model selection and evaluation strategies.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_078.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_082.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_078.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_082.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Building a Churn Prediction Model for Robinhood Users - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_073.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="building-a-churn-prediction-model-for-robinhood-users"><a class="header" href="#building-a-churn-prediction-model-for-robinhood-users">Building a Churn Prediction Model for Robinhood Users</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>Robinhood</strong>: "Walk me through how you'd build a model to predict whether a particular Robinhood user will churn."</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question is a classic end-to-end machine learning system design problem that companies like Robinhood frequently ask during data science interviews. It tests multiple critical skills:</p>
+<ul>
+<li><strong>Business Understanding</strong>: Can you translate a real business problem into a technical solution?</li>
+<li><strong>Product Intuition</strong>: Do you understand how fintech apps like Robinhood work and make money?</li>
+<li><strong>Technical Depth</strong>: Can you design, implement, and evaluate a complete ML pipeline?</li>
+<li><strong>System Thinking</strong>: Can you consider the full lifecycle from data collection to model deployment?</li>
+</ul>
+<p>Companies ask this because churn prediction is genuinely crucial for business success. Even a small monthly churn rate of 2% compounds to nearly 27% yearly churn. Since acquiring new customers costs 5-10 times more than retaining existing ones, churn prediction directly impacts profitability and growth.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<h3 id="what-is-customer-churn"><a class="header" href="#what-is-customer-churn">What is Customer Churn?</a></h3>
+<p>Customer churn occurs when users stop using a product or service. In the context of Robinhood, churn could mean:</p>
+<ul>
+<li>Users who stop trading for extended periods</li>
+<li>Users who withdraw all their money and close accounts</li>
+<li>Users who reduce their trading activity significantly</li>
+<li>Users who cancel premium services like Robinhood Gold</li>
+</ul>
+<p>Think of churn like a leaky bucket - while you're adding new customers (water) to the top, existing customers (water) are leaving through holes in the bottom. The goal is to predict which customers are likely to "leak out" so you can take action to retain them.</p>
+<h3 id="machine-learning-classification"><a class="header" href="#machine-learning-classification">Machine Learning Classification</a></h3>
+<p>Churn prediction is a <strong>binary classification</strong> problem - we're predicting one of two outcomes:</p>
+<ul>
+<li><strong>Churned</strong> (1): The user will stop using the service</li>
+<li><strong>Not Churned</strong> (0): The user will continue using the service</li>
+</ul>
+<p>This is different from regression (predicting continuous numbers) or multi-class classification (predicting multiple categories).</p>
+<h3 id="key-terminology"><a class="header" href="#key-terminology">Key Terminology</a></h3>
+<ul>
+<li><strong>Features</strong>: Input variables we use to make predictions (e.g., trading frequency, account balance)</li>
+<li><strong>Target Variable</strong>: What we're trying to predict (churned or not churned)</li>
+<li><strong>Training Data</strong>: Historical data we use to teach the model</li>
+<li><strong>Model</strong>: The algorithm that learns patterns from data to make predictions</li>
+<li><strong>Evaluation Metrics</strong>: Ways to measure how well our model performs</li>
+</ul>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="step-1-define-the-problem"><a class="header" href="#step-1-define-the-problem">Step 1: Define the Problem</a></h3>
+<p>Before building any model, we must clearly define what "churn" means for Robinhood. This requires understanding how Robinhood makes money:</p>
+<p><strong>Robinhood's Revenue Streams:</strong></p>
+<ol>
+<li><strong>Payment for Order Flow (70%+ of revenue)</strong>: Robinhood routes trades to market makers who pay for this order flow</li>
+<li><strong>Robinhood Gold subscriptions</strong>: Premium features for monthly fees</li>
+<li><strong>Interest on cash balances</strong>: Earning interest on users' uninvested cash</li>
+<li><strong>Cash card interchange fees</strong>: Fees from debit card transactions</li>
+</ol>
+<p><strong>Possible Churn Definitions:</strong></p>
+<ul>
+<li><strong>Trading Activity</strong>: No trades for 30+ consecutive days</li>
+<li><strong>Account Value</strong>: Account equity below $10 for 28+ consecutive days</li>
+<li><strong>Engagement</strong>: No app opens for 14+ consecutive days</li>
+<li><strong>Premium Cancellation</strong>: Canceling Robinhood Gold subscription</li>
+</ul>
+<p>For our example, let's define churn as: "A user whose account equity falls below $10 for 28+ consecutive days after previously having at least $10."</p>
+<h3 id="step-2-data-collection-and-feature-engineering"><a class="header" href="#step-2-data-collection-and-feature-engineering">Step 2: Data Collection and Feature Engineering</a></h3>
+<p><strong>Demographic Features:</strong></p>
+<ul>
+<li>Age, location, income level</li>
+<li>Account creation date</li>
+<li>Referral source (how they found Robinhood)</li>
+</ul>
+<p><strong>Behavioral Features:</strong></p>
+<ul>
+<li>Trading frequency (daily, weekly, monthly averages)</li>
+<li>Types of securities traded (stocks, options, crypto)</li>
+<li>Trading volume and amounts</li>
+<li>App usage patterns (session length, time of day)</li>
+<li>Feature usage (research tools, notifications)</li>
+</ul>
+<p><strong>Financial Features:</strong></p>
+<ul>
+<li>Account balance trends</li>
+<li>Portfolio diversity (number of different stocks)</li>
+<li>Cash vs. invested ratio</li>
+<li>Profit/loss performance</li>
+<li>Deposit and withdrawal patterns</li>
+</ul>
+<p><strong>Engagement Features:</strong></p>
+<ul>
+<li>Days since last login</li>
+<li>Number of watchlist items</li>
+<li>Social features usage (if any)</li>
+<li>Customer support interactions</li>
+</ul>
+<p><strong>Time-Based Features:</strong></p>
+<ul>
+<li>Seasonality patterns (day of week, month)</li>
+<li>Time since account opening</li>
+<li>Recent activity trends (increasing/decreasing)</li>
+</ul>
+<h3 id="step-3-data-preprocessing"><a class="header" href="#step-3-data-preprocessing">Step 3: Data Preprocessing</a></h3>
+<p><strong>Handle Missing Values:</strong></p>
+<pre><code class="language-python"># Example approaches
+# Remove rows with missing target variable
+# Fill missing numerical features with median
+# Fill missing categorical features with mode
+# Create "missing" indicator features
+</code></pre>
+<p><strong>Feature Scaling:</strong>
+Since features have different scales (account balance in thousands, trading frequency as counts), we need to normalize them so no single feature dominates.</p>
+<p><strong>Handle Class Imbalance:</strong>
+Most users don't churn, creating imbalanced data. If 95% of users don't churn, a model that always predicts "no churn" would be 95% accurate but completely useless.</p>
+<p>Solutions:</p>
+<ul>
+<li><strong>Oversampling</strong>: Create synthetic examples of churned users</li>
+<li><strong>Undersampling</strong>: Reduce non-churned examples</li>
+<li><strong>Class weights</strong>: Penalize misclassifying the minority class more heavily</li>
+</ul>
+<h3 id="step-4-model-selection"><a class="header" href="#step-4-model-selection">Step 4: Model Selection</a></h3>
+<p><strong>Logistic Regression:</strong></p>
+<ul>
+<li><strong>Pros</strong>: Simple, interpretable, gives probabilities</li>
+<li><strong>Cons</strong>: May miss complex patterns</li>
+<li><strong>Best for</strong>: When you need to explain why users churn</li>
+</ul>
+<p><strong>Random Forest:</strong></p>
+<ul>
+<li><strong>Pros</strong>: Handles non-linear patterns, less overfitting, feature importance</li>
+<li><strong>Cons</strong>: Less interpretable than logistic regression</li>
+<li><strong>Best for</strong>: Good balance of performance and interpretability</li>
+</ul>
+<p><strong>Gradient Boosting (XGBoost):</strong></p>
+<ul>
+<li><strong>Pros</strong>: Often highest performance, handles complex patterns</li>
+<li><strong>Cons</strong>: Can overfit, requires more tuning</li>
+<li><strong>Best for</strong>: When maximizing prediction accuracy</li>
+</ul>
+<p><strong>Decision Trees:</strong></p>
+<ul>
+<li><strong>Pros</strong>: Highly interpretable, good for business rules</li>
+<li><strong>Cons</strong>: Prone to overfitting</li>
+<li><strong>Best for</strong>: Creating simple, explainable business rules</li>
+</ul>
+<h3 id="step-5-model-training-and-validation"><a class="header" href="#step-5-model-training-and-validation">Step 5: Model Training and Validation</a></h3>
+<p><strong>Train-Test Split:</strong></p>
+<pre><code class="language-python"># Split data chronologically
+# Train on older data, test on newer data
+# This simulates real-world deployment
+training_data = data[data['date'] &lt; '2024-01-01']
+test_data = data[data['date'] &gt;= '2024-01-01']
+</code></pre>
+<p><strong>Cross-Validation:</strong>
+Use time-series cross-validation to ensure our model works across different time periods.</p>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<h3 id="logistic-regression-intuition"><a class="header" href="#logistic-regression-intuition">Logistic Regression Intuition</a></h3>
+<p>Logistic regression uses the sigmoid function to convert any real number into a probability between 0 and 1:</p>
+<pre><code>P(churn) = 1 / (1 + e^(-z))
+where z = b₀ + b₁x₁ + b₂x₂ + ... + bₙxₙ
+</code></pre>
+<p>In simple terms:</p>
+<ul>
+<li>Each feature (x₁, x₂, etc.) gets a weight (b₁, b₂, etc.)</li>
+<li>We multiply features by their weights and add them up</li>
+<li>The sigmoid function converts this sum into a probability</li>
+</ul>
+<p><strong>Example:</strong>
+If trading frequency has weight -0.5 and account balance has weight 0.3:</p>
+<ul>
+<li>High trading frequency → lower churn probability</li>
+<li>High account balance → higher churn probability (counterintuitive but possible)</li>
+</ul>
+<h3 id="evaluation-metrics-explained"><a class="header" href="#evaluation-metrics-explained">Evaluation Metrics Explained</a></h3>
+<p><strong>Confusion Matrix:</strong></p>
+<pre><code>                Predicted
+              Churn  No Churn
+Actual Churn    TP      FN
+    No Churn    FP      TN
+</code></pre>
+<ul>
+<li><strong>TP (True Positive)</strong>: Correctly predicted churn</li>
+<li><strong>TN (True Negative)</strong>: Correctly predicted no churn</li>
+<li><strong>FP (False Positive)</strong>: Incorrectly predicted churn</li>
+<li><strong>FN (False Negative)</strong>: Missed actual churn</li>
+</ul>
+<p><strong>Key Metrics:</strong></p>
+<ul>
+<li><strong>Precision</strong>: Of predicted churners, how many actually churned? TP/(TP+FP)</li>
+<li><strong>Recall</strong>: Of actual churners, how many did we catch? TP/(TP+FN)</li>
+<li><strong>F1-Score</strong>: Harmonic mean of precision and recall</li>
+</ul>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="real-world-implementation"><a class="header" href="#real-world-implementation">Real-World Implementation</a></h3>
+<p><strong>Data Pipeline:</strong></p>
+<pre><code class="language-python"># Daily batch job
+1. Extract user behavior data from last 24 hours
+2. Update feature calculations
+3. Score users with trained model
+4. Flag high-risk users for intervention
+</code></pre>
+<p><strong>Intervention Strategies:</strong></p>
+<ul>
+<li><strong>High churn probability</strong>: Personal outreach, special offers</li>
+<li><strong>Medium churn probability</strong>: Targeted email campaigns</li>
+<li><strong>Low churn probability</strong>: Standard engagement content</li>
+</ul>
+<p><strong>A/B Testing:</strong>
+Test intervention effectiveness by randomly assigning high-risk users to treatment (intervention) and control (no intervention) groups.</p>
+<h3 id="code-example-simplified"><a class="header" href="#code-example-simplified">Code Example (Simplified)</a></h3>
+<pre><code class="language-python">import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+
+# Load and prepare data
+data = pd.read_csv('robinhood_user_data.csv')
+features = ['trading_frequency', 'account_balance', 'days_since_login']
+X = data[features]
+y = data['churned']
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Make predictions
+predictions = model.predict(X_test)
+probabilities = model.predict_proba(X_test)[:, 1]
+
+# Evaluate
+print(classification_report(y_test, predictions))
+</code></pre>
+<h3 id="performance-considerations"><a class="header" href="#performance-considerations">Performance Considerations</a></h3>
+<p><strong>Model Refresh:</strong></p>
+<ul>
+<li>Retrain monthly to capture changing user behavior</li>
+<li>Monitor for concept drift (when patterns change over time)</li>
+<li>Update features as new data sources become available</li>
+</ul>
+<p><strong>Scalability:</strong></p>
+<ul>
+<li>Use distributed computing for large datasets</li>
+<li>Consider online learning for real-time updates</li>
+<li>Optimize feature computation for speed</li>
+</ul>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="data-leakage"><a class="header" href="#data-leakage">Data Leakage</a></h3>
+<p><strong>Wrong</strong>: Using features that wouldn't be available at prediction time</p>
+<ul>
+<li>Using "last login date" when predicting if someone will churn tomorrow</li>
+<li>Including future information in historical features</li>
+</ul>
+<p><strong>Right</strong>: Only use information available before the prediction period</p>
+<h3 id="survivorship-bias"><a class="header" href="#survivorship-bias">Survivorship Bias</a></h3>
+<p><strong>Wrong</strong>: Only analyzing users who have been active for a long time
+<strong>Right</strong>: Include all users, even those who churned early</p>
+<h3 id="feature-engineering-mistakes"><a class="header" href="#feature-engineering-mistakes">Feature Engineering Mistakes</a></h3>
+<p><strong>Wrong</strong>: Creating features that are just different versions of the target</p>
+<ul>
+<li>"Days until churn" as a feature when predicting churn
+<strong>Right</strong>: Use leading indicators that predict churn</li>
+</ul>
+<h3 id="evaluation-errors"><a class="header" href="#evaluation-errors">Evaluation Errors</a></h3>
+<p><strong>Wrong</strong>: Using accuracy as the only metric for imbalanced data
+<strong>Right</strong>: Focus on precision, recall, and F1-score for minority class</p>
+<h3 id="business-logic-mistakes"><a class="header" href="#business-logic-mistakes">Business Logic Mistakes</a></h3>
+<p><strong>Wrong</strong>: Treating all churn equally
+<strong>Right</strong>: Consider the value of different user segments</p>
+<ul>
+<li>A user with $100K invested churning is more important than a $10 user</li>
+</ul>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="how-to-structure-your-answer"><a class="header" href="#how-to-structure-your-answer">How to Structure Your Answer</a></h3>
+<p><strong>1. Clarify the Problem (5 minutes)</strong></p>
+<ul>
+<li>Ask about churn definition</li>
+<li>Understand business impact</li>
+<li>Discuss available data sources</li>
+</ul>
+<p><strong>2. Data and Features (10 minutes)</strong></p>
+<ul>
+<li>Describe feature categories</li>
+<li>Mention data preprocessing needs</li>
+<li>Address class imbalance</li>
+</ul>
+<p><strong>3. Model Selection (10 minutes)</strong></p>
+<ul>
+<li>Compare 2-3 algorithms</li>
+<li>Justify your choice</li>
+<li>Discuss interpretability vs. performance trade-offs</li>
+</ul>
+<p><strong>4. Evaluation and Deployment (10 minutes)</strong></p>
+<ul>
+<li>Explain evaluation metrics</li>
+<li>Describe model validation approach</li>
+<li>Discuss monitoring and maintenance</li>
+</ul>
+<p><strong>5. Business Impact (5 minutes)</strong></p>
+<ul>
+<li>Connect to business value</li>
+<li>Suggest intervention strategies</li>
+<li>Mention A/B testing</li>
+</ul>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<ul>
+<li><strong>Business Understanding</strong>: Show you understand Robinhood's business model</li>
+<li><strong>Technical Depth</strong>: Demonstrate knowledge of ML pipeline components</li>
+<li><strong>Practical Considerations</strong>: Address real-world deployment challenges</li>
+<li><strong>Evaluation Rigor</strong>: Emphasize proper validation and metrics</li>
+</ul>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<ul>
+<li>"How would you handle seasonal patterns in trading behavior?"</li>
+<li>"What if the model's performance degrades over time?"</li>
+<li>"How would you explain model predictions to business stakeholders?"</li>
+<li>"What features would be most important for your model?"</li>
+<li>"How would you ensure the model is fair across different user groups?"</li>
+</ul>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<ul>
+<li>Focusing only on model accuracy without considering business impact</li>
+<li>Ignoring class imbalance issues</li>
+<li>Not discussing feature engineering in depth</li>
+<li>Forgetting about model interpretability needs</li>
+<li>Not considering deployment and monitoring</li>
+</ul>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<h3 id="customer-lifetime-value-clv"><a class="header" href="#customer-lifetime-value-clv">Customer Lifetime Value (CLV)</a></h3>
+<p>Understanding CLV helps prioritize which users to focus retention efforts on. High CLV users who are likely to churn deserve more attention.</p>
+<h3 id="cohort-analysis"><a class="header" href="#cohort-analysis">Cohort Analysis</a></h3>
+<p>Analyzing user behavior by cohorts (groups who signed up in the same period) helps understand how churn patterns change over time.</p>
+<h3 id="ab-testing"><a class="header" href="#ab-testing">A/B Testing</a></h3>
+<p>Essential for validating that churn prediction models actually improve business outcomes when deployed.</p>
+<h3 id="real-time-vs-batch-prediction"><a class="header" href="#real-time-vs-batch-prediction">Real-time vs. Batch Prediction</a></h3>
+<ul>
+<li><strong>Batch</strong>: Daily scoring of all users for proactive outreach</li>
+<li><strong>Real-time</strong>: Immediate scoring when users exhibit concerning behavior</li>
+</ul>
+<h3 id="multi-class-churn-prediction"><a class="header" href="#multi-class-churn-prediction">Multi-class Churn Prediction</a></h3>
+<p>Instead of binary churn/no-churn, predict different types of churn:</p>
+<ul>
+<li>Temporary dormancy</li>
+<li>Permanent churn</li>
+<li>Product-specific churn (e.g., only stopping options trading)</li>
+</ul>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="academic-papers"><a class="header" href="#academic-papers">Academic Papers</a></h3>
+<ul>
+<li>"Behavioral Modeling for Churn Prediction" (Archaux et al., 2015)</li>
+<li>"A framework to improve churn prediction performance in retail banking" (Financial Innovation, 2023)</li>
+</ul>
+<h3 id="technical-resources"><a class="header" href="#technical-resources">Technical Resources</a></h3>
+<ul>
+<li>Scikit-learn documentation on classification metrics</li>
+<li>"Hands-On Machine Learning" by Aurélien Géron (Chapter 3 on Classification)</li>
+<li>Kaggle's Telco Customer Churn dataset for practice</li>
+</ul>
+<h3 id="business-context"><a class="header" href="#business-context">Business Context</a></h3>
+<ul>
+<li>"The Lean Startup" by Eric Ries (for understanding metric-driven development)</li>
+<li>Robinhood's SEC filings for understanding their business model</li>
+<li>Articles on fintech user behavior and retention strategies</li>
+</ul>
+<h3 id="advanced-topics"><a class="header" href="#advanced-topics">Advanced Topics</a></h3>
+<ul>
+<li>Time series analysis for churn prediction</li>
+<li>Deep learning approaches for sequential user behavior</li>
+<li>Causal inference for understanding churn drivers</li>
+<li>Multi-armed bandits for optimizing intervention strategies</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_059.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_083.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_059.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_083.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Expected Waiting Time for Extreme Values in Normal Distributions - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_027.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="expected-waiting-time-for-extreme-values-in-normal-distributions"><a class="header" href="#expected-waiting-time-for-extreme-values-in-normal-distributions">Expected Waiting Time for Extreme Values in Normal Distributions</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>Quora</strong>: You are drawing from a normally distributed random variable X ~ N(0, 1) once a day. What is the approximate expected number of days until you get a value of more than 2?</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question appears frequently in data science interviews at major tech companies like Facebook, Google, and Quora because it tests several fundamental concepts that are crucial for real-world data science applications:</p>
+<ul>
+<li><strong>Statistical Distribution Knowledge</strong>: Understanding normal distributions, which are ubiquitous in data science</li>
+<li><strong>Probability Calculations</strong>: Ability to compute probabilities for specific events</li>
+<li><strong>Waiting Time Problems</strong>: Recognizing when to apply geometric distribution models</li>
+<li><strong>Real-World Modeling</strong>: Connecting abstract math to practical scenarios like quality control, A/B testing, and anomaly detection</li>
+</ul>
+<p>Companies value this question because it reveals whether candidates can think beyond memorized formulas and apply probability theory to solve practical problems. The ability to model waiting times is essential for analyzing user behavior, system reliability, and business metrics.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<h3 id="normal-distribution-basics"><a class="header" href="#normal-distribution-basics">Normal Distribution Basics</a></h3>
+<p>A <strong>normal distribution</strong> is a bell-shaped probability distribution that's symmetric around its mean. The <strong>standard normal distribution</strong> N(0, 1) is a special case where:</p>
+<ul>
+<li>Mean (μ) = 0</li>
+<li>Standard deviation (σ) = 1</li>
+</ul>
+<p>Think of it like the distribution of heights in a population - most people are around average height, with fewer people being very tall or very short.</p>
+<h3 id="geometric-distribution-fundamentals"><a class="header" href="#geometric-distribution-fundamentals">Geometric Distribution Fundamentals</a></h3>
+<p>A <strong>geometric distribution</strong> models the number of trials needed to get the first success in a series of independent experiments. It's like asking: "How many coin flips until I get heads?"</p>
+<p>Key properties:</p>
+<ul>
+<li>Each trial has the same probability of success (p)</li>
+<li>Trials are independent</li>
+<li>We stop at the first success</li>
+<li>Expected value = 1/p</li>
+</ul>
+<h3 id="key-terminology"><a class="header" href="#key-terminology">Key Terminology</a></h3>
+<ul>
+<li><strong>Cumulative Distribution Function (CDF)</strong>: The probability that a random variable is less than or equal to a specific value</li>
+<li><strong>Complement Rule</strong>: P(not A) = 1 - P(A)</li>
+<li><strong>Independent Events</strong>: The outcome of one trial doesn't affect others</li>
+<li><strong>Z-score</strong>: Number of standard deviations from the mean</li>
+</ul>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="step-1-understanding-the-setup"><a class="header" href="#step-1-understanding-the-setup">Step 1: Understanding the Setup</a></h3>
+<p>We're drawing from X ~ N(0, 1) once per day, which means:</p>
+<ul>
+<li>Each day, we get one random number from a standard normal distribution</li>
+<li>Each draw is independent of previous draws</li>
+<li>We want to know when we'll first see a value greater than 2</li>
+</ul>
+<p>Think of this like a quality control scenario where you're measuring a product dimension daily, and you want to know when you'll first see an "extreme" measurement.</p>
+<h3 id="step-2-calculate-the-probability-of-success"><a class="header" href="#step-2-calculate-the-probability-of-success">Step 2: Calculate the Probability of Success</a></h3>
+<p>First, we need to find P(X &gt; 2) for a standard normal distribution.</p>
+<p>Using the <strong>empirical rule</strong> (68-95-99.7 rule):</p>
+<ul>
+<li>About 95% of values fall within 2 standard deviations of the mean</li>
+<li>This means about 5% fall outside this range</li>
+<li>Since the distribution is symmetric, 2.5% are above +2 and 2.5% are below -2</li>
+</ul>
+<p>For a more precise calculation:</p>
+<ul>
+<li>From standard normal tables: P(X ≤ 2) = 0.9772</li>
+<li>Using the complement rule: P(X &gt; 2) = 1 - 0.9772 = 0.0228</li>
+</ul>
+<p>So there's approximately a 2.28% chance each day of getting a value greater than 2.</p>
+<h3 id="step-3-recognize-the-geometric-distribution-pattern"><a class="header" href="#step-3-recognize-the-geometric-distribution-pattern">Step 3: Recognize the Geometric Distribution Pattern</a></h3>
+<p>Since we're waiting for the first occurrence of an event (X &gt; 2) with:</p>
+<ul>
+<li>Constant probability p = 0.0228 each day</li>
+<li>Independent trials (daily draws)</li>
+<li>We stop at the first success</li>
+</ul>
+<p>This is exactly a geometric distribution scenario!</p>
+<h3 id="step-4-apply-the-expected-value-formula"><a class="header" href="#step-4-apply-the-expected-value-formula">Step 4: Apply the Expected Value Formula</a></h3>
+<p>For a geometric distribution, the expected number of trials until the first success is:</p>
+<p><strong>E[T] = 1/p</strong></p>
+<p>Where p is the probability of success on each trial.</p>
+<p>E[T] = 1/0.0228 ≈ 43.9 days</p>
+<p>Therefore, we expect to wait approximately <strong>44 days</strong> until we first draw a value greater than 2.</p>
+<h3 id="intuitive-verification"><a class="header" href="#intuitive-verification">Intuitive Verification</a></h3>
+<p>This result makes intuitive sense:</p>
+<ul>
+<li>If something happens 2.28% of the time, it should take about 100/2.28 ≈ 44 attempts on average</li>
+<li>With a 2.28% daily chance, most of the time (97.72%) we "fail" to get our target value</li>
+<li>The geometric distribution accounts for this high failure rate</li>
+</ul>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<h3 id="standard-normal-probability-calculation"><a class="header" href="#standard-normal-probability-calculation">Standard Normal Probability Calculation</a></h3>
+<p>For X ~ N(0, 1), we calculate P(X &gt; 2) using:</p>
+<ol>
+<li><strong>Standardization</strong>: Since we already have a standard normal distribution, no conversion needed</li>
+<li><strong>Table Lookup</strong>: P(X ≤ 2) = Φ(2) = 0.9772</li>
+<li><strong>Complement</strong>: P(X &gt; 2) = 1 - Φ(2) = 1 - 0.9772 = 0.0228</li>
+</ol>
+<p>The function Φ(z) is the cumulative distribution function of the standard normal distribution.</p>
+<h3 id="geometric-distribution-mathematics"><a class="header" href="#geometric-distribution-mathematics">Geometric Distribution Mathematics</a></h3>
+<p>If Y ~ Geometric(p), then:</p>
+<ul>
+<li><strong>Probability mass function</strong>: P(Y = k) = (1-p)^(k-1) × p for k = 1, 2, 3, ...</li>
+<li><strong>Expected value</strong>: E[Y] = 1/p</li>
+<li><strong>Variance</strong>: Var(Y) = (1-p)/p²</li>
+</ul>
+<p>For our problem:</p>
+<ul>
+<li>p = 0.0228</li>
+<li>E[Y] = 1/0.0228 ≈ 43.9 days</li>
+<li>Var(Y) = (1-0.0228)/(0.0228)² ≈ 1,879 days²</li>
+</ul>
+<p>The high variance indicates significant uncertainty - while the average is 44 days, the actual waiting time could vary considerably.</p>
+<h3 id="numerical-example"><a class="header" href="#numerical-example">Numerical Example</a></h3>
+<p>Let's trace through a few scenarios:</p>
+<ul>
+<li><strong>Scenario 1</strong>: Get X &gt; 2 on day 1 (probability 0.0228)</li>
+<li><strong>Scenario 2</strong>: Fail day 1, succeed day 2 (probability 0.9772 × 0.0228 ≈ 0.0223)</li>
+<li><strong>Scenario 3</strong>: Fail days 1-2, succeed day 3 (probability 0.9772² × 0.0228 ≈ 0.0218)</li>
+</ul>
+<p>The expected value weighs all possible outcomes: 1×0.0228 + 2×0.0223 + 3×0.0218 + ... = 43.9</p>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="quality-control-in-manufacturing"><a class="header" href="#quality-control-in-manufacturing">Quality Control in Manufacturing</a></h3>
+<p>Suppose you're monitoring a production line where 97.72% of products meet specifications, but 2.28% are defective. How long until you find the first defective item?</p>
+<p>Expected time = 1/0.0228 ≈ 44 units produced</p>
+<p>This helps plan inspection schedules and quality assurance resources.</p>
+<h3 id="ab-testing-and-conversion-rates"><a class="header" href="#ab-testing-and-conversion-rates">A/B Testing and Conversion Rates</a></h3>
+<p>In digital marketing, if a new feature has a 2.28% conversion rate, how many visitors until the first conversion?</p>
+<p>Expected visitors = 1/0.0228 ≈ 44 visitors</p>
+<p>This informs traffic requirements and testing duration.</p>
+<h3 id="system-reliability-and-failure-analysis"><a class="header" href="#system-reliability-and-failure-analysis">System Reliability and Failure Analysis</a></h3>
+<p>For systems where extreme events (like server crashes) occur with 2.28% daily probability:</p>
+<p>Expected time to failure = 44 days</p>
+<p>This guides maintenance schedules and backup planning.</p>
+<h3 id="code-implementation-example"><a class="header" href="#code-implementation-example">Code Implementation Example</a></h3>
+<pre><code class="language-python">import numpy as np
+from scipy import stats
+
+# Calculate P(X &gt; 2) for standard normal
+p_success = 1 - stats.norm.cdf(2, loc=0, scale=1)
+print(f"P(X &gt; 2) = {p_success:.4f}")  # 0.0228
+
+# Expected waiting time (geometric distribution)
+expected_days = 1 / p_success
+print(f"Expected days: {expected_days:.1f}")  # 43.9
+
+# Simulation to verify
+np.random.seed(42)
+num_simulations = 10000
+waiting_times = []
+
+for _ in range(num_simulations):
+    day = 1
+    while True:
+        draw = np.random.standard_normal()
+        if draw &gt; 2:
+            waiting_times.append(day)
+            break
+        day += 1
+
+average_wait = np.mean(waiting_times)
+print(f"Simulated average: {average_wait:.1f} days")
+</code></pre>
+<h3 id="performance-considerations"><a class="header" href="#performance-considerations">Performance Considerations</a></h3>
+<p>For large-scale applications:</p>
+<ul>
+<li><strong>Memory</strong>: Geometric distribution calculations are computationally light</li>
+<li><strong>Accuracy</strong>: Standard normal probabilities should use high-precision tables or functions</li>
+<li><strong>Edge Cases</strong>: Very small probabilities may require careful numerical handling</li>
+</ul>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="misconception-1-since-95-of-values-are-within-2-standard-deviations-px--2--5"><a class="header" href="#misconception-1-since-95-of-values-are-within-2-standard-deviations-px--2--5">Misconception 1: "Since 95% of values are within 2 standard deviations, P(X &gt; 2) = 5%"</a></h3>
+<p><strong>Correction</strong>: The 95% refers to the interval (-2, +2). Only 2.5% are above +2, and 2.5% are below -2.</p>
+<h3 id="misconception-2-the-expected-value-is-the-most-likely-outcome"><a class="header" href="#misconception-2-the-expected-value-is-the-most-likely-outcome">Misconception 2: "The expected value is the most likely outcome"</a></h3>
+<p><strong>Correction</strong>: For geometric distributions, the most likely outcome is always 1 (success on the first trial), not the expected value. The expected value represents the long-run average.</p>
+<h3 id="misconception-3-if-the-expected-wait-is-44-days-im-guaranteed-to-succeed-by-day-44"><a class="header" href="#misconception-3-if-the-expected-wait-is-44-days-im-guaranteed-to-succeed-by-day-44">Misconception 3: "If the expected wait is 44 days, I'm guaranteed to succeed by day 44"</a></h3>
+<p><strong>Correction</strong>: There's significant variance. You might succeed on day 1 or wait much longer than 44 days. The expected value is an average across many repetitions.</p>
+<h3 id="misconception-4-past-failures-make-future-success-more-likely"><a class="header" href="#misconception-4-past-failures-make-future-success-more-likely">Misconception 4: "Past failures make future success more likely"</a></h3>
+<p><strong>Correction</strong>: Each daily draw is independent. If you've waited 100 days without success, tomorrow still has exactly a 2.28% chance of success.</p>
+<h3 id="edge-cases-to-consider"><a class="header" href="#edge-cases-to-consider">Edge Cases to Consider</a></h3>
+<ul>
+<li><strong>Probability = 0</strong>: If P(X &gt; threshold) = 0, expected waiting time is infinite</li>
+<li><strong>Probability = 1</strong>: If P(X &gt; threshold) = 1, expected waiting time is 1 trial</li>
+<li><strong>Very small probabilities</strong>: May require high-precision arithmetic to avoid numerical errors</li>
+</ul>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="how-to-structure-your-answer"><a class="header" href="#how-to-structure-your-answer">How to Structure Your Answer</a></h3>
+<ol>
+<li>
+<p><strong>Clarify the problem</strong>: "We're looking for the expected waiting time until we first observe X &gt; 2"</p>
+</li>
+<li>
+<p><strong>Identify the distributions involved</strong>:</p>
+<ul>
+<li>"X follows a standard normal distribution"</li>
+<li>"The waiting time follows a geometric distribution"</li>
+</ul>
+</li>
+<li>
+<p><strong>Calculate step-by-step</strong>:</p>
+<ul>
+<li>Find P(X &gt; 2) using standard normal tables</li>
+<li>Apply the geometric distribution expected value formula</li>
+</ul>
+</li>
+<li>
+<p><strong>State the final answer</strong>: "Approximately 44 days"</p>
+</li>
+<li>
+<p><strong>Provide intuition</strong>: "This makes sense because we only have a 2.28% chance each day"</p>
+</li>
+</ol>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<ul>
+<li><strong>Independence</strong>: Each day's draw doesn't affect others</li>
+<li><strong>Complement rule</strong>: Use 1 - P(X ≤ 2) to find P(X &gt; 2)</li>
+<li><strong>Recognition</strong>: Identify this as a geometric distribution problem</li>
+<li><strong>Formula application</strong>: E[T] = 1/p for geometric distributions</li>
+</ul>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<p><strong>Q</strong>: "What if we wanted P(X &gt; 1.5) instead of P(X &gt; 2)?"
+<strong>A</strong>: Recalculate using P(X &gt; 1.5) = 1 - Φ(1.5) ≈ 1 - 0.9332 = 0.0668, giving E[T] ≈ 15 days.</p>
+<p><strong>Q</strong>: "How would this change if we drew twice per day?"
+<strong>A</strong>: The daily probability becomes 1 - (1 - 0.0228)² ≈ 0.0451, giving E[T] ≈ 22 days.</p>
+<p><strong>Q</strong>: "What's the probability we wait longer than 100 days?"
+<strong>A</strong>: P(T &gt; 100) = (1 - 0.0228)^100 ≈ 0.102, about 10.2%.</p>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<ul>
+<li>Don't confuse the 95% rule with tail probabilities</li>
+<li>Don't forget that geometric distribution counts trials, not failures</li>
+<li>Don't assume the problem involves other distributions like Poisson or exponential</li>
+<li>Don't calculate P(X ≥ 2) when the question asks for P(X &gt; 2)</li>
+</ul>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<h3 id="connected-topics-worth-understanding"><a class="header" href="#connected-topics-worth-understanding">Connected Topics Worth Understanding</a></h3>
+<p><strong>Exponential Distribution</strong>: The continuous analog of the geometric distribution for modeling waiting times in continuous settings.</p>
+<p><strong>Poisson Process</strong>: Related to counting events in continuous time, where the time between events follows an exponential distribution.</p>
+<p><strong>Central Limit Theorem</strong>: Explains why normal distributions are so common in practice.</p>
+<p><strong>Confidence Intervals</strong>: Often use normal distribution properties for statistical inference.</p>
+<p><strong>Hypothesis Testing</strong>: Frequently involves calculating probabilities of extreme values.</p>
+<h3 id="how-this-fits-into-the-broader-ml-landscape"><a class="header" href="#how-this-fits-into-the-broader-ml-landscape">How This Fits into the Broader ML Landscape</a></h3>
+<p>This problem demonstrates skills essential for:</p>
+<ul>
+<li><strong>Anomaly Detection</strong>: Identifying when measurements fall outside normal ranges</li>
+<li><strong>Statistical Quality Control</strong>: Monitoring processes for unusual behavior</li>
+<li><strong>A/B Testing</strong>: Calculating sample sizes and test durations</li>
+<li><strong>Risk Management</strong>: Modeling rare but important events</li>
+<li><strong>Feature Engineering</strong>: Understanding when values are statistically significant</li>
+<li><strong>Model Validation</strong>: Assessing whether model outputs follow expected distributions</li>
+</ul>
+<p>Understanding waiting time problems helps in designing experiments, interpreting results, and making data-driven decisions in machine learning applications.</p>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="essential-resources"><a class="header" href="#essential-resources">Essential Resources</a></h3>
+<p><strong>Books</strong>:</p>
+<ul>
+<li>"Introduction to Probability" by Blitzstein and Hwang - Excellent coverage of geometric distributions</li>
+<li>"All of Statistics" by Wasserman - Comprehensive treatment of probability distributions</li>
+<li>"Probability and Statistics for Engineering and the Sciences" by Devore - Practical applications focus</li>
+</ul>
+<p><strong>Online Materials</strong>:</p>
+<ul>
+<li>Khan Academy's Statistics and Probability course - Free, beginner-friendly explanations</li>
+<li>MIT OpenCourseWare 18.05 Introduction to Probability and Statistics - College-level rigor</li>
+<li>Seeing Theory (seeing-theory.brown.edu) - Interactive visualizations of probability concepts</li>
+</ul>
+<p><strong>Practice Problems</strong>:</p>
+<ul>
+<li>"Introduction to Mathematical Statistics" by Hogg, McKean, and Craig - Problem sets with solutions</li>
+<li>StrataScratch and LeetCode probability sections - Interview-focused practice</li>
+<li>Project Euler probability problems - Computational approach to probability</li>
+</ul>
+<h3 id="advanced-topics"><a class="header" href="#advanced-topics">Advanced Topics</a></h3>
+<p>For deeper understanding, explore:</p>
+<ul>
+<li><strong>Memoryless Property</strong>: Why exponential distributions have no memory</li>
+<li><strong>Order Statistics</strong>: Distribution of extreme values in samples</li>
+<li><strong>Extreme Value Theory</strong>: Mathematical framework for rare events</li>
+<li><strong>Renewal Theory</strong>: Advanced waiting time problems</li>
+<li><strong>Markov Chains</strong>: When independence assumptions don't hold</li>
+</ul>
+<p>These resources will deepen your understanding of probability theory and its applications in data science and machine learning.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_026.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_028.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_026.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_028.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

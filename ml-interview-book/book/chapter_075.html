@@ -1,0 +1,505 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Mutual Information Filtering: Understanding Redundant Feature Selection - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_075.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="mutual-information-filtering-understanding-redundant-feature-selection"><a class="header" href="#mutual-information-filtering-understanding-redundant-feature-selection">Mutual Information Filtering: Understanding Redundant Feature Selection</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>Tech Company</strong>: Consider learning a classifier in a situation with 1000 features total. 50 of them are truly informative about class. Another 50 features are direct copies of the first 50 features. The final 900 features are not informative. Assume there is enough data to reliably assess how useful features are, and the feature selection methods are using good thresholds. How many features will be selected by mutual information filtering?</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question tests several critical machine learning concepts that data scientists encounter daily:</p>
+<ul>
+<li><strong>Feature selection fundamentals</strong>: Understanding how different algorithms approach the problem of identifying relevant features</li>
+<li><strong>Redundancy detection</strong>: Recognizing when features provide duplicate information and how various methods handle this</li>
+<li><strong>Filter vs. wrapper methods</strong>: Distinguishing between univariate and multivariate feature selection approaches</li>
+<li><strong>Real-world preprocessing</strong>: Most production datasets contain redundant, correlated, or duplicate features that must be handled appropriately</li>
+</ul>
+<p>Companies ask this question because it reveals whether candidates understand the limitations of popular feature selection methods and can anticipate potential issues in their machine learning pipelines. It's particularly relevant for roles involving high-dimensional data, feature engineering, and model optimization.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<h3 id="what-is-mutual-information"><a class="header" href="#what-is-mutual-information">What is Mutual Information?</a></h3>
+<p>Mutual information (MI) measures the statistical dependence between two variables. Think of it as answering the question: "How much does knowing the value of one variable reduce uncertainty about another variable?"</p>
+<p><strong>Everyday analogy</strong>: Imagine you're trying to predict whether someone will buy an umbrella. Knowing it's raining gives you a lot of information (high mutual information). Knowing their shoe size gives you almost no information (low mutual information).</p>
+<h3 id="key-properties-of-mutual-information"><a class="header" href="#key-properties-of-mutual-information">Key Properties of Mutual Information:</a></h3>
+<ul>
+<li><strong>Range</strong>: 0 to infinity (0 means completely independent variables)</li>
+<li><strong>Symmetry</strong>: MI(X,Y) = MI(Y,X)</li>
+<li><strong>Non-negative</strong>: Always ≥ 0</li>
+<li><strong>Zero for independent variables</strong>: MI(X,Y) = 0 if X and Y are independent</li>
+</ul>
+<h3 id="feature-selection-categories"><a class="header" href="#feature-selection-categories">Feature Selection Categories</a></h3>
+<p><strong>Filter methods</strong> (like mutual information filtering):</p>
+<ul>
+<li>Evaluate each feature independently based on statistical measures</li>
+<li>Fast and computationally efficient</li>
+<li>Don't consider feature interactions</li>
+<li>Examples: correlation, chi-square, mutual information</li>
+</ul>
+<p><strong>Wrapper methods</strong>:</p>
+<ul>
+<li>Evaluate feature subsets using the actual machine learning algorithm</li>
+<li>Consider feature interactions</li>
+<li>More computationally expensive</li>
+<li>Examples: recursive feature elimination, forward/backward selection</li>
+</ul>
+<p><strong>Embedded methods</strong>:</p>
+<ul>
+<li>Feature selection happens during model training</li>
+<li>Examples: LASSO regularization, tree-based feature importance</li>
+</ul>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="how-mutual-information-filtering-works"><a class="header" href="#how-mutual-information-filtering-works">How Mutual Information Filtering Works</a></h3>
+<p>Mutual information filtering follows this process:</p>
+<ol>
+<li><strong>Calculate MI scores</strong>: For each feature, compute MI(feature, target_class)</li>
+<li><strong>Rank features</strong>: Sort features by their MI scores (highest first)</li>
+<li><strong>Select top features</strong>: Choose the k features with highest MI scores</li>
+<li><strong>Independent evaluation</strong>: Each feature is evaluated in isolation</li>
+</ol>
+<h3 id="the-critical-limitation-independent-evaluation"><a class="header" href="#the-critical-limitation-independent-evaluation">The Critical Limitation: Independent Evaluation</a></h3>
+<p>Here's the key insight for our interview question: <strong>Mutual information filtering evaluates each feature independently</strong>. It doesn't consider relationships between features.</p>
+<p>Let's trace through our specific scenario:</p>
+<p><strong>Given</strong>:</p>
+<ul>
+<li>50 truly informative features (let's call them F1, F2, ..., F50)</li>
+<li>50 duplicate features (exact copies: F1', F2', ..., F50')</li>
+<li>900 non-informative features</li>
+</ul>
+<p><strong>What happens during MI filtering</strong>:</p>
+<ol>
+<li><strong>Informative features</strong>: F1, F2, ..., F50 each have high MI with the target class</li>
+<li><strong>Duplicate features</strong>: F1', F2', ..., F50' have identical MI scores to their originals because they're perfect copies</li>
+<li><strong>Non-informative features</strong>: All 900 have very low MI scores</li>
+</ol>
+<h3 id="the-answer-100-features-selected"><a class="header" href="#the-answer-100-features-selected">The Answer: 100 Features Selected</a></h3>
+<p>Since mutual information filtering evaluates features independently:</p>
+<ul>
+<li>All 50 original informative features will score high</li>
+<li>All 50 duplicate features will score equally high (they're identical!)</li>
+<li>The algorithm cannot distinguish between originals and copies</li>
+</ul>
+<p><strong>Result</strong>: 100 features will be selected (50 originals + 50 duplicates)</p>
+<h3 id="why-this-happens-mathematical-perspective"><a class="header" href="#why-this-happens-mathematical-perspective">Why This Happens: Mathematical Perspective</a></h3>
+<p>For identical features X and X':</p>
+<ul>
+<li>MI(X, Y) = MI(X', Y) where Y is the target</li>
+<li>Both features provide exactly the same information about the target</li>
+<li>The filter method has no way to detect that X' is redundant given X</li>
+</ul>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<h3 id="mutual-information-formula"><a class="header" href="#mutual-information-formula">Mutual Information Formula</a></h3>
+<p>For discrete variables X and Y:</p>
+<pre><code>MI(X,Y) = ∑∑ P(x,y) × log(P(x,y) / (P(x) × P(y)))
+</code></pre>
+<p><strong>Plain English</strong>: Sum over all possible value combinations, weighing by how much the joint probability differs from what we'd expect if variables were independent.</p>
+<h3 id="numerical-example"><a class="header" href="#numerical-example">Numerical Example</a></h3>
+<p>Consider a simple binary classification with a binary feature:</p>
+<div class="table-wrapper"><table><thead><tr><th>Feature Value</th><th>Class = 0</th><th>Class = 1</th><th>Total</th></tr></thead><tbody>
+<tr><td>Feature = 0</td><td>40</td><td>10</td><td>50</td></tr>
+<tr><td>Feature = 1</td><td>10</td><td>40</td><td>50</td></tr>
+<tr><td>Total</td><td>50</td><td>50</td><td>100</td></tr>
+</tbody></table>
+</div>
+<p>For this feature:</p>
+<ul>
+<li>High MI score (≈ 0.69 bits)</li>
+<li>Strong predictive power</li>
+</ul>
+<p>For an identical duplicate feature:</p>
+<ul>
+<li>Exactly the same MI score</li>
+<li>No way for MI filtering to detect redundancy</li>
+</ul>
+<h3 id="why-correlation--redundancy-detection"><a class="header" href="#why-correlation--redundancy-detection">Why Correlation ≠ Redundancy Detection</a></h3>
+<p>Even though our duplicate features have perfect correlation (r = 1.0) with originals, mutual information filtering doesn't check correlations between features—only between each feature and the target.</p>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="real-world-scenarios-where-this-matters"><a class="header" href="#real-world-scenarios-where-this-matters">Real-World Scenarios Where This Matters</a></h3>
+<ol>
+<li><strong>Medical datasets</strong>: Patient weight in kg and pounds</li>
+<li><strong>Financial data</strong>: Revenue in different currencies before conversion</li>
+<li><strong>Sensor data</strong>: Multiple sensors measuring the same physical quantity</li>
+<li><strong>Text analysis</strong>: Features like "contains_happy" and "contains_joy" that might be perfectly correlated in training data</li>
+<li><strong>Image processing</strong>: Pixel values and their normalized counterparts</li>
+</ol>
+<h3 id="code-example-conceptual"><a class="header" href="#code-example-conceptual">Code Example (Conceptual)</a></h3>
+<pre><code class="language-python"># Pseudocode for MI filtering
+def mutual_info_filter(X, y, k):
+    mi_scores = []
+    
+    for feature in X.columns:
+        # Calculate MI between this feature and target
+        score = mutual_info_score(X[feature], y)
+        mi_scores.append((feature, score))
+    
+    # Sort by MI score (descending)
+    mi_scores.sort(key=lambda x: x[1], reverse=True)
+    
+    # Select top k features
+    selected_features = [feature for feature, score in mi_scores[:k]]
+    
+    return selected_features
+
+# In our scenario:
+# - Features F1-F50 get high scores
+# - Features F1'-F50' get identical high scores  
+# - Features F51-F950 get low scores
+# Result: F1-F50 and F1'-F50' are all selected (100 total)
+</code></pre>
+<h3 id="performance-implications"><a class="header" href="#performance-implications">Performance Implications</a></h3>
+<p>Having 100 features instead of the optimal 50:</p>
+<ul>
+<li><strong>Training time</strong>: Roughly doubles</li>
+<li><strong>Memory usage</strong>: Doubles</li>
+<li><strong>Model complexity</strong>: Increases unnecessarily</li>
+<li><strong>Overfitting risk</strong>: Higher with redundant features</li>
+<li><strong>Interpretability</strong>: Harder to understand which features matter</li>
+</ul>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="misconception-1-mi-filtering-automatically-removes-duplicates"><a class="header" href="#misconception-1-mi-filtering-automatically-removes-duplicates">Misconception 1: "MI Filtering Automatically Removes Duplicates"</a></h3>
+<p><strong>Reality</strong>: MI filtering only looks at feature-target relationships, not feature-feature relationships.</p>
+<h3 id="misconception-2-high-correlation-means-one-feature-will-be-dropped"><a class="header" href="#misconception-2-high-correlation-means-one-feature-will-be-dropped">Misconception 2: "High Correlation Means One Feature Will Be Dropped"</a></h3>
+<p><strong>Reality</strong>: Unless the method explicitly checks for correlation between features, both correlated features may be selected.</p>
+<h3 id="misconception-3-more-features-always-better-after-feature-selection"><a class="header" href="#misconception-3-more-features-always-better-after-feature-selection">Misconception 3: "More Features Always Better After Feature Selection"</a></h3>
+<p><strong>Reality</strong>: Redundant features can hurt model performance through increased complexity and overfitting.</p>
+<h3 id="pitfall-confusing-filter-and-wrapper-methods"><a class="header" href="#pitfall-confusing-filter-and-wrapper-methods">Pitfall: Confusing Filter and Wrapper Methods</a></h3>
+<ul>
+<li><strong>Filter methods</strong> (like MI): Fast, independent evaluation, may select redundant features</li>
+<li><strong>Wrapper methods</strong>: Slower, considers feature interactions, better at detecting redundancy</li>
+</ul>
+<h3 id="pitfall-not-considering-sample-size"><a class="header" href="#pitfall-not-considering-sample-size">Pitfall: Not Considering Sample Size</a></h3>
+<p>With small datasets (&lt; 1000 samples), MI estimation becomes unreliable. The discrete nature of MI calculation can lead to poor estimates with insufficient data.</p>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="how-to-structure-your-answer"><a class="header" href="#how-to-structure-your-answer">How to Structure Your Answer</a></h3>
+<ol>
+<li><strong>Define mutual information</strong>: "MI measures statistical dependence between variables"</li>
+<li><strong>Explain the key limitation</strong>: "MI filtering evaluates features independently"</li>
+<li><strong>Work through the logic</strong>: "Since duplicates have identical MI scores..."</li>
+<li><strong>State the answer confidently</strong>: "100 features will be selected"</li>
+<li><strong>Show deeper understanding</strong>: "This illustrates why we might need methods that consider feature redundancy"</li>
+</ol>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<ul>
+<li>Understanding of filter vs. wrapper methods</li>
+<li>Recognition that duplicate features will have identical MI scores</li>
+<li>Awareness of the computational and performance implications</li>
+<li>Knowledge of alternative approaches (MRMR, wrapper methods)</li>
+</ul>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<ul>
+<li>
+<p><strong>"How would you modify the approach to get 50 features?"</strong>
+Answer: Use methods like MRMR (Maximum Relevance Minimum Redundancy) or wrapper methods that consider feature interactions.</p>
+</li>
+<li>
+<p><strong>"What are the downsides of having 100 features instead of 50?"</strong>
+Answer: Increased computational cost, memory usage, overfitting risk, and reduced model interpretability.</p>
+</li>
+<li>
+<p><strong>"When might MI filtering be preferred despite this limitation?"</strong>
+Answer: When speed is critical, datasets are very large, or as a first-pass screening method.</p>
+</li>
+</ul>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<ul>
+<li>Don't confuse correlation with mutual information</li>
+<li>Don't assume MI filtering can detect redundancy between features</li>
+<li>Don't forget that MI filtering evaluates features independently</li>
+<li>Don't overlook the practical implications of selecting redundant features</li>
+</ul>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<h3 id="advanced-feature-selection-methods"><a class="header" href="#advanced-feature-selection-methods">Advanced Feature Selection Methods</a></h3>
+<p><strong>MRMR (Maximum Relevance Minimum Redundancy)</strong>:</p>
+<ul>
+<li>Balances relevance to target with redundancy between features</li>
+<li>Would likely select closer to 50 features in our scenario</li>
+</ul>
+<p><strong>Joint Mutual Information (JMI)</strong>:</p>
+<ul>
+<li>Considers interactions between features</li>
+<li>Better at identifying redundant feature combinations</li>
+</ul>
+<p><strong>Wrapper methods (e.g., Recursive Feature Elimination)</strong>:</p>
+<ul>
+<li>Use the actual ML algorithm to evaluate feature subsets</li>
+<li>Can detect when duplicate features don't improve model performance</li>
+</ul>
+<h3 id="information-theory-connections"><a class="header" href="#information-theory-connections">Information Theory Connections</a></h3>
+<ul>
+<li><strong>Entropy</strong>: Measures uncertainty in a single variable</li>
+<li><strong>Conditional entropy</strong>: Uncertainty in one variable given another</li>
+<li><strong>Information gain</strong>: Reduction in entropy (used in decision trees)</li>
+<li><strong>KL divergence</strong>: Measures difference between probability distributions</li>
+</ul>
+<h3 id="feature-engineering-considerations"><a class="header" href="#feature-engineering-considerations">Feature Engineering Considerations</a></h3>
+<ul>
+<li><strong>Feature scaling</strong>: MI can be sensitive to feature scaling</li>
+<li><strong>Discretization</strong>: Continuous features may need binning for MI calculation</li>
+<li><strong>Missing values</strong>: Can significantly impact MI calculations</li>
+<li><strong>Outliers</strong>: May distort MI estimates</li>
+</ul>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="academic-papers"><a class="header" href="#academic-papers">Academic Papers</a></h3>
+<ul>
+<li>"Feature Selection via Mutual Information: New Theoretical Insights" (Bennasar et al., 2015)</li>
+<li>"Feature selection using Joint Mutual Information Maximisation" (Bennasar et al., 2015)</li>
+<li>"Mutual Information-Based Feature Selection for Classification" (Kraskov et al., 2004)</li>
+</ul>
+<h3 id="books"><a class="header" href="#books">Books</a></h3>
+<ul>
+<li>"Pattern Recognition and Machine Learning" by Christopher Bishop (Chapter 1.6 on Information Theory)</li>
+<li>"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman (Chapter 3.3 on Feature Selection)</li>
+</ul>
+<h3 id="online-resources"><a class="header" href="#online-resources">Online Resources</a></h3>
+<ul>
+<li>Scikit-learn documentation: <code>mutual_info_classif</code></li>
+<li>Kaggle Learn: "Feature Engineering" course</li>
+<li>Machine Learning Mastery: "Information Gain and Mutual Information for Machine Learning"</li>
+</ul>
+<h3 id="practical-implementation"><a class="header" href="#practical-implementation">Practical Implementation</a></h3>
+<ul>
+<li><strong>Python libraries</strong>: <code>scikit-learn.feature_selection.mutual_info_classif</code>, <code>sklearn.feature_selection.SelectKBest</code></li>
+<li><strong>R packages</strong>: <code>infotheo</code>, <code>FSelector</code></li>
+<li><strong>Advanced tools</strong>: <code>mRMRe</code> package for MRMR implementation</li>
+</ul>
+<h3 id="related-interview-topics"><a class="header" href="#related-interview-topics">Related Interview Topics</a></h3>
+<ul>
+<li>Curse of dimensionality</li>
+<li>Bias-variance tradeoff in feature selection</li>
+<li>Cross-validation in feature selection</li>
+<li>Feature importance in tree-based models</li>
+<li>Regularization methods (L1/L2) for automatic feature selection</li>
+</ul>
+<p>Understanding mutual information filtering's behavior with redundant features is crucial for building robust machine learning pipelines and demonstrates sophisticated knowledge of feature selection methodology that interviewers value highly.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_057.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_089.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_057.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_089.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,805 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>L1 vs L2 Regularization: Understanding Ridge, Lasso, and the Art of Model Generalization - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_088.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="l1-vs-l2-regularization-understanding-ridge-lasso-and-the-art-of-model-generalization"><a class="header" href="#l1-vs-l2-regularization-understanding-ridge-lasso-and-the-art-of-model-generalization">L1 vs L2 Regularization: Understanding Ridge, Lasso, and the Art of Model Generalization</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>Google/Meta/OpenAI</strong>: "Explain the difference between L1 and L2 regularization. When would you use each?"</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question is fundamental to understanding modern machine learning and is asked frequently at top tech companies because it tests multiple critical competencies:</p>
+<p><strong>Mathematical Foundation</strong>: Can you explain the mathematical differences between L1 and L2 penalties and their geometric interpretations? This demonstrates your understanding of optimization theory and linear algebra.</p>
+<p><strong>Practical ML Experience</strong>: Do you understand the real-world implications of regularization choices? Can you explain when sparse models are preferable vs when you want to shrink all coefficients uniformly?</p>
+<p><strong>Model Selection Intuition</strong>: Can you reason about bias-variance trade-offs and explain how regularization affects model complexity? This shows deep understanding of generalization principles.</p>
+<p><strong>Feature Engineering Insight</strong>: Do you understand how L1 regularization can perform automatic feature selection, while L2 regularization preserves all features? This is crucial for building interpretable models in production.</p>
+<p>Companies like Google use this question because regularization choices directly impact model performance, interpretability, and computational efficiency in production systems. A candidate who deeply understands regularization can make informed decisions about model architecture and hyperparameter tuning.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<h3 id="what-is-regularization"><a class="header" href="#what-is-regularization">What is Regularization?</a></h3>
+<p><strong>Regularization</strong> is a technique used to prevent overfitting by adding a penalty term to the loss function that discourages model complexity. Think of it as a "complexity tax" that forces the model to find simpler solutions.</p>
+<p>The general form of a regularized loss function is:</p>
+<pre><code>Total Loss = Original Loss + λ × Regularization Penalty
+</code></pre>
+<p>Where λ (lambda) is the <strong>regularization strength</strong> - a hyperparameter that controls how much we penalize complexity.</p>
+<h3 id="the-overfitting-problem"><a class="header" href="#the-overfitting-problem">The Overfitting Problem</a></h3>
+<p>Before diving into L1 vs L2, it's crucial to understand why we need regularization at all:</p>
+<p><strong>Overfitting</strong>: When a model learns the training data too well, including noise and irrelevant patterns, resulting in poor performance on new, unseen data.</p>
+<p><strong>Symptoms of Overfitting</strong>:</p>
+<ul>
+<li>Training accuracy is much higher than validation accuracy</li>
+<li>Model performs poorly on test data</li>
+<li>Model has learned noise rather than signal</li>
+<li>Very complex models with many parameters</li>
+</ul>
+<p><strong>The Training Paradox</strong>: More complex models can achieve lower training error but often generalize worse to new data.</p>
+<h3 id="key-terminology"><a class="header" href="#key-terminology">Key Terminology</a></h3>
+<ul>
+<li><strong>L1 Norm (Manhattan Distance)</strong>: Sum of absolute values: ||w||₁ = |w₁| + |w₂| + ... + |wₙ|</li>
+<li><strong>L2 Norm (Euclidean Distance)</strong>: Square root of sum of squares: ||w||₂ = √(w₁² + w₂² + ... + wₙ²)</li>
+<li><strong>Sparsity</strong>: A sparse model has many coefficients equal to exactly zero</li>
+<li><strong>Feature Selection</strong>: The process of identifying which features are most important</li>
+<li><strong>Shrinkage</strong>: Reducing the magnitude of model parameters toward zero</li>
+</ul>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="l2-regularization-ridge-regression"><a class="header" href="#l2-regularization-ridge-regression">L2 Regularization (Ridge Regression)</a></h3>
+<p><strong>Mathematical Definition</strong>:
+L2 regularization adds the square of the magnitude of coefficients as a penalty term:</p>
+<pre><code>L2 Penalty = λ × Σ(wi²)
+Total Loss = Original Loss + λ × Σ(wi²)
+</code></pre>
+<p><strong>Key Characteristics</strong>:</p>
+<ul>
+<li>Penalizes the <strong>squared</strong> values of parameters</li>
+<li>Shrinks coefficients toward zero but <strong>never exactly to zero</strong></li>
+<li>Prefers solutions where all features contribute small amounts</li>
+<li>Smooth, differentiable penalty function</li>
+</ul>
+<p><strong>Geometric Interpretation</strong>:
+In the parameter space, L2 regularization constrains solutions to lie within a <strong>circle</strong> (in 2D) or <strong>hypersphere</strong> (in higher dimensions). This circular constraint leads to solutions where no single parameter dominates.</p>
+<p><strong>The Ridge Regression Solution</strong>:
+For linear regression, Ridge has a closed-form solution:</p>
+<pre><code>w = (X^T X + λI)^(-1) X^T y
+</code></pre>
+<p>The λI term ensures the matrix is invertible even when X^T X is singular.</p>
+<h3 id="l1-regularization-lasso-regression"><a class="header" href="#l1-regularization-lasso-regression">L1 Regularization (Lasso Regression)</a></h3>
+<p><strong>Mathematical Definition</strong>:
+L1 regularization adds the sum of absolute values of coefficients as a penalty:</p>
+<pre><code>L1 Penalty = λ × Σ|wi|
+Total Loss = Original Loss + λ × Σ|wi|
+</code></pre>
+<p><strong>Key Characteristics</strong>:</p>
+<ul>
+<li>Penalizes the <strong>absolute</strong> values of parameters</li>
+<li>Can drive coefficients to <strong>exactly zero</strong></li>
+<li>Performs automatic feature selection</li>
+<li>Creates sparse models</li>
+<li>Non-differentiable at zero (requires specialized optimization)</li>
+</ul>
+<p><strong>Geometric Interpretation</strong>:
+L1 regularization constrains solutions to lie within a <strong>diamond</strong> (in 2D) or <strong>hyperoctahedron</strong> (in higher dimensions). The sharp corners of this constraint often intersect the optimal solution at points where some coordinates are exactly zero.</p>
+<h3 id="the-crucial-geometric-difference"><a class="header" href="#the-crucial-geometric-difference">The Crucial Geometric Difference</a></h3>
+<p><strong>Why L1 Creates Sparsity and L2 Doesn't</strong>:</p>
+<p>Imagine you're trying to minimize a loss function subject to staying within a constraint region:</p>
+<p><strong>L2 Constraint (Circle)</strong>: The optimal point typically lies on the smooth, curved boundary. Since circles have no corners, the solution rarely has coordinates that are exactly zero.</p>
+<p><strong>L1 Constraint (Diamond)</strong>: The diamond has sharp corners at the axes where coordinates are zero. The optimal point often occurs at these corners, resulting in sparse solutions.</p>
+<p><strong>Visual Analogy</strong>: Think of L1 as a diamond-shaped fence and L2 as a circular fence around your house. If you're trying to get as close as possible to a point outside the fence, with a circular fence you'll rarely end up exactly on the north-south or east-west axis. But with a diamond fence, you often end up at a corner where one coordinate is zero.</p>
+<h3 id="mathematical-behavior-comparison"><a class="header" href="#mathematical-behavior-comparison">Mathematical Behavior Comparison</a></h3>
+<p><strong>Small Coefficients</strong>:</p>
+<ul>
+<li>L1: Aggressive shrinkage, often to exactly zero</li>
+<li>L2: Gentle, proportional shrinkage</li>
+</ul>
+<p><strong>Large Coefficients</strong>:</p>
+<ul>
+<li>L1: Less aggressive shrinkage for large values</li>
+<li>L2: Stronger penalty for large values due to squaring</li>
+</ul>
+<p><strong>Optimization Landscape</strong>:</p>
+<ul>
+<li>L1: Non-smooth, requires specialized algorithms (coordinate descent, proximal methods)</li>
+<li>L2: Smooth, amenable to gradient-based methods</li>
+</ul>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="when-to-use-l2-regularization-ridge"><a class="header" href="#when-to-use-l2-regularization-ridge">When to Use L2 Regularization (Ridge)</a></h3>
+<p><strong>Scenario 1: When All Features are Potentially Relevant</strong></p>
+<pre><code class="language-python"># Example: Predicting house prices with many potentially relevant features
+from sklearn.linear_model import Ridge
+
+# Ridge regression - keeps all features but shrinks coefficients
+ridge = Ridge(alpha=1.0)  # alpha is the λ parameter
+ridge.fit(X_train, y_train)
+
+# All coefficients will be non-zero but small
+print(f"Non-zero coefficients: {np.sum(ridge.coef_ != 0)}")  # Usually equals number of features
+</code></pre>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li><strong>Image Recognition</strong>: Pixel values are all potentially informative</li>
+<li><strong>Text Analysis</strong>: Most words might carry some signal</li>
+<li><strong>Sensor Data</strong>: Multiple sensors providing correlated but useful information</li>
+<li><strong>Financial Modeling</strong>: Various economic indicators all potentially relevant</li>
+</ul>
+<p><strong>Advantages of Ridge</strong>:</p>
+<ul>
+<li>Numerical stability (always has a solution)</li>
+<li>Handles multicollinearity well</li>
+<li>Uses all available information</li>
+<li>Smooth optimization landscape</li>
+</ul>
+<h3 id="when-to-use-l1-regularization-lasso"><a class="header" href="#when-to-use-l1-regularization-lasso">When to Use L1 Regularization (Lasso)</a></h3>
+<p><strong>Scenario 1: When You Need Feature Selection</strong></p>
+<pre><code class="language-python"># Example: Gene expression data with thousands of features
+from sklearn.linear_model import Lasso
+
+# Lasso regression - automatically selects relevant genes
+lasso = Lasso(alpha=0.1)
+lasso.fit(X_train, y_train)
+
+# Many coefficients will be exactly zero
+selected_features = np.where(lasso.coef_ != 0)[0]
+print(f"Selected {len(selected_features)} out of {X_train.shape[1]} features")
+</code></pre>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li><strong>Genomics</strong>: Identifying relevant genes from thousands</li>
+<li><strong>High-Dimensional Data</strong>: When you have more features than samples</li>
+<li><strong>Interpretable Models</strong>: When you need to explain which features matter</li>
+<li><strong>Feature Engineering</strong>: Automatic selection from engineered features</li>
+</ul>
+<p><strong>Advantages of Lasso</strong>:</p>
+<ul>
+<li>Automatic feature selection</li>
+<li>Interpretable sparse models</li>
+<li>Reduces overfitting in high-dimensional settings</li>
+<li>Computational efficiency (fewer non-zero coefficients)</li>
+</ul>
+<h3 id="real-world-industry-examples"><a class="header" href="#real-world-industry-examples">Real-World Industry Examples</a></h3>
+<p><strong>Computer Vision at Meta/Facebook</strong>:</p>
+<ul>
+<li><strong>L2 for CNN Training</strong>: Ridge-like weight decay prevents overfitting in deep networks</li>
+<li><strong>L1 for Model Compression</strong>: Sparse neural networks for mobile deployment</li>
+</ul>
+<p><strong>Natural Language Processing at Google</strong>:</p>
+<ul>
+<li><strong>L2 for Transformer Models</strong>: Weight decay in BERT and GPT training</li>
+<li><strong>L1 for Feature Selection</strong>: Identifying relevant n-grams in text classification</li>
+</ul>
+<p><strong>Recommendation Systems at Netflix</strong>:</p>
+<ul>
+<li><strong>L2 for Matrix Factorization</strong>: Prevents overfitting in collaborative filtering</li>
+<li><strong>L1 for Content Features</strong>: Selecting relevant movie/user attributes</li>
+</ul>
+<p><strong>Financial Risk Models at JPMorgan</strong>:</p>
+<ul>
+<li><strong>L1 for Factor Selection</strong>: Identifying key economic indicators</li>
+<li><strong>L2 for Stable Predictions</strong>: Ensuring model robustness</li>
+</ul>
+<h3 id="code-examples---complete-implementation"><a class="header" href="#code-examples---complete-implementation">Code Examples - Complete Implementation</a></h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_regression
+from sklearn.linear_model import Ridge, Lasso, ElasticNet
+from sklearn.model_selection import cross_val_score
+from sklearn.preprocessing import StandardScaler
+
+# Generate synthetic data
+X, y = make_regression(n_samples=100, n_features=20, noise=0.1, random_state=42)
+X = StandardScaler().fit_transform(X)
+
+# Compare different regularization approaches
+alphas = np.logspace(-3, 2, 50)
+ridge_scores = []
+lasso_scores = []
+
+for alpha in alphas:
+    # Ridge regression
+    ridge = Ridge(alpha=alpha)
+    ridge_cv = cross_val_score(ridge, X, y, cv=5, scoring='r2')
+    ridge_scores.append(ridge_cv.mean())
+    
+    # Lasso regression
+    lasso = Lasso(alpha=alpha, max_iter=10000)
+    lasso_cv = cross_val_score(lasso, X, y, cv=5, scoring='r2')
+    lasso_scores.append(lasso_cv.mean())
+
+# Find optimal regularization strengths
+optimal_ridge_alpha = alphas[np.argmax(ridge_scores)]
+optimal_lasso_alpha = alphas[np.argmax(lasso_scores)]
+
+print(f"Optimal Ridge alpha: {optimal_ridge_alpha:.4f}")
+print(f"Optimal Lasso alpha: {optimal_lasso_alpha:.4f}")
+
+# Compare coefficient paths
+ridge_final = Ridge(alpha=optimal_ridge_alpha).fit(X, y)
+lasso_final = Lasso(alpha=optimal_lasso_alpha).fit(X, y)
+
+print(f"Ridge non-zero coefficients: {np.sum(np.abs(ridge_final.coef_) &gt; 1e-5)}")
+print(f"Lasso non-zero coefficients: {np.sum(np.abs(lasso_final.coef_) &gt; 1e-5)}")
+</code></pre>
+<h3 id="performance-comparison-framework"><a class="header" href="#performance-comparison-framework">Performance Comparison Framework</a></h3>
+<pre><code class="language-python">def compare_regularization_methods(X, y, test_size=0.2):
+    """
+    Comprehensive comparison of regularization methods
+    """
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import mean_squared_error, r2_score
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
+    
+    models = {
+        'Ridge': Ridge(alpha=1.0),
+        'Lasso': Lasso(alpha=0.1),
+        'ElasticNet': ElasticNet(alpha=0.1, l1_ratio=0.5),
+        'No Regularization': Ridge(alpha=0.0)  # Equivalent to ordinary linear regression
+    }
+    
+    results = {}
+    
+    for name, model in models.items():
+        # Fit model
+        model.fit(X_train, y_train)
+        
+        # Make predictions
+        y_pred = model.predict(X_test)
+        
+        # Calculate metrics
+        mse = mean_squared_error(y_test, y_pred)
+        r2 = r2_score(y_test, y_pred)
+        n_features = np.sum(np.abs(model.coef_) &gt; 1e-5)
+        
+        results[name] = {
+            'MSE': mse,
+            'R²': r2,
+            'Features Used': n_features,
+            'Max Coefficient': np.max(np.abs(model.coef_)),
+            'Coefficient Std': np.std(model.coef_)
+        }
+    
+    return results
+</code></pre>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<h3 id="optimization-perspective"><a class="header" href="#optimization-perspective">Optimization Perspective</a></h3>
+<p><strong>Ridge Regression Optimization</strong>:
+The Ridge problem can be solved using calculus since the L2 penalty is differentiable:</p>
+<pre><code>∂/∂w [||y - Xw||² + λ||w||²] = -2X^T(y - Xw) + 2λw = 0
+</code></pre>
+<p>Solving for w gives the closed-form solution:</p>
+<pre><code>w* = (X^T X + λI)^(-1) X^T y
+</code></pre>
+<p><strong>Lasso Optimization</strong>:
+The L1 penalty is not differentiable at zero, requiring specialized optimization techniques:</p>
+<ul>
+<li><strong>Coordinate Descent</strong>: Optimize one parameter at a time</li>
+<li><strong>Proximal Gradient Methods</strong>: Handle the non-smooth penalty</li>
+<li><strong>LARS (Least Angle Regression)</strong>: Efficiently compute the entire Lasso path</li>
+</ul>
+<h3 id="bayesian-interpretation"><a class="header" href="#bayesian-interpretation">Bayesian Interpretation</a></h3>
+<p>Regularization has an elegant Bayesian interpretation:</p>
+<p><strong>Ridge (L2) = Gaussian Prior</strong>:
+L2 regularization is equivalent to placing a Gaussian prior on the coefficients:</p>
+<pre><code>p(w) ∝ exp(-λ||w||²) = Normal(0, σ²I)
+</code></pre>
+<p><strong>Lasso (L1) = Laplace Prior</strong>:
+L1 regularization corresponds to a Laplace (double exponential) prior:</p>
+<pre><code>p(w) ∝ exp(-λ||w||₁)
+</code></pre>
+<p>The Laplace distribution has more probability mass at zero, explaining why L1 produces sparse solutions.</p>
+<h3 id="degrees-of-freedom"><a class="header" href="#degrees-of-freedom">Degrees of Freedom</a></h3>
+<p><strong>Ridge Regression</strong>:
+The effective degrees of freedom for Ridge regression is:</p>
+<pre><code>df(λ) = tr[X(X^T X + λI)^(-1 X^T]
+</code></pre>
+<p>As λ increases, degrees of freedom decrease smoothly from p (number of features) to 0.</p>
+<p><strong>Lasso Regression</strong>:
+For Lasso, the degrees of freedom equals the number of non-zero coefficients in the solution, providing a more intuitive measure of model complexity.</p>
+<h3 id="computational-complexity"><a class="header" href="#computational-complexity">Computational Complexity</a></h3>
+<p><strong>Ridge</strong>:</p>
+<ul>
+<li><strong>Training</strong>: O(p³) for matrix inversion, O(np²) for large n</li>
+<li><strong>Prediction</strong>: O(p) per sample</li>
+<li><strong>Memory</strong>: O(p²) for storing (X^T X + λI)</li>
+</ul>
+<p><strong>Lasso</strong>:</p>
+<ul>
+<li><strong>Training</strong>: O(p × iterations) for coordinate descent</li>
+<li><strong>Prediction</strong>: O(k) where k is number of selected features</li>
+<li><strong>Memory</strong>: O(np) for coordinate descent</li>
+</ul>
+<h2 id="elastic-net-the-best-of-both-worlds"><a class="header" href="#elastic-net-the-best-of-both-worlds">Elastic Net: The Best of Both Worlds</a></h2>
+<h3 id="mathematical-definition"><a class="header" href="#mathematical-definition">Mathematical Definition</a></h3>
+<p>Elastic Net combines L1 and L2 penalties:</p>
+<pre><code>Elastic Net Penalty = λ₁||w||₁ + λ₂||w||²
+</code></pre>
+<p>Often parameterized as:</p>
+<pre><code>Penalty = λ × [α||w||₁ + (1-α)||w||²]
+</code></pre>
+<p>Where α ∈ [0,1] controls the balance between L1 and L2.</p>
+<h3 id="when-to-use-elastic-net"><a class="header" href="#when-to-use-elastic-net">When to Use Elastic Net</a></h3>
+<p><strong>Scenario 1: Correlated Features with Sparsity Needs</strong></p>
+<pre><code class="language-python">from sklearn.linear_model import ElasticNet
+
+# Elastic Net balances feature selection with stability
+elastic = ElasticNet(alpha=0.1, l1_ratio=0.5)  # 50% L1, 50% L2
+elastic.fit(X_train, y_train)
+</code></pre>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li><strong>Genomics with Gene Groups</strong>: Related genes should be selected together</li>
+<li><strong>Financial Data</strong>: Economic indicators are often correlated</li>
+<li><strong>Text Mining</strong>: Related terms should be handled gracefully</li>
+<li><strong>Image Processing</strong>: Spatially correlated pixels</li>
+</ul>
+<p><strong>Advantages of Elastic Net</strong>:</p>
+<ul>
+<li>Groups correlated features together</li>
+<li>More stable than pure Lasso</li>
+<li>Still performs feature selection</li>
+<li>Handles multicollinearity better than Lasso</li>
+</ul>
+<h3 id="parameter-selection-guidelines"><a class="header" href="#parameter-selection-guidelines">Parameter Selection Guidelines</a></h3>
+<p><strong>α (L1 ratio) Selection</strong>:</p>
+<ul>
+<li><strong>α = 1</strong>: Pure Lasso (maximum sparsity)</li>
+<li><strong>α = 0.5</strong>: Balanced approach (recommended starting point)</li>
+<li><strong>α = 0</strong>: Pure Ridge (no feature selection)</li>
+</ul>
+<p><strong>λ (Overall regularization strength)</strong>:</p>
+<ul>
+<li>Use cross-validation to select optimal value</li>
+<li>Start with λ = 1.0 and adjust based on validation performance</li>
+</ul>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="misconception-1-l1-is-always-better-for-feature-selection"><a class="header" href="#misconception-1-l1-is-always-better-for-feature-selection">Misconception 1: "L1 is Always Better for Feature Selection"</a></h3>
+<p><strong>Reality</strong>: L1 can be unstable when features are highly correlated. If two features are perfectly correlated, Lasso arbitrarily chooses one and sets the other to zero.</p>
+<p><strong>Example Problem</strong>:</p>
+<pre><code class="language-python"># Highly correlated features - Lasso becomes unstable
+X1 = np.random.randn(100, 1)
+X2 = X1 + 0.01 * np.random.randn(100, 1)  # Almost identical to X1
+X_corr = np.column_stack([X1, X2])
+</code></pre>
+<p><strong>Solution</strong>: Use Elastic Net or grouped selection methods.</p>
+<h3 id="misconception-2-ridge-doesnt-do-feature-selection"><a class="header" href="#misconception-2-ridge-doesnt-do-feature-selection">Misconception 2: "Ridge Doesn't Do Feature Selection"</a></h3>
+<p><strong>Reality</strong>: While Ridge doesn't set coefficients to exactly zero, it can effectively perform feature selection by making irrelevant coefficients extremely small.</p>
+<p><strong>Practical Impact</strong>: Coefficients smaller than machine precision are effectively zero in practice.</p>
+<h3 id="misconception-3-regularization-always-improves-performance"><a class="header" href="#misconception-3-regularization-always-improves-performance">Misconception 3: "Regularization Always Improves Performance"</a></h3>
+<p><strong>Reality</strong>: If the true model is simple and you have enough data, regularization might hurt performance by introducing bias.</p>
+<p><strong>When to Avoid Regularization</strong>:</p>
+<ul>
+<li>Very simple underlying relationships</li>
+<li>Abundant training data relative to model complexity</li>
+<li>When interpretability isn't important and computational resources are unlimited</li>
+</ul>
+<h3 id="misconception-4-higher-λ-is-always-better-for-generalization"><a class="header" href="#misconception-4-higher-λ-is-always-better-for-generalization">Misconception 4: "Higher λ is Always Better for Generalization"</a></h3>
+<p><strong>Reality</strong>: Too much regularization leads to underfitting. The optimal λ balances bias and variance.</p>
+<p><strong>Finding the Sweet Spot</strong>:</p>
+<pre><code class="language-python">from sklearn.model_selection import validation_curve
+
+# Plot validation curve to find optimal regularization
+train_scores, val_scores = validation_curve(
+    Ridge(), X, y, param_name='alpha', 
+    param_range=np.logspace(-3, 2, 20), cv=5
+)
+</code></pre>
+<h3 id="misconception-5-l1-and-l2-only-apply-to-linear-models"><a class="header" href="#misconception-5-l1-and-l2-only-apply-to-linear-models">Misconception 5: "L1 and L2 Only Apply to Linear Models"</a></h3>
+<p><strong>Reality</strong>: Regularization principles apply to all model types:</p>
+<p><strong>Neural Networks</strong>: Weight decay (L2) and dropout (approximates L1)
+<strong>Tree Models</strong>: Pruning is a form of regularization
+<strong>SVMs</strong>: The C parameter controls regularization strength</p>
+<h2 id="feature-scaling-and-preprocessing"><a class="header" href="#feature-scaling-and-preprocessing">Feature Scaling and Preprocessing</a></h2>
+<h3 id="critical-importance-of-scaling"><a class="header" href="#critical-importance-of-scaling">Critical Importance of Scaling</a></h3>
+<p><strong>Why Scaling Matters</strong>:
+Regularization penalties are applied equally to all coefficients, but features with different scales will have naturally different coefficient magnitudes.</p>
+<p><strong>Example Problem</strong>:</p>
+<pre><code class="language-python"># Without scaling - regularization affects features unequally
+X_unscaled = np.column_stack([
+    np.random.randn(100),      # Feature 1: mean=0, std=1
+    1000 * np.random.randn(100)  # Feature 2: mean=0, std=1000
+])
+
+# Feature 2 will have coefficients ~1000x smaller than Feature 1
+# Regularization will disproportionately penalize Feature 2
+</code></pre>
+<p><strong>Solution - Always Scale Features</strong>:</p>
+<pre><code class="language-python">from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Now regularization treats all features equally
+</code></pre>
+<h3 id="preprocessing-best-practices"><a class="header" href="#preprocessing-best-practices">Preprocessing Best Practices</a></h3>
+<p><strong>Feature Scaling Methods</strong>:</p>
+<ul>
+<li><strong>StandardScaler</strong>: Mean=0, Std=1 (most common for regularization)</li>
+<li><strong>MinMaxScaler</strong>: Scale to [0,1] range</li>
+<li><strong>RobustScaler</strong>: Uses median and quartiles (robust to outliers)</li>
+</ul>
+<p><strong>When to Scale</strong>:</p>
+<ul>
+<li><strong>Always</strong> for L1 and L2 regularization</li>
+<li><strong>Always</strong> for neural networks</li>
+<li><strong>Often helpful</strong> for distance-based algorithms</li>
+</ul>
+<p><strong>When Scaling Might Not Be Needed</strong>:</p>
+<ul>
+<li>Tree-based models (Random Forest, XGBoost)</li>
+<li>Models that are inherently scale-invariant</li>
+</ul>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="structuring-your-answer"><a class="header" href="#structuring-your-answer">Structuring Your Answer</a></h3>
+<p><strong>1. Start with the Core Difference (1 minute)</strong>
+"L1 and L2 regularization differ in their penalty functions and resulting behavior. L1 uses absolute values and creates sparse solutions, while L2 uses squared values and shrinks all coefficients uniformly."</p>
+<p><strong>2. Explain the Mathematical Foundation (2 minutes)</strong></p>
+<ul>
+<li>L1: Σ|wi| penalty, diamond-shaped constraint region</li>
+<li>L2: Σwi² penalty, circular constraint region</li>
+<li>Why geometry leads to sparsity vs shrinkage</li>
+</ul>
+<p><strong>3. Provide Practical Examples (2 minutes)</strong></p>
+<ul>
+<li>L1: Feature selection in high-dimensional data (genomics, text)</li>
+<li>L2: When all features are relevant (computer vision, sensor data)</li>
+<li>Elastic Net: Correlated features requiring stability</li>
+</ul>
+<p><strong>4. Discuss Trade-offs and Selection Criteria (1 minute)</strong></p>
+<ul>
+<li>Interpretability vs performance</li>
+<li>Computational considerations</li>
+<li>Data characteristics that favor each approach</li>
+</ul>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<p><strong>Mathematical Understanding</strong>: Show you understand the geometric interpretation and why it leads to different behaviors.</p>
+<p><strong>Practical Experience</strong>: Demonstrate knowledge of real-world applications and when to choose each method.</p>
+<p><strong>Nuanced Thinking</strong>: Acknowledge that the choice depends on the specific problem context.</p>
+<p><strong>Modern Perspective</strong>: Mention Elastic Net and extensions like grouped Lasso.</p>
+<h3 id="sample-strong-answer"><a class="header" href="#sample-strong-answer">Sample Strong Answer</a></h3>
+<p>"L1 and L2 regularization differ fundamentally in their penalty structure and resulting model behavior.</p>
+<p>L1 regularization adds the sum of absolute coefficient values as a penalty - λΣ|wi|. Geometrically, this creates a diamond-shaped constraint region. When the optimal solution intersects this diamond, it often occurs at the sharp corners where some coordinates are exactly zero, leading to sparse models that perform automatic feature selection.</p>
+<p>L2 regularization adds the sum of squared coefficients - λΣwi². This creates a circular constraint region with smooth boundaries. Solutions typically don't fall exactly on the axes, so L2 shrinks all coefficients toward zero but rarely sets them to exactly zero.</p>
+<p>In practice, I'd use L1 when I need interpretable models with automatic feature selection - like identifying relevant genes in genomics data or important features in high-dimensional datasets. L2 is better when all features are potentially relevant and I want stable, robust models - like in computer vision where most pixels carry information.</p>
+<p>For real-world applications, I often start with Elastic Net, which combines both penalties. This gives me the sparsity benefits of L1 while avoiding its instability with correlated features. The key is always to use cross-validation to select the optimal regularization strength and to ensure features are properly scaled before applying regularization."</p>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<p><strong>"How would you choose the regularization parameter λ?"</strong></p>
+<ul>
+<li>Cross-validation is the gold standard</li>
+<li>Start with λ=1.0 and search logarithmically</li>
+<li>Use validation curves to visualize bias-variance trade-off</li>
+</ul>
+<p><strong>"What's the difference between Ridge and ordinary least squares?"</strong></p>
+<ul>
+<li>Ridge adds bias to reduce variance</li>
+<li>Handles multicollinearity and singular matrices</li>
+<li>Always has a unique solution</li>
+</ul>
+<p><strong>"Can you explain why Lasso sometimes removes correlated features arbitrarily?"</strong></p>
+<ul>
+<li>When features are highly correlated, multiple solutions exist</li>
+<li>Lasso picks one arbitrarily based on numerical precision</li>
+<li>Elastic Net addresses this by grouping correlated features</li>
+</ul>
+<p><strong>"How does regularization relate to the bias-variance trade-off?"</strong></p>
+<ul>
+<li>Regularization increases bias but reduces variance</li>
+<li>Optimal λ minimizes total error = bias² + variance + noise</li>
+<li>Under-regularization leads to overfitting (high variance)</li>
+<li>Over-regularization leads to underfitting (high bias)</li>
+</ul>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<p><strong>Oversimplification</strong>: Don't just say "L1 for feature selection, L2 for shrinkage" without explaining why.</p>
+<p><strong>Ignoring Preprocessing</strong>: Failing to mention the importance of feature scaling shows lack of practical experience.</p>
+<p><strong>No Trade-off Discussion</strong>: Not acknowledging that regularization introduces bias in exchange for reduced variance.</p>
+<p><strong>Missing Modern Context</strong>: Not mentioning Elastic Net or other modern regularization techniques.</p>
+<p><strong>Theoretical Only</strong>: Focusing purely on math without practical applications or real-world considerations.</p>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<h3 id="advanced-regularization-techniques"><a class="header" href="#advanced-regularization-techniques">Advanced Regularization Techniques</a></h3>
+<p><strong>Group Lasso</strong>: Selects or removes entire groups of related features simultaneously.</p>
+<p><strong>Fused Lasso</strong>: Encourages sparsity in both coefficients and their differences (useful for ordered features).</p>
+<p><strong>Adaptive Lasso</strong>: Weights the L1 penalty based on preliminary coefficient estimates.</p>
+<p><strong>Nuclear Norm Regularization</strong>: Matrix completion and low-rank approximation.</p>
+<h3 id="regularization-in-deep-learning"><a class="header" href="#regularization-in-deep-learning">Regularization in Deep Learning</a></h3>
+<p><strong>Weight Decay</strong>: L2 regularization applied to neural network weights.</p>
+<p><strong>Dropout</strong>: Randomly setting neurons to zero during training (approximates L1-like sparsity).</p>
+<p><strong>Batch Normalization</strong>: Implicit regularization through normalization.</p>
+<p><strong>Early Stopping</strong>: Preventing overfitting by stopping training before convergence.</p>
+<h3 id="cross-validation-and-model-selection"><a class="header" href="#cross-validation-and-model-selection">Cross-Validation and Model Selection</a></h3>
+<p><strong>K-Fold Cross-Validation</strong>: Standard approach for selecting regularization parameters.</p>
+<p><strong>Leave-One-Out</strong>: Computationally efficient for Ridge regression (has closed form).</p>
+<p><strong>Time Series Validation</strong>: Special considerations for temporal data.</p>
+<p><strong>Nested Cross-Validation</strong>: Avoiding selection bias in model comparison.</p>
+<h3 id="computational-considerations"><a class="header" href="#computational-considerations">Computational Considerations</a></h3>
+<p><strong>Coordinate Descent</strong>: Efficient algorithm for Lasso optimization.</p>
+<p><strong>Proximal Gradient Methods</strong>: General framework for non-smooth optimization.</p>
+<p><strong>Warm Starts</strong>: Initializing optimization with previous solutions for different λ values.</p>
+<p><strong>Regularization Paths</strong>: Computing solutions for all λ values efficiently.</p>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="essential-papers"><a class="header" href="#essential-papers">Essential Papers</a></h3>
+<p><strong>Theoretical Foundations</strong>:</p>
+<ul>
+<li>"Regression Shrinkage and Selection via the Lasso" (Tibshirani, 1996) - The original Lasso paper</li>
+<li>"Regularization and Variable Selection via the Elastic Net" (Zou &amp; Hastie, 2005) - Elastic Net introduction</li>
+<li>"The Elements of Statistical Learning" (Hastie, Tibshirani, Friedman) - Comprehensive treatment</li>
+</ul>
+<p><strong>Computational Methods</strong>:</p>
+<ul>
+<li>"Coordinate Descent Algorithms for Lasso Penalized Regression" (Wu &amp; Lange, 2008)</li>
+<li>"LARS: Least Angle Regression" (Efron et al., 2004) - Efficient Lasso computation</li>
+<li>"Proximal Algorithms" (Parikh &amp; Boyd, 2014) - General optimization framework</li>
+</ul>
+<h3 id="practical-resources"><a class="header" href="#practical-resources">Practical Resources</a></h3>
+<p><strong>Implementation Guides</strong>:</p>
+<ul>
+<li><strong>Scikit-learn Documentation</strong>: Comprehensive examples and parameter guides</li>
+<li><strong>Glmnet Package</strong>: R implementation with extensive documentation</li>
+<li><strong>TensorFlow/PyTorch</strong>: Regularization in deep learning contexts</li>
+</ul>
+<p><strong>Online Courses</strong>:</p>
+<ul>
+<li><strong>Andrew Ng's Machine Learning Course</strong>: Clear explanations of regularization concepts</li>
+<li><strong>Stanford CS229</strong>: Mathematical foundations and derivations</li>
+<li><strong>Fast.ai</strong>: Practical deep learning regularization techniques</li>
+</ul>
+<h3 id="advanced-topics"><a class="header" href="#advanced-topics">Advanced Topics</a></h3>
+<p><strong>Statistical Theory</strong>:</p>
+<ul>
+<li>"High-Dimensional Statistics" (Wainwright, 2019) - Theory for p &gt;&gt; n settings</li>
+<li>"Statistical Learning with Sparsity" (Hastie, Tibshirani, Wainwright, 2015) - Comprehensive sparsity treatment</li>
+</ul>
+<p><strong>Applications</strong>:</p>
+<ul>
+<li><strong>Bioinformatics</strong>: "Penalized Methods for Bi-level Variable Selection" (Breheny &amp; Huang, 2009)</li>
+<li><strong>Signal Processing</strong>: "Sparse Signal Recovery with Exponential-Family Noise" (Plan &amp; Vershynin, 2016)</li>
+<li><strong>Economics</strong>: "Machine Learning Methods for Economic Analysis" (Mullainathan &amp; Spiess, 2017)</li>
+</ul>
+<h3 id="software-and-tools"><a class="header" href="#software-and-tools">Software and Tools</a></h3>
+<p><strong>Python Libraries</strong>:</p>
+<ul>
+<li><strong>scikit-learn</strong>: Standard implementation with extensive documentation</li>
+<li><strong>statsmodels</strong>: Statistical focus with detailed model summaries</li>
+<li><strong>scipy.optimize</strong>: Lower-level optimization routines</li>
+</ul>
+<p><strong>R Packages</strong>:</p>
+<ul>
+<li><strong>glmnet</strong>: Fast and efficient regularized regression</li>
+<li><strong>lars</strong>: Least angle regression implementation</li>
+<li><strong>elasticnet</strong>: Elastic net with various algorithms</li>
+</ul>
+<p><strong>Specialized Tools</strong>:</p>
+<ul>
+<li><strong>CVX/CVXPY</strong>: Convex optimization for custom regularization</li>
+<li><strong>TensorFlow Probability</strong>: Bayesian perspective on regularization</li>
+<li><strong>JAX</strong>: Automatic differentiation for custom regularization terms</li>
+</ul>
+<p>Understanding L1 and L2 regularization deeply will make you a more effective machine learning practitioner. These techniques are foundational to modern ML and appear everywhere from linear models to deep neural networks. The key is understanding not just what they do, but why they work and when to apply them in real-world scenarios.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_087.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_091.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_087.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_091.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

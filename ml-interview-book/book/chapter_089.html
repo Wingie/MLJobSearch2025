@@ -1,0 +1,640 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Handling Missing Data: A Complete Guide to Imputation Strategies - Machine Learning Interview Questions: Complete Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Comprehensive answers to 189 ML interview questions from top tech companies">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Machine Learning Interview Questions: Complete Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/wingston/MLJobSearch2025/edit/main/ml-interview-book/src/chapter_089.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="handling-missing-data-a-complete-guide-to-imputation-strategies"><a class="header" href="#handling-missing-data-a-complete-guide-to-imputation-strategies">Handling Missing Data: A Complete Guide to Imputation Strategies</a></h1>
+<h2 id="the-interview-question"><a class="header" href="#the-interview-question">The Interview Question</a></h2>
+<blockquote>
+<p><strong>Google/Meta/Netflix</strong>: "How would you handle missing data in a dataset? Compare different imputation strategies."</p>
+</blockquote>
+<h2 id="why-this-question-matters"><a class="header" href="#why-this-question-matters">Why This Question Matters</a></h2>
+<p>This question is fundamental to real-world machine learning and data science because it tests several critical skills:</p>
+<ul>
+<li><strong>Data quality awareness</strong>: Do you understand that real data is messy and incomplete?</li>
+<li><strong>Statistical foundation</strong>: Can you distinguish between different types of missingness and their implications?</li>
+<li><strong>Practical decision-making</strong>: Do you know when to drop data versus when to impute it?</li>
+<li><strong>Method selection</strong>: Can you choose appropriate imputation techniques based on data characteristics?</li>
+<li><strong>Bias prevention</strong>: Do you understand how poor missing data handling can corrupt your results?</li>
+</ul>
+<p>Companies ask this because missing data is ubiquitous in production systems. A candidate who deeply understands missing data handling demonstrates experience with real-world data challenges and the statistical rigor needed for reliable ML systems. Poor handling of missing data can lead to biased models, incorrect business decisions, and failed product launches.</p>
+<h2 id="fundamental-concepts"><a class="header" href="#fundamental-concepts">Fundamental Concepts</a></h2>
+<h3 id="what-is-missing-data"><a class="header" href="#what-is-missing-data">What is Missing Data?</a></h3>
+<p><strong>Missing data</strong> occurs when no data value is stored for a variable in an observation. In datasets, this is typically represented as <code>NaN</code> (Not a Number), <code>NULL</code>, or empty cells. Missing data is not just an inconvenience - it's a fundamental challenge that can dramatically affect the validity of your analysis.</p>
+<h3 id="key-terminology"><a class="header" href="#key-terminology">Key Terminology</a></h3>
+<ul>
+<li><strong>Missingness Pattern</strong>: The specific way data is missing across variables and observations</li>
+<li><strong>Complete Case</strong>: An observation with no missing values across all variables</li>
+<li><strong>Incomplete Case</strong>: An observation with at least one missing value</li>
+<li><strong>Imputation</strong>: The process of replacing missing values with estimated values</li>
+<li><strong>Deletion</strong>: Removing observations or variables with missing data</li>
+<li><strong>Bias</strong>: Systematic error introduced when missing data handling distorts the true relationships</li>
+</ul>
+<h3 id="the-three-types-of-missing-data-mechanisms"><a class="header" href="#the-three-types-of-missing-data-mechanisms">The Three Types of Missing Data Mechanisms</a></h3>
+<p>Understanding WHY data is missing is crucial for choosing the right handling strategy. Statistician Donald Rubin identified three fundamental types:</p>
+<p><strong>1. Missing Completely at Random (MCAR)</strong></p>
+<ul>
+<li>The probability of being missing is the same for all observations</li>
+<li>Missingness is unrelated to any observed or unobserved data</li>
+<li>Example: A sensor battery dies randomly during data collection</li>
+</ul>
+<p><strong>2. Missing at Random (MAR)</strong></p>
+<ul>
+<li>The probability of being missing depends only on observed data</li>
+<li>Once you account for observed variables, missingness is random</li>
+<li>Example: Older patients are less likely to complete digital health surveys</li>
+</ul>
+<p><strong>3. Missing Not at Random (MNAR)</strong></p>
+<ul>
+<li>The probability of being missing depends on the unobserved data itself</li>
+<li>The missing value would predict its own missingness</li>
+<li>Example: People with higher incomes refusing to disclose salary information</li>
+</ul>
+<h2 id="detailed-explanation"><a class="header" href="#detailed-explanation">Detailed Explanation</a></h2>
+<h3 id="understanding-missing-data-through-real-examples"><a class="header" href="#understanding-missing-data-through-real-examples">Understanding Missing Data Through Real Examples</a></h3>
+<p><strong>The Survey Scenario</strong>:
+Imagine conducting a health survey with questions about age, income, exercise habits, and weight. Here's how different missingness types would manifest:</p>
+<p><strong>MCAR Example</strong>: Some surveys get lost in the mail due to postal errors. The lost surveys are completely random - neither age, income, nor health status influences which surveys get lost.</p>
+<p><strong>MAR Example</strong>: Elderly participants (observable age) are less comfortable with technology and skip the online portion of the survey. Once you know someone's age, whether they completed the online section is random.</p>
+<p><strong>MNAR Example</strong>: Participants with higher weights intentionally skip the weight question because they're embarrassed. The missing weight values are directly related to the unobserved weight itself.</p>
+<h3 id="why-missing-data-type-matters"><a class="header" href="#why-missing-data-type-matters">Why Missing Data Type Matters</a></h3>
+<p><strong>Impact on Analysis</strong>:</p>
+<ul>
+<li><strong>MCAR</strong>: Reduces sample size but doesn't introduce bias</li>
+<li><strong>MAR</strong>: Can introduce bias if not handled properly, but correctable with appropriate methods</li>
+<li><strong>MNAR</strong>: Almost always introduces bias and is the hardest to handle correctly</li>
+</ul>
+<p><strong>The Restaurant Rating Analogy</strong>:
+Think of online restaurant reviews with missing ratings:</p>
+<ul>
+<li><strong>MCAR</strong>: Some customers randomly forget to rate (technical glitches, distractions)</li>
+<li><strong>MAR</strong>: Younger customers rate more often than older ones (age is observable)</li>
+<li><strong>MNAR</strong>: Customers only rate when they have extreme experiences (very good or very bad)</li>
+</ul>
+<p>In the MNAR case, the missing ratings aren't random - they're systematically related to the unobserved rating value, making the observed ratings biased.</p>
+<h3 id="simple-imputation-strategies"><a class="header" href="#simple-imputation-strategies">Simple Imputation Strategies</a></h3>
+<p><strong>1. Mean Imputation</strong>
+Replace missing values with the column's mean.</p>
+<pre><code class="language-python"># Simple example
+ages = [25, 30, NaN, 45, 35]
+mean_age = (25 + 30 + 45 + 35) / 4 = 33.75
+# Imputed: [25, 30, 33.75, 45, 35]
+</code></pre>
+<p><strong>Pros</strong>: Simple, preserves sample size, works well for normally distributed data
+<strong>Cons</strong>: Reduces variance, ignores relationships between variables, can introduce bias</p>
+<p><strong>2. Median Imputation</strong>
+Replace missing values with the column's median.</p>
+<p><strong>When to use</strong>: Data is skewed or has outliers
+<strong>Example</strong>: In salary data where a few extremely high salaries skew the mean, median is more representative</p>
+<p><strong>3. Mode Imputation</strong>
+Replace missing values with the most frequent value.</p>
+<p><strong>When to use</strong>: Categorical data
+<strong>Example</strong>: Missing "Department" values in employee data replaced with "Sales" if that's the most common department</p>
+<h3 id="advanced-imputation-techniques"><a class="header" href="#advanced-imputation-techniques">Advanced Imputation Techniques</a></h3>
+<p><strong>1. K-Nearest Neighbors (KNN) Imputation</strong></p>
+<p>KNN finds the k most similar observations and uses their values to impute missing data.</p>
+<p><strong>How it works</strong>:</p>
+<ol>
+<li>For each missing value, find k observations most similar to the incomplete observation</li>
+<li>Use the average (for numerical) or mode (for categorical) of these k neighbors</li>
+<li>Similarity typically measured using Euclidean distance</li>
+</ol>
+<p><strong>Example</strong>: Imputing missing age for a customer</p>
+<ul>
+<li>Find 5 customers most similar in income, education, and location</li>
+<li>Use their average age as the imputed value</li>
+</ul>
+<p><strong>Advantages</strong>:</p>
+<ul>
+<li>Considers relationships between variables</li>
+<li>Works for both numerical and categorical data</li>
+<li>More accurate than simple statistical methods</li>
+</ul>
+<p><strong>Disadvantages</strong>:</p>
+<ul>
+<li>Computationally expensive for large datasets</li>
+<li>Sensitive to the choice of k and distance metric</li>
+<li>Performance degrades with high-dimensional data</li>
+</ul>
+<p><strong>2. Iterative Imputation (MICE)</strong></p>
+<p>Multiple Imputation by Chained Equations treats each variable with missing values as the dependent variable in a regression model.</p>
+<p><strong>How it works</strong>:</p>
+<ol>
+<li>Make initial guess for all missing values (e.g., mean imputation)</li>
+<li>For each variable with missing data:
+<ul>
+<li>Treat it as dependent variable</li>
+<li>Use other variables as predictors in a regression model</li>
+<li>Predict and update missing values</li>
+</ul>
+</li>
+<li>Repeat until convergence</li>
+</ol>
+<p><strong>Example Process</strong>:</p>
+<pre><code>Initial: Age=NaN, Income=50k, Education=College
+Iteration 1: Predict Age using Income + Education → Age=35
+Iteration 2: Use updated Age=35 to improve other predictions
+Continue until predictions stabilize
+</code></pre>
+<p><strong>Advantages</strong>:</p>
+<ul>
+<li>Handles complex relationships between variables</li>
+<li>Provides uncertainty estimates</li>
+<li>Flexible - can use different models for different variables</li>
+</ul>
+<p><strong>Disadvantages</strong>:</p>
+<ul>
+<li>More complex to implement and interpret</li>
+<li>Requires choosing regression models for each variable</li>
+<li>Can be computationally intensive</li>
+</ul>
+<p><strong>3. Model-Based Imputation</strong></p>
+<p>Use machine learning models to predict missing values.</p>
+<p><strong>Random Forest Imputation</strong>:</p>
+<ul>
+<li>Train random forest models where missing variable is the target</li>
+<li>Use other variables as features</li>
+<li>Handles non-linear relationships well</li>
+</ul>
+<p><strong>Deep Learning Imputation</strong>:</p>
+<ul>
+<li>Autoencoders can learn complex patterns for imputation</li>
+<li>Useful for high-dimensional data</li>
+</ul>
+<h2 id="mathematical-foundations"><a class="header" href="#mathematical-foundations">Mathematical Foundations</a></h2>
+<h3 id="the-mathematics-of-bias-in-missing-data"><a class="header" href="#the-mathematics-of-bias-in-missing-data">The Mathematics of Bias in Missing Data</a></h3>
+<p>When data is missing, the observed sample may not represent the population. Let's formalize this:</p>
+<p><strong>Population parameter</strong>: θ (true value we want to estimate)
+<strong>Sample estimate</strong>: θ̂ (what we calculate from our data)</p>
+<p><strong>Bias</strong> = E[θ̂] - θ</p>
+<p>Where E[θ̂] is the expected value of our estimate.</p>
+<p><strong>Under MCAR</strong>: E[θ̂] = θ (unbiased)
+<strong>Under MAR/MNAR</strong>: E[θ̂] ≠ θ (potentially biased)</p>
+<h3 id="mean-imputation-bias-example"><a class="header" href="#mean-imputation-bias-example">Mean Imputation Bias Example</a></h3>
+<p>Suppose we have true values: [10, 20, 30, 40, 50] with mean = 30</p>
+<p>If values &gt;35 are MNAR (missing): [10, 20, 30, NaN, NaN]</p>
+<ul>
+<li>Observed mean = 20</li>
+<li>Mean imputation gives: [10, 20, 30, 20, 20]</li>
+<li>New mean = 20 (biased downward)</li>
+</ul>
+<h3 id="knn-distance-calculation"><a class="header" href="#knn-distance-calculation">KNN Distance Calculation</a></h3>
+<p>For numerical data, KNN typically uses Euclidean distance:</p>
+<p>d(x,y) = √[(x₁-y₁)² + (x₂-y₂)² + ... + (xₙ-yₙ)²]</p>
+<p><strong>Standardization is crucial</strong> because variables with larger scales dominate:</p>
+<ul>
+<li>Income: $50,000 vs $60,000 (difference = 10,000)</li>
+<li>Age: 25 vs 35 (difference = 10)</li>
+</ul>
+<p>Without standardization, income differences would overwhelm age differences in distance calculations.</p>
+<h2 id="practical-applications"><a class="header" href="#practical-applications">Practical Applications</a></h2>
+<h3 id="real-world-industry-examples"><a class="header" href="#real-world-industry-examples">Real-World Industry Examples</a></h3>
+<p><strong>Healthcare Data at Hospital Systems</strong>:</p>
+<ul>
+<li>Patient records often missing lab results, vital signs, or patient history</li>
+<li>MNAR common: Sicker patients more likely to have incomplete records</li>
+<li>Strategy: Use time-aware imputation considering that recent values predict missing ones better</li>
+</ul>
+<p><strong>E-commerce Recommendation Systems</strong>:</p>
+<ul>
+<li>Customer ratings matrix is typically 99%+ sparse (missing)</li>
+<li>MAR assumption: Missing ratings depend on observable user/item characteristics</li>
+<li>Strategy: Matrix factorization techniques that jointly model observed and missing ratings</li>
+</ul>
+<p><strong>Financial Risk Assessment</strong>:</p>
+<ul>
+<li>Credit applications with missing income or employment history</li>
+<li>Often MNAR: People with irregular income more likely to skip employment questions</li>
+<li>Strategy: Careful feature engineering and domain-specific imputation rules</li>
+</ul>
+<h3 id="code-implementation-examples"><a class="header" href="#code-implementation-examples">Code Implementation Examples</a></h3>
+<p><strong>Simple Imputation in Python</strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+from sklearn.impute import SimpleImputer
+
+# Create sample data
+data = pd.DataFrame({
+    'age': [25, 30, np.nan, 45, 35],
+    'income': [50000, np.nan, 75000, 60000, np.nan],
+    'department': ['Sales', 'Engineering', np.nan, 'Sales', 'Marketing']
+})
+
+# Mean imputation for numerical data
+num_imputer = SimpleImputer(strategy='mean')
+data[['age', 'income']] = num_imputer.fit_transform(data[['age', 'income']])
+
+# Mode imputation for categorical data
+cat_imputer = SimpleImputer(strategy='most_frequent')
+data[['department']] = cat_imputer.fit_transform(data[['department']])
+</code></pre>
+<p><strong>KNN Imputation</strong>:</p>
+<pre><code class="language-python">from sklearn.impute import KNNImputer
+
+# KNN imputation with k=3
+knn_imputer = KNNImputer(n_neighbors=3)
+data_imputed = pd.DataFrame(
+    knn_imputer.fit_transform(data),
+    columns=data.columns
+)
+</code></pre>
+<p><strong>MICE Imputation</strong>:</p>
+<pre><code class="language-python">from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+
+# Iterative imputation (MICE)
+mice_imputer = IterativeImputer(random_state=42)
+data_mice = pd.DataFrame(
+    mice_imputer.fit_transform(data),
+    columns=data.columns
+)
+</code></pre>
+<h3 id="performance-considerations"><a class="header" href="#performance-considerations">Performance Considerations</a></h3>
+<p><strong>Computational Complexity</strong>:</p>
+<ul>
+<li><strong>Simple methods</strong>: O(n) - linear in dataset size</li>
+<li><strong>KNN</strong>: O(n²) - quadratic due to distance calculations</li>
+<li><strong>MICE</strong>: O(iterations × variables × n) - depends on convergence</li>
+</ul>
+<p><strong>Memory Requirements</strong>:</p>
+<ul>
+<li><strong>Simple methods</strong>: Minimal additional memory</li>
+<li><strong>KNN</strong>: Stores entire dataset for neighbor search</li>
+<li><strong>MICE</strong>: Multiple copies of dataset during iterations</li>
+</ul>
+<p><strong>When to Use Each Method</strong>:</p>
+<ul>
+<li><strong>&lt;5% missing data</strong>: Simple imputation often sufficient</li>
+<li><strong>5-20% missing data</strong>: KNN or MICE recommended</li>
+<li><strong>&gt;20% missing data</strong>: Consider if imputation is appropriate; may need domain expertise</li>
+</ul>
+<h2 id="common-misconceptions-and-pitfalls"><a class="header" href="#common-misconceptions-and-pitfalls">Common Misconceptions and Pitfalls</a></h2>
+<h3 id="myth-1-mean-imputation-is-safe-because-it-preserves-the-mean"><a class="header" href="#myth-1-mean-imputation-is-safe-because-it-preserves-the-mean">Myth 1: "Mean Imputation is Safe Because It Preserves the Mean"</a></h3>
+<p><strong>Reality</strong>: While mean imputation preserves the variable's mean, it destroys the variance and all relationships with other variables.</p>
+<p><strong>Example</strong>: Original ages [20, 30, 40] have variance = 100. After mean imputation [20, 30, 30, 30, 30], variance = 80. The correlation between age and any other variable will be artificially reduced.</p>
+<h3 id="myth-2-dropping-missing-data-is-always-safer-than-imputing"><a class="header" href="#myth-2-dropping-missing-data-is-always-safer-than-imputing">Myth 2: "Dropping Missing Data is Always Safer Than Imputing"</a></h3>
+<p><strong>Reality</strong>: Dropping data can introduce severe bias, especially under MAR or MNAR conditions.</p>
+<p><strong>Example</strong>: In a salary survey, if high earners systematically skip income questions (MNAR), deleting these observations will bias your salary estimates downward, leading to incorrect business decisions.</p>
+<h3 id="myth-3-advanced-methods-are-always-better"><a class="header" href="#myth-3-advanced-methods-are-always-better">Myth 3: "Advanced Methods Are Always Better"</a></h3>
+<p><strong>Reality</strong>: Complex methods can overfit to noise and may not improve results when missingness is simple.</p>
+<p><strong>Example</strong>: For MCAR data with &lt;5% missingness, mean imputation might perform as well as KNN but with much less computational cost and complexity.</p>
+<h3 id="myth-4-missing-data-handling-is-a-preprocessing-step"><a class="header" href="#myth-4-missing-data-handling-is-a-preprocessing-step">Myth 4: "Missing Data Handling is a Preprocessing Step"</a></h3>
+<p><strong>Reality</strong>: Missing data handling should be integrated with your modeling strategy and evaluation framework.</p>
+<p><strong>Problem</strong>: If you impute using the full dataset (including test data), you're leaking information and will overestimate model performance.</p>
+<p><strong>Correct approach</strong>: Handle missing data separately for training and test sets, or use proper cross-validation that includes missing data handling within each fold.</p>
+<h3 id="common-technical-pitfalls"><a class="header" href="#common-technical-pitfalls">Common Technical Pitfalls</a></h3>
+<p><strong>1. Imputing Before Train/Test Split</strong></p>
+<pre><code class="language-python"># WRONG
+data_imputed = imputer.fit_transform(full_dataset)
+X_train, X_test = train_test_split(data_imputed)
+
+# CORRECT
+X_train, X_test = train_test_split(data_with_missing)
+imputer.fit(X_train)
+X_train_imputed = imputer.transform(X_train)
+X_test_imputed = imputer.transform(X_test)
+</code></pre>
+<p><strong>2. Ignoring Scale Differences in KNN</strong></p>
+<pre><code class="language-python"># WRONG - income dominates distance calculation
+knn_imputer = KNNImputer(n_neighbors=5)
+data_imputed = knn_imputer.fit_transform(data)
+
+# CORRECT - standardize first
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data)
+data_imputed = knn_imputer.fit_transform(data_scaled)
+data_imputed = scaler.inverse_transform(data_imputed)
+</code></pre>
+<h2 id="interview-strategy"><a class="header" href="#interview-strategy">Interview Strategy</a></h2>
+<h3 id="how-to-structure-your-answer"><a class="header" href="#how-to-structure-your-answer">How to Structure Your Answer</a></h3>
+<ol>
+<li><strong>Identify the missing data mechanism</strong>: "First, I'd analyze whether the data is MCAR, MAR, or MNAR"</li>
+<li><strong>Assess the extent</strong>: "I'd look at what percentage of data is missing and the patterns across variables"</li>
+<li><strong>Consider the options</strong>: "Based on the analysis, I'd choose between deletion or imputation"</li>
+<li><strong>Select appropriate method</strong>: "For imputation, I'd compare simple and advanced methods based on data characteristics"</li>
+<li><strong>Validate the approach</strong>: "Finally, I'd evaluate the impact on model performance"</li>
+</ol>
+<h3 id="key-points-to-emphasize"><a class="header" href="#key-points-to-emphasize">Key Points to Emphasize</a></h3>
+<ul>
+<li><strong>Missing data is not just missing</strong>: The mechanism matters for choosing the right approach</li>
+<li><strong>No universal best method</strong>: The choice depends on data characteristics and problem context</li>
+<li><strong>Validation is crucial</strong>: Always assess how missing data handling affects your results</li>
+<li><strong>Consider the business impact</strong>: Poor handling can lead to biased decisions with real consequences</li>
+</ul>
+<h3 id="sample-strong-answer"><a class="header" href="#sample-strong-answer">Sample Strong Answer</a></h3>
+<p>"I'd start by analyzing the missing data pattern to understand whether it's MCAR, MAR, or MNAR, since this determines the appropriate handling strategy. For example, if customer ratings are missing because dissatisfied customers don't rate (MNAR), simple imputation would introduce bias.</p>
+<p>Next, I'd assess the extent - if less than 5% is missing and it's MCAR, I might use listwise deletion or simple imputation. For larger amounts or MAR data, I'd consider advanced methods like KNN or MICE that can capture relationships between variables.</p>
+<p>I'd validate my approach by comparing model performance with different imputation strategies using proper cross-validation. For instance, I might train models with mean imputation, KNN imputation, and complete case analysis to see which performs best on held-out data.</p>
+<p>The key is matching the method to the data characteristics while avoiding common pitfalls like data leakage or ignoring the business context of why data is missing."</p>
+<h3 id="follow-up-questions-to-expect"><a class="header" href="#follow-up-questions-to-expect">Follow-up Questions to Expect</a></h3>
+<ul>
+<li>"How would you detect whether missing data is MCAR, MAR, or MNAR?"</li>
+<li>"What metrics would you use to evaluate imputation quality?"</li>
+<li>"How does missing data handling interact with feature scaling?"</li>
+<li>"When would you consider collecting more data instead of imputing?"</li>
+<li>"How do you handle missing data in time series?"</li>
+</ul>
+<h3 id="red-flags-to-avoid"><a class="header" href="#red-flags-to-avoid">Red Flags to Avoid</a></h3>
+<ul>
+<li>Don't assume all missing data is the same</li>
+<li>Don't always default to deletion or mean imputation without analysis</li>
+<li>Don't ignore the computational cost of advanced methods</li>
+<li>Don't forget about proper train/test separation when imputing</li>
+<li>Don't claim that imputation always improves results</li>
+</ul>
+<h2 id="related-concepts"><a class="header" href="#related-concepts">Related Concepts</a></h2>
+<h3 id="data-quality-and-preprocessing"><a class="header" href="#data-quality-and-preprocessing">Data Quality and Preprocessing</a></h3>
+<ul>
+<li><strong>Outlier detection</strong>: Missing values and outliers often occur together</li>
+<li><strong>Feature engineering</strong>: Creating missingness indicators as features</li>
+<li><strong>Data validation</strong>: Checking for systematic patterns in missingness</li>
+<li><strong>ETL pipelines</strong>: Handling missing data in production data pipelines</li>
+</ul>
+<h3 id="statistical-learning-theory"><a class="header" href="#statistical-learning-theory">Statistical Learning Theory</a></h3>
+<ul>
+<li><strong>Selection bias</strong>: How missing data can bias your sample</li>
+<li><strong>Observational studies</strong>: Missing data is more problematic than in controlled experiments</li>
+<li><strong>Causal inference</strong>: Missing confounders can invalidate causal conclusions</li>
+<li><strong>Survey methodology</strong>: Nonresponse bias in survey research</li>
+</ul>
+<h3 id="machine-learning-model-considerations"><a class="header" href="#machine-learning-model-considerations">Machine Learning Model Considerations</a></h3>
+<ul>
+<li><strong>Tree-based models</strong>: Can handle missing values natively</li>
+<li><strong>Linear models</strong>: Require complete data or imputation</li>
+<li><strong>Neural networks</strong>: Various architectures for handling missingness</li>
+<li><strong>Ensemble methods</strong>: Combining models trained on different imputations</li>
+</ul>
+<h3 id="evaluation-and-validation"><a class="header" href="#evaluation-and-validation">Evaluation and Validation</a></h3>
+<ul>
+<li><strong>Cross-validation</strong>: Proper handling of missing data in CV folds</li>
+<li><strong>Model comparison</strong>: How to fairly compare models with different missing data strategies</li>
+<li><strong>Uncertainty quantification</strong>: Multiple imputation provides uncertainty estimates</li>
+<li><strong>A/B testing</strong>: Ensuring missing data doesn't bias experiment results</li>
+</ul>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<h3 id="essential-papers"><a class="header" href="#essential-papers">Essential Papers</a></h3>
+<ul>
+<li>"Inference and Missing Data" (Rubin, 1976): The foundational paper defining MCAR, MAR, MNAR</li>
+<li>"Multiple Imputation by Chained Equations" (van Buuren &amp; Groothuis-Oudshoorn, 2011): Comprehensive guide to MICE</li>
+<li>"Missing Data in Randomized Controlled Trials" (White et al., 2011): Best practices for clinical research</li>
+</ul>
+<h3 id="online-resources"><a class="header" href="#online-resources">Online Resources</a></h3>
+<ul>
+<li><strong>scikit-learn Imputation Guide</strong>: Comprehensive documentation with code examples</li>
+<li><strong>R mice package documentation</strong>: Advanced multiple imputation techniques</li>
+<li><strong>Kaggle Missing Data Courses</strong>: Practical tutorials with real datasets</li>
+</ul>
+<h3 id="books"><a class="header" href="#books">Books</a></h3>
+<ul>
+<li>"Flexible Imputation of Missing Data" by van Buuren: The definitive guide to multiple imputation</li>
+<li>"Statistical Analysis with Missing Data" by Little &amp; Rubin: Theoretical foundations</li>
+<li>"Applied Missing Data Analysis" by Craig Enders: Practical applications across disciplines</li>
+</ul>
+<h3 id="practical-tools"><a class="header" href="#practical-tools">Practical Tools</a></h3>
+<ul>
+<li><strong>Python</strong>: scikit-learn, pandas, missingno (visualization)</li>
+<li><strong>R</strong>: mice, VIM, Hmisc packages</li>
+<li><strong>Visualization</strong>: missingno library for missing data patterns</li>
+<li><strong>Automated ML</strong>: Some AutoML platforms handle missing data automatically</li>
+</ul>
+<h3 id="industry-case-studies"><a class="header" href="#industry-case-studies">Industry Case Studies</a></h3>
+<ul>
+<li><strong>Netflix Recommendation System</strong>: Matrix completion for sparse rating data</li>
+<li><strong>Healthcare Analytics</strong>: Missing Electronic Health Record data</li>
+<li><strong>Financial Services</strong>: Credit scoring with incomplete application data</li>
+<li><strong>Marketing Analytics</strong>: Customer survey data with systematic nonresponse</li>
+</ul>
+<p>Understanding missing data deeply is crucial for building reliable ML systems. The key insight is that missing data is not just a technical nuisance - it's often informative about the underlying process generating your data, and handling it correctly can mean the difference between biased and unbiased conclusions.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_075.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_092.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_075.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_092.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
