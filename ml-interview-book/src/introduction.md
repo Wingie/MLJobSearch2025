@@ -62,3 +62,14 @@ Each chapter is self-contained, so you can:
 - Use as a reference during actual interviews (if allowed)
 
 Let's begin your journey to ML interview mastery! 🚀
+
+## License and Attribution
+
+This work is licensed under the **MIT License** - see the [LICENSE](https://github.com/your-username/ml-interview-book/blob/main/LICENSE) file for details.
+
+**Attribution is mandatory** when using, redistributing, or building upon this work. Please include:
+- Copyright notice: "© 2025 ML Interview Book Contributors"
+- Link to this repository
+- MIT License acknowledgment
+
+This ensures the educational content remains freely accessible while respecting the contributors' work.
